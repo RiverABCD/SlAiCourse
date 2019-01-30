@@ -1,0 +1,98 @@
+﻿[
+  {
+    "0": [
+      {"EN":                        ""},
+      {"ZH":                        ""},
+	  {"ObjectType":                "Normal"},
+	  {"PlantAttack":               "1"},
+	  {"MetalAttcck":               "1"},
+	  {"AnimalAttack":              "1"},
+	  {"AffectRange":               "160"},
+	  {"TexPath":                   "Texture2D'/Game/Res/UI/ObjectIcon/1.1'"},
+    ]
+  },
+  {
+    "1": [
+      {"EN":                        "Wood"},
+      {"ZH":                        "木头"},
+	  {"ObjectType":                "Normal"},
+	  {"PlantAttack":               "1"},
+	  {"MetalAttcck":               "1"},
+	  {"AnimalAttack":              "1"},
+	  {"AffectRange":               "160"},
+	  {"TexPath":                   "Texture2D'/Game/Res/UI/ObjectIcon/1.1'"},
+    ]
+  },
+  {
+    "2": [
+      {"EN":                        "Stone"},
+      {"ZH":                        "石头"},
+	  {"ObjectType":                "Normal"},
+	  {"PlantAttack":               "1"},
+	  {"MetalAttcck":               "1"},
+	  {"AnimalAttack":              "1"},
+	  {"AffectRange":               "160"},
+	  {"TexPath":                   "Texture2D'/Game/Res/UI/ObjectIcon/2.2'"},
+    ]
+  },
+  {
+    "3": [
+      {"EN":                        "Apple"},
+      {"ZH":                        "苹果"},
+	  {"ObjectType":                "Food"},
+	  {"PlantAttack":               "1"},
+	  {"MetalAttcck":               "1"},
+	  {"AnimalAttack":              "1"},
+	  {"AffectRange":               "160"},
+	  {"TexPath":                   "Texture2D'/Game/Res/UI/ObjectIcon/3.3'"},
+    ]
+  },
+  {
+    "4": [
+      {"EN":                        "Meat"},
+      {"ZH":                        "肉排"},
+	  {"ObjectType":                "Food"},
+	  {"PlantAttack":               "1"},
+	  {"MetalAttcck":               "1"},
+	  {"AnimalAttack":              "1"},
+	  {"AffectRange":               "160"},
+	  {"TexPath":                   "Texture2D'/Game/Res/UI/ObjectIcon/4.4'"},
+    ]
+  },
+  {
+    "5": [
+      {"EN":                        "Axe"},
+      {"ZH":                        "斧头"},
+	  {"ObjectType":                "Tool"},
+	  {"PlantAttack":               "4"},
+	  {"MetalAttcck":               "2"},
+	  {"AnimalAttack":              "2"},
+	  {"AffectRange":               "180"},
+	  {"TexPath":                   "Texture2D'/Game/Res/UI/ObjectIcon/5.5'"},
+    ]
+  },
+  {
+    "6": [
+      {"EN":                        "Hammer"},
+      {"ZH":                        "锤子"},
+	  {"ObjectType":                "Tool"},
+	  {"PlantAttack":               "2"},
+	  {"MetalAttcck":               "4"},
+	  {"AnimalAttack":              "2"},
+	  {"AffectRange":               "170"},
+	  {"TexPath":                   "Texture2D'/Game/Res/UI/ObjectIcon/6.6'"},
+    ]
+  },
+  {
+    "7": [
+      {"EN":                        "Sword"},
+      {"ZH":                        "剑"},
+	  {"ObjectType":                "Weapon"},
+	  {"PlantAttack":               "2"},
+	  {"MetalAttcck":               "2"},
+	  {"AnimalAttack":              "4"},
+	  {"AffectRange":               "200"},
+	  {"TexPath":                   "Texture2D'/Game/Res/UI/ObjectIcon/7.7'"},
+    ]
+  },
+]
