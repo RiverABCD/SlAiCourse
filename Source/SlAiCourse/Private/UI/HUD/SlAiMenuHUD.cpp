@@ -8,10 +8,12 @@
 
 ASlAiMenuHUD::ASlAiMenuHUD()
 {
+	
 	if (GEngine&&GEngine->GameViewport)
 	{
 		SAssignNew(MenuHUDWidget, SSlAiMenuHUDWidget);
 		GEngine->GameViewport->AddViewportWidgetContent(SNew(SWeakWidget).PossiblyNullContent(MenuHUDWidget.ToSharedRef()));
 
 	}
+	
 }

@@ -11,7 +11,9 @@
 BEGIN_SLATE_FUNCTION_BUILD_OPTIMIZATION
 void SSlAiMenuWidget::Construct(const FArguments& InArgs)
 {
-	
+	//»ñÈ¡±à¼­Æ÷µÄMenuStyle
+	MenuStyle = &SlAiStyle::Get().GetWidgetStyle < FSlAiMenuStyle > ("BPSlAiMenuStyle");
+
 	ChildSlot
 	[
 		SAssignNew(RootSizeBox,SBox)
@@ -37,7 +39,7 @@ void SSlAiMenuWidget::Construct(const FArguments& InArgs)
 				[
 					SAssignNew(TitleText, STextBlock)
 					.Font(SlAiStyle::Get().GetFontStyle("MenuItemFont"))
-					.Text(FText::FromString("I am ¹þ¹þ"))
+					.Text(FText::FromString("I am 11"))
 					//.Text(NSLOCTEXT("SlAiMenu", "Menu", "Menu"))
 				]
 			]
