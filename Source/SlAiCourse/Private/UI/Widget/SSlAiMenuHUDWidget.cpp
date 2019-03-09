@@ -30,7 +30,7 @@ void SSlAiMenuHUDWidget::Construct(const FArguments& InArgs)
 		]
 			+ SOverlay::Slot().HAlign(HAlign_Center).VAlign(VAlign_Center)
 		[
-			SAssignNew(MenuWidget,SSlAiMenuWidget)
+			SAssignNew(MenuWidget, SSlAiMenuWidget)
 		]
 
 		]
