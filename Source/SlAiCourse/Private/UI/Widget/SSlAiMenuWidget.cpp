@@ -21,15 +21,15 @@ void SSlAiMenuWidget::Construct(const FArguments& InArgs)
 			SNew(SOverlay)
 	+SOverlay::Slot().HAlign(HAlign_Fill).VAlign(VAlign_Fill).Padding(FMargin(0.f, 50.f, 0.f, 0.f))
 		[
-			SNew(SImage).Image(&MenuStyle->MenuBackgroundBrush)
+			SNew(SImage).Image(&MenuStyle->MenuBackgroundBrush)//UMG±≥æ∞Õº
 		]
 	+SOverlay::Slot().HAlign(HAlign_Left).VAlign(VAlign_Center).Padding(FMargin(0.f,25.f,0.f,0.f))
 		[
-			SNew(SImage).Image(&MenuStyle->LeftIconBrush)
+			SNew(SImage).Image(&MenuStyle->LeftIconBrush)//UMG◊Û±ﬂøÚ
 		]
 	+SOverlay::Slot().HAlign(HAlign_Right).VAlign(VAlign_Center).Padding(FMargin(0.f, 25.f, 0.f, 0.f))
 		[
-			SNew(SImage).Image(&MenuStyle->RightIconBrush)
+			SNew(SImage).Image(&MenuStyle->RightIconBrush)//UMG”“±ﬂøÚ
 		]
 	+SOverlay::Slot().HAlign(HAlign_Center).VAlign(VAlign_Top)
 		[
@@ -37,7 +37,7 @@ void SSlAiMenuWidget::Construct(const FArguments& InArgs)
 			[
 				SNew(SBorder).BorderImage(&MenuStyle->TitleBorderBrush).HAlign(HAlign_Center).VAlign(VAlign_Center)
 				[
-					SAssignNew(TitleText, STextBlock)
+					SAssignNew(TitleText, STextBlock)//±ÍÃ‚
 					.Font(SlAiStyle::Get().GetFontStyle("MenuItemFont"))
 					.Text(FText::FromString("I am 12"))
 					//.Text(NSLOCTEXT("SlAiMenu", "Menu", "Menu"))
