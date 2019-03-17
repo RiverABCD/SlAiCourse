@@ -39,8 +39,8 @@ void SSlAiMenuWidget::Construct(const FArguments& InArgs)
 				[
 					SAssignNew(TitleText, STextBlock)//标题
 					.Font(SlAiStyle::Get().GetFontStyle("MenuItemFont"))
-					.Text(FText::FromString("I am 12"))
-					//.Text(NSLOCTEXT("SlAiMenu", "Menu", "Menu"))
+					//.Text(FText::FromString("I am 12"))
+					.Text(NSLOCTEXT("SlAiMenu", "Menu", "Menu"))//文字本地化
 				]
 			]
 		]
