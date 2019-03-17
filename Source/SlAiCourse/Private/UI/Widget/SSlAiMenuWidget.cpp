@@ -8,11 +8,16 @@
 #include "SImage.h"
 #include "STextBlock.h"
 
+#include "Internationalization.h"
+
 BEGIN_SLATE_FUNCTION_BUILD_OPTIMIZATION
 void SSlAiMenuWidget::Construct(const FArguments& InArgs)
 {
 	//»ñÈ¡±à¼­Æ÷µÄMenuStyle
 	MenuStyle = &SlAiStyle::Get().GetWidgetStyle < FSlAiMenuStyle > ("BPSlAiMenuStyle");
+
+	FInternationalization::Get().SetCurrentCulture(TEXT("en"));
+	//FInternationalization::Get().SetCurrentCulture(TEXT("zh"));
 
 	ChildSlot
 	[
