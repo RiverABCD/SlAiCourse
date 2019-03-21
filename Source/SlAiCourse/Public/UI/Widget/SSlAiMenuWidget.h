@@ -3,10 +3,12 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "SlAiTypes.h"
 #include "Widgets/SCompoundWidget.h"
 
 class SBox;
 class STextBlock;
+class SVerticalBox;
 /**
  * 
  */
@@ -21,10 +23,16 @@ public:
 	void Construct(const FArguments& InArgs);
 
 private:
+	//绑定到各个MenuItem的方法
+	void MenuItemOnClicked(EMenuItem::Type ItemType);
+
+private:
 	//保存根节点
 	TSharedPtr<SBox> RootSizeBox;
 	//获取MenuStyle
 	const struct FSlAiMenuStyle* MenuStyle;
 	//保存标题
 	TSharedPtr<STextBlock> TitleText;
+	//用来保存垂直列表
+	TSharedPtr<SVerticalBox> ContentBox;
 };

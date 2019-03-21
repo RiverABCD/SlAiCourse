@@ -25,20 +25,20 @@ SlAiInternation::Register(LOCTEXT("LoadRecord", "LoadRecord"));//加载存档
 
 SlAiInternation::Register(LOCTEXT("ChooseRecord", "ChooseRecord"));//选择存档
 
-																   //进入游戏界面
+//进入游戏界面
 SlAiInternation::Register(LOCTEXT("RecordName", "RecordName"));//存档名
 SlAiInternation::Register(LOCTEXT("EnterGame", "EnterGame"));//进入游戏
 SlAiInternation::Register(LOCTEXT("EnterRecord", "EnterRecord"));//进入存档
 SlAiInternation::Register(LOCTEXT("RecordNameHint", "Input Record Name!");//输入存档名
 SlAiInternation::Register(LOCTEXT("NameRepeatedHint", "Record Name Repeated!");//输入存档名
 
-																			   //游戏设置界面
+//游戏设置界面
 SlAiInternation::Register(LOCTEXT("Chinese", "Chinese"));//中文
 SlAiInternation::Register(LOCTEXT("English", "English"));//英文
 SlAiInternation::Register(LOCTEXT("Music", "Music"));//音乐
 SlAiInternation::Register(LOCTEXT("Sound", "Sound"));//音效
 
-													 //公用
+//公用
 SlAiInternation::Register(LOCTEXT("GoBack", "GoBack"));//返回
 
 #undef LOCTEXT_NAMESPACE

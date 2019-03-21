@@ -17,3 +17,21 @@ enum class ECultureTeam : uint8 {
 	EN = 0,
 	ZH
 };
+
+//Menu按钮的类型
+namespace EMenuItem {
+	enum Type {
+		None,
+		StartGame,
+		GameOption,
+		QuitGame,
+		NewGame,
+		LoadRecord,
+		StartGameGoBack,
+		GameOptionGoBack,
+		NewGameGoBack,
+		ChooseRecordGoBack,
+		EnterGame,
+		EnterRecord
+	};
+}
