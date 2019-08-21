@@ -35,3 +35,28 @@ namespace EMenuItem {
 		EnterRecord
 	};
 }
+
+//Menu界面类型
+namespace EMenuType
+{
+	enum Type	
+	{
+		None,
+		MainMenu,
+		StartGame,
+		GameOption,
+		NewGame,
+		ChooseRecord
+	};
+}
+
+//Menu动画状态枚举
+namespace EMenuAnim
+{
+	enum Type
+	{
+		Stop, //停止动画
+		Close, //关闭Menu
+		Open  //打开Menu
+	};
+}

@@ -15,7 +15,16 @@ public:
 
 #define LOCTEXT_NAMESPACE "SlAiMenu"
 
+#if 0
+
+#define LocTEXT_NAMESPACE "SlAiMenu"
+SlAiInternation::Register(LOCTEXT("Menu", "Menu"));
+#undef LOCTEXT_NAMESPACE
+
+#endif
+
 SlAiInternation::Register(LOCTEXT("Menu", "Menu"));//菜单
+
 SlAiInternation::Register(LOCTEXT("StartGame", "StartGame"));//开始游戏
 SlAiInternation::Register(LOCTEXT("GameOption", "GameOption"));//游戏设置
 SlAiInternation::Register(LOCTEXT("QuitGame", "QuitGame"));//退出游戏

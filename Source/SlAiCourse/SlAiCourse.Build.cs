@@ -9,7 +9,7 @@ public class SlAiCourse : ModuleRules
 		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
 	
 		PublicDependencyModuleNames.AddRange(new string[] 
-        { "Core", "CoreUObject", "Engine", "InputCore" ,"Slate","SlateCore"});
+        { "Core", "CoreUObject", "Engine", "InputCore" ,"Slate","SlateCore","Json","JsonUtilities"});
 
 		PrivateDependencyModuleNames.AddRange(new string[] {  });
 

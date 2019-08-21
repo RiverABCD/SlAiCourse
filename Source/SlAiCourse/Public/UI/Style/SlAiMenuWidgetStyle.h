@@ -7,7 +7,7 @@
 #include "SlateWidgetStyleContainerBase.h"
 #include "SlateBrush.h"
 #include "SlateFontInfo.h"
-
+#include "SlateSound.h"
 #include "SlAiMenuWidgetStyle.generated.h"
 
 /**
@@ -85,6 +85,60 @@ struct SLAICOURSE_API FSlAiMenuStyle : public FSlateWidgetStyle
 	*/
 	UPROPERTY(EditAnywhere, Category = Common)
 		FLinearColor FontColor_Black;
+
+	/*
+	* GameSet背景
+	*/
+	UPROPERTY(EditAnywhere, Category = GameOption)
+		FSlateBrush GameOptionBGBrush;
+
+	/*
+	* CheckedBox的Brush被选中
+	*/
+	UPROPERTY(EditAnywhere, Category = GameOption)
+		FSlateBrush CheckedBoxBrush;
+
+	/*
+	* CheckedBox的Brush不被选中
+	*/
+	UPROPERTY(EditAnywhere, Category = GameOption)
+		FSlateBrush UnCheckedBoxBrush;
+
+	/*
+	* Slider的背景Brush
+	*/
+	UPROPERTY(EditAnywhere, Category = GameOption)
+		FSlateBrush SliderBarBrush;
+
+	/*
+	* 指定Slider的样式
+	*/
+	UPROPERTY(EditAnywhere, Category = GameOption)
+		FSliderStyle SliderStyle;
+
+	/*
+	* 开始游戏声音
+	*/
+	UPROPERTY(EditAnywhere, Category = Sound)
+		FSlateSound StartGameSound;
+
+	/*
+	* 结束游戏声音
+	*/
+	UPROPERTY(EditAnywhere, Category = Sound)
+		FSlateSound ExitGameSound;
+
+	/*
+	* 转换按钮声音
+	*/
+	UPROPERTY(EditAnywhere, Category = Sound)
+		FSlateSound MenuItemChangeSound;
+
+	/*
+	* Menu背景声音
+	*/
+	UPROPERTY(EditAnywhere, Category = Sound)
+		FSlateSound MenuBackgroundMusic;
 };
 
 /**
