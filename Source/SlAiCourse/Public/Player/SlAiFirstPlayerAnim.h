@@ -14,7 +14,8 @@ class SLAICOURSE_API USlAiFirstPlayerAnim : public USlAiPlayerAnim
 {
 	GENERATED_BODY()
 	
-	
-	
+public:
+
+	USlAiFirstPlayerAnim();
 	
 };

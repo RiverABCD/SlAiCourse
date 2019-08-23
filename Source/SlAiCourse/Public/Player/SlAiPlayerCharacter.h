@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
+#include "SlAiTypes.h"
 #include "SlAiPlayerCharacter.generated.h"
 
 UCLASS()
@@ -15,17 +16,64 @@ public:
 	// Sets default values for this character's properties
 	ASlAiPlayerCharacter();
 
-protected:
-	// Called when the game starts or when spawned
-	virtual void BeginPlay() override;
-
-public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
+	//修改视角
+	void ChangeView(EGameViewMode::Type NewGameView);
+public:
+	UPROPERTY(VisibleDefaultsOnly, Category = "SlAi")
+		class USpringArmComponent* CameraBoom;
+	UPROPERTY(VisibleDefaultsOnly, Category = "SlAi")
+		class UCameraComponent* ThirdCamera;
+	UPROPERTY(VisibleDefaultsOnly, Category = "SlAi")
+		UCameraComponent* FirstCamera;
+
+	//玩家控制器指针
+	class ASlAiPlayerController* SPController;
+
+	//当前的视角模型
+	EGameViewMode::Type GameView;
+
+	//上半身动画状态
+	EUpperBody::Type UpperType;
+
+	//是否允许切换视角
+	bool IsAllowSwitch;
+
+	//是否锁住输入
+	bool IsInputLocked;
+
+	//是否在攻击
+	bool IsAttack;
+
+protected:
+	// Called when the game starts or when spawned
+	virtual void BeginPlay() override;
+
+private:
+
+	void MoveForward(float Value);
+	void MoveRight(float Value);
+	void LookUpAtRate(float Value);
+	void Turn(float Value);
+	void TurnAtRate(float Value);
+	void OnStartJump();
+	void OnStopJump();
+	void OnStartRun();
+	void OnStopRun();
+
+private:
+	//第一人称骨骼模型
+	UPROPERTY(VisibleDefaultsOnly, Category = "SlAi")
+		USkeletalMeshComponent* MeshFirst;
+
+	//旋转比例
+	float BaseLookUpRate;
+	float BaseTurnRate;
 	
 	
 };
