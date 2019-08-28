@@ -10,7 +10,7 @@
 #include "SlAiHelper.h"
 
 #include "SlAiGameInstance.h"
-//#include "Kismet/GameplayStatics.h"
+#include "Kismet/GameplayStatics.h"
 
 ASlAiGameMode::ASlAiGameMode()
 {
@@ -28,7 +28,18 @@ void ASlAiGameMode::Tick(float DeltaSeconds)
 
 }
 
+void ASlAiGameMode::InitGamePlayModule()
+{
+	//添加引用
+	SPController = Cast<ASlAiPlayerController>(UGameplayStatics::GetPlayerController(GetWorld(), 0));
+	SPCharacter = Cast<ASlAiPlayerCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
+	SPState = Cast<ASlAiPlayerState>(SPController->PlayerState);
+}
+
 void ASlAiGameMode::BeginPlay()
 {
+	//初始化游戏数据
+	SlAiDataHandle::Get()->InitializeGameData();
 	
+	if(!SPController) InitGamePlayModule();
 }

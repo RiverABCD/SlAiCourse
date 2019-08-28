@@ -8,6 +8,8 @@
 #include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
+#include "Components/ChildActorComponent.h"
+
 
 // Sets default values
 ASlAiPlayerCharacter::ASlAiPlayerCharacter()
@@ -85,6 +87,9 @@ ASlAiPlayerCharacter::ASlAiPlayerCharacter()
 	GetMesh()->SetOwnerNoSee(false);
 	MeshFirst->SetOwnerNoSee(true);
 
+	//实例化手上物品
+	HandObject = CreateDefaultSubobject<UChildActorComponent>(TEXT("HandObject"));
+
 
 	//初始化参数
 	BaseLookUpRate = 45.f;
@@ -104,7 +109,8 @@ ASlAiPlayerCharacter::ASlAiPlayerCharacter()
 void ASlAiPlayerCharacter::BeginPlay()
 {
 	Super::BeginPlay();
-	
+	//把手持物品组件绑定到第三人称模型右手插槽上
+	HandObject->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetNotIncludingScale, FName("RHSocket"));
 }
 
 // Called every frame

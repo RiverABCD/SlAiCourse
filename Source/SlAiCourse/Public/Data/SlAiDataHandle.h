@@ -19,6 +19,8 @@ public:
 	void ChangeLocalizationCulture(ECultureTeam Culture);
 	//修改菜单音量
 	void ResetMenuVolume(float MusicVol, float SoundVol);
+	//游戏数据初始化
+	void InitializeGameData();
 
 public:
 	//语言
@@ -30,6 +32,10 @@ public:
 	TArray<FString> RecordDataList;
 	//存档名
 	FString RecordName;
+	//物品属性图
+	TMap<int, TSharedPtr<ObjectAttribute>> ObjectAttrMap;
+	//物品贴图资源数组
+	TArray<const FSlateBrush*> ObjectBrushList;
 private:
 	//创建单例
 	static TSharedRef<SlAiDataHandle> Create();
@@ -45,7 +51,7 @@ private:
 	//初始化Menu声音数据
 	void InitializedMenuAudio();
 	//初始化物品属性图
-	//void InitObjectAttr();
+	void InitObjectAttr();
 	//初始化资源属性图
 	//void InitResourceAttrMap();
 	//初始化合成表图
@@ -60,7 +66,7 @@ private:
 	//获取MenuStyle,里面存放有声音文件
 	const struct FSlAiMenuStyle* MenuStyle;
 	//获取GameStyle
-	//const struct FSlAiGameStyle* GameStyle;
+	const struct FSlAiGameStyle* GameStyle;
 	//音乐组件
 	class USoundMix* SlAiSoundMix;
 	class USoundClass* SlAiMusicClass;

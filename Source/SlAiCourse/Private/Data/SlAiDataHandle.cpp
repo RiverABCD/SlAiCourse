@@ -7,7 +7,7 @@
 #include "SlAiHelper.h"
 #include "SlAiStyle.h"
 #include "SlAiMenuWidgetStyle.h"
-//#include "SlAiGameWidgetStyle.h"
+#include "SlAiGameWidgetStyle.h"
 #include "Sound/SoundCue.h"
 
 #include "AudioDevice.h"
@@ -153,4 +153,35 @@ void SlAiDataHandle::InitializedMenuAudio()
 	ResetMenuVolume(MusicVolume, SoundVolume);
 }
 
+void SlAiDataHandle::InitializeGameData()
+{
+	InitObjectAttr();
+}
 
+void SlAiDataHandle::InitObjectAttr()
+{
+	SlAiSingleton<SlAiJsonHandle>::Get()->ObjectAttrJsonRead(ObjectAttrMap);
+	//获取GameStyle
+	GameStyle = &SlAiStyle::Get().GetWidgetStyle<FSlAiGameStyle>("BPSlAiGameStyle");
+	//填充笔刷数组
+	ObjectBrushList.Add(&GameStyle->EmptyBrush);
+	ObjectBrushList.Add(&GameStyle->ObjectBrush_1);
+	ObjectBrushList.Add(&GameStyle->ObjectBrush_2);
+	ObjectBrushList.Add(&GameStyle->ObjectBrush_3);
+	ObjectBrushList.Add(&GameStyle->ObjectBrush_4);
+	ObjectBrushList.Add(&GameStyle->ObjectBrush_5);
+	ObjectBrushList.Add(&GameStyle->ObjectBrush_6);
+	ObjectBrushList.Add(&GameStyle->ObjectBrush_7);
+
+	////动态生成Object的图片Brush,这段代码会引起奔溃
+	//for (int i = 1; i < ObjectAttrMap.Num(); ++i) {
+	//	//测试函数,动态创建FSlateBrush,一定要创建指针,否则会在函数结束时销毁资源
+	//	FSlateBrush* ObjectBrush = new FSlateBrush();
+	//	ObjectBrush->ImageSize = FVector2D(80.f, 80.f);
+	//	ObjectBrush->DrawAs = ESlateBrushDrawType::Image;
+	//	UTexture2D* ObjectTex = LoadObject<UTexture2D>(NULL, *(*ObjectAttrMap.Find(i))->TexPath);
+	//	ObjectBrush->SetResourceObject(ObjectTex);
+	//	ObjectBrushList.Add(ObjectBrush);
+	//}
+
+}

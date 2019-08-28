@@ -5,6 +5,8 @@
 #include "CoreMinimal.h"
 #include "GameFramework/PlayerController.h"
 #include "SlAiTypes.h"
+#include "SlAiPlayerCharacter.h"
+#include "SlAiPlayerState.h"
 #include "SlAiPlayerController.generated.h"
 
 /**
@@ -25,6 +27,7 @@ public:
 public:
 	//获取玩家角色
 	class ASlAiPlayerCharacter* SPCharacter;
+	class ASlAiPlayerState* SPState;
 
 protected:
 	virtual void BeginPlay() override;
@@ -39,6 +42,9 @@ private:
 	void RightEventStart();
 	void RightEventStop();
 
+	//鼠标滚轮上下滑动事件
+	void ScrollUpEvent();
+	void ScrollDownEvent();
 private:
 
 	//左键预动作
@@ -46,4 +52,8 @@ private:
 
 	//右键预动作
 	EUpperBody::Type RightUpperType;
+
+	//是否按住左右鼠标键
+	bool IsLeftButtonDown;
+	bool IsRightButtonDown;
 };

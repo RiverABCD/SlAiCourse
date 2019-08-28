@@ -19,6 +19,15 @@ public:
 	//重写帧函数
 	virtual void Tick(float DeltaSeconds) override;
 
+	//组件赋值,给GameHUD调用,避免空引用引起崩溃
+	void InitGamePlayModule();
+public:
+	class ASlAiPlayerController* SPController;
+
+	class ASlAiPlayerCharacter* SPCharacter;
+
+	class ASlAiPlayerState* SPState;
+
 protected:
 	virtual void BeginPlay() override;
 	

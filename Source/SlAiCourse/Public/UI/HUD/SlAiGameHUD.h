@@ -14,7 +14,13 @@ class SLAICOURSE_API ASlAiGameHUD : public AHUD
 {
 	GENERATED_BODY()
 	
-	
-	
-	
+public:
+	ASlAiGameHUD();
+public:
+	//±£¥ÊGameMode÷∏’Î
+	class ASlAiGameMode* GM;
+protected:
+	virtual void BeginPlay() override;
+private:
+	TSharedPtr<class SSlAiGameHUDWidget> GameHUDWidget;
 };

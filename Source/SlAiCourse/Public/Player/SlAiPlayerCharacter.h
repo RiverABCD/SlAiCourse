@@ -71,6 +71,10 @@ private:
 	UPROPERTY(VisibleDefaultsOnly, Category = "SlAi")
 		USkeletalMeshComponent* MeshFirst;
 
+	//手上物品
+	UPROPERTY(VisibleDefaultsOnly, Category = "SlAi")
+		class UChildActorComponent* HandObject;
+
 	//旋转比例
 	float BaseLookUpRate;
 	float BaseTurnRate;
