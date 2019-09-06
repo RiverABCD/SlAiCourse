@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
 
@@ -17,7 +17,7 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 public:
-	//×ÊÔ´ID
+	//èµ„æºID
 	int ResourceIndex;
 
 protected:
@@ -25,11 +25,11 @@ protected:
 	virtual void BeginPlay() override;
 
 protected:
-	//¸ù×é¼ş
+	//æ ¹ç»„ä»¶
 	USceneComponent* RootScene;
-	//¾²Ì¬Ä£ĞÍ
+	//é™æ€æ¨¡å‹
 	UStaticMeshComponent* BaseMesh;
-	//±£´æ×ÊÔ´µØÖ·£¬ÓÃÓÚËæ»úË¢×ÊÔ´
+	//ä¿å­˜èµ„æºåœ°å€ï¼Œç”¨äºéšæœºåˆ·èµ„æº
 	TArray<FString> ResourcePath;
 	
 	
