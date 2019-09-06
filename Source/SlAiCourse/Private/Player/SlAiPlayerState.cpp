@@ -54,6 +54,13 @@ int ASlAiPlayerState::GetCurrentHandObjectIndex() const
 	return ShortcutContainerList[CurrentShortcutIndex]->ObjectIndex;
 }
 
+EObjectType::Type ASlAiPlayerState::GetCurrentObjectType()
+{
+	TSharedPtr<ObjectAttribute> ObjectAttr;
+	ObjectAttr = *SlAiDataHandle::Get()->ObjectAttrMap.Find(GetCurrentHandObjectIndex());
+	return ObjectAttr->ObjectType;
+}
+
 FText ASlAiPlayerState::GetShortcutInfoText() const
 {
 	TSharedPtr<ObjectAttribute> ObjectAttr;

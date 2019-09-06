@@ -1,15 +1,17 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 #include "SlAiPlayerCharacter.h"
-#include <ConstructorHelpers.h>
-#include <Engine/SkeletalMesh.h>
-#include <Components/SkeletalMeshComponent.h>
+#include "ConstructorHelpers.h"
+#include "Engine/SkeletalMesh.h"
+#include "Components/SkeletalMeshComponent.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Components/ChildActorComponent.h"
 
+#include "SlAiHandObject.h"
+#include "Animation/AnimInstance.h"
 
 // Sets default values
 ASlAiPlayerCharacter::ASlAiPlayerCharacter()
@@ -17,31 +19,31 @@ ASlAiPlayerCharacter::ASlAiPlayerCharacter()
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
-	//¿ªÊ¼ÉèÖÃÈËÎïÅö×²ÌåÊôĞÔÎªPlayerProfile,ÏÂÃæµÄ¹Ç÷ÀÄ£ĞÍµÄÅö×²¾Í¶¼¿ÉÒÔÉèÖÃÎªÎŞÅö×²
+	//å¼€å§‹è®¾ç½®äººç‰©ç¢°æ’ä½“å±æ€§ä¸ºPlayerProfile,ä¸‹é¢çš„éª¨éª¼æ¨¡å‹çš„ç¢°æ’å°±éƒ½å¯ä»¥è®¾ç½®ä¸ºæ— ç¢°æ’
 	GetCapsuleComponent()->SetCollisionProfileName(FName("PlayerProfile"));
 
-	//Ìí¼ÓµÚÒ»ÈË³Æ¹Ç÷ÀÄ£ĞÍ
+	//æ·»åŠ ç¬¬ä¸€äººç§°éª¨éª¼æ¨¡å‹
 	static ConstructorHelpers::FObjectFinder<USkeletalMesh> StaticMeshFirst(TEXT("SkeletalMesh'/Game/Res/PolygonAdventure/Mannequin/FirstPlayer/SkMesh/FirstPlayer.FirstPlayer'"));
 	MeshFirst = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("MeshFirst"));
 	MeshFirst->SetSkeletalMesh(StaticMeshFirst.Object);
 	MeshFirst->SetupAttachment((USceneComponent*)GetCapsuleComponent());
 	MeshFirst->bOnlyOwnerSee = true;
 	MeshFirst->bReceivesDecals = false;
-	//¸üĞÂÆµÂÊË¥Èõ
+	//æ›´æ–°é¢‘ç‡è¡°å¼±
 
-	//ÉèÖÃÅö×²ÊôĞÔ
+	//è®¾ç½®ç¢°æ’å±æ€§
 	MeshFirst->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 	MeshFirst->SetCollisionObjectType(ECC_Pawn);
 	MeshFirst->SetCollisionResponseToAllChannels(ECR_Ignore);
-	//ÉèÖÃÎ»ÒÆ
+	//è®¾ç½®ä½ç§»
 	MeshFirst->SetRelativeLocation(FVector(0.f, 0.f, -95.f));
 	MeshFirst->SetRelativeRotation(FQuat::MakeFromEuler(FVector(0.f, 0.f, -90.f)));
 
-	//»ñÈ¡µÚÒ»ÈË³ÆµÄ¶¯×÷À¶Í¼
+	//è·å–ç¬¬ä¸€äººç§°çš„åŠ¨ä½œè“å›¾
 	static ConstructorHelpers::FClassFinder<UAnimInstance> StaticAnimFirst(TEXT("AnimBlueprint'/Game/Blueprint/Player/FirstPlayer_Animation.FirstPlayer_Animation_C'"));
 	MeshFirst->AnimClass = StaticAnimFirst.Class;
 
-	//¸øÄ¬ÈÏmeshÌí¼Ó¹Ç÷ÀÄ£ĞÍ
+	//ç»™é»˜è®¤meshæ·»åŠ éª¨éª¼æ¨¡å‹
 	static ConstructorHelpers::FObjectFinder<USkeletalMesh> StaticMeshThird(TEXT("SkeletalMesh'/Game/Res/PolygonAdventure/Mannequin/Player/SkMesh/Player.Player'"));
 	GetMesh()->SetSkeletalMesh(StaticMeshThird.Object);
 	GetMesh()->bOnlyOwnerSee = true;
@@ -52,56 +54,56 @@ ASlAiPlayerCharacter::ASlAiPlayerCharacter()
 	GetMesh()->SetRelativeLocation(FVector(0.f, 0.f, -95.f));
 	GetMesh()->SetRelativeRotation(FQuat::MakeFromEuler(FVector(0.f, 0.f, -90.f)));
 
-	//»ñÈ¡µÚÈıÈË³ÆµÄ¶¯×÷À¶Í¼
+	//è·å–ç¬¬ä¸‰äººç§°çš„åŠ¨ä½œè“å›¾
 	static ConstructorHelpers::FClassFinder<UAnimInstance> StaticAnimThird(TEXT("AnimBlueprint'/Game/Blueprint/Player/ThirdPlayer_Animation.ThirdPlayer_Animation_C'"));
 	GetMesh()->AnimClass = StaticAnimThird.Class;
 
-	//ÉãÏñ»úÊÖ±Û
+	//æ‘„åƒæœºæ‰‹è‡‚
 	CameraBoom = CreateDefaultSubobject<USpringArmComponent>(TEXT("CameraBoom"));
 	CameraBoom->SetupAttachment(RootComponent);
-	//ÉèÖÃ¾àÀë
+	//è®¾ç½®è·ç¦»
 	CameraBoom->TargetArmLength = 300.f;
-	//ÉèÖÃÆ«ÒÆ
+	//è®¾ç½®åç§»
 	CameraBoom->TargetOffset = FVector(0.f, 0.f, 60.f);
-	//°ó¶¨ControllerµÄĞı×ª
+	//ç»‘å®šControllerçš„æ—‹è½¬
 	CameraBoom->bUsePawnControlRotation = true;
 
-	//³õÊ¼»¯µÚÈıÈË³ÆÉãÏñ»ú
+	//åˆå§‹åŒ–ç¬¬ä¸‰äººç§°æ‘„åƒæœº
 	ThirdCamera = CreateDefaultSubobject<UCameraComponent>(TEXT("ThirdCamera"));
 	ThirdCamera->SetupAttachment(CameraBoom, USpringArmComponent::SocketName);
-	//ÉèÖÃThirdCamera²»¸úËæ¿ØÖÆÆ÷µÄĞı×ª
+	//è®¾ç½®ThirdCameraä¸è·Ÿéšæ§åˆ¶å™¨çš„æ—‹è½¬
 	ThirdCamera->bUsePawnControlRotation = false;
 
-	//³õÊ¼»¯µÚÒ»ÈË³ÆÉãÏñ»ú
+	//åˆå§‹åŒ–ç¬¬ä¸€äººç§°æ‘„åƒæœº
 	FirstCamera = CreateDefaultSubobject<UCameraComponent>(TEXT("FirstCamera"));
 	FirstCamera->SetupAttachment((USceneComponent*)GetCapsuleComponent());
-	//ÉèÖÃ¸úËæControllerĞı×ª
+	//è®¾ç½®è·ŸéšControlleræ—‹è½¬
 	FirstCamera->bUsePawnControlRotation = true;
-	//ÉèÖÃÆ«ÒÆ
+	//è®¾ç½®åç§»
 	FirstCamera->AddLocalOffset(FVector(0.f, 0.f, 60.f));
 
-	//Ä¬ÈÏµÚÈıÈË³Æ
+	//é»˜è®¤ç¬¬ä¸‰äººç§°
 	FirstCamera->SetActive(false);
 	ThirdCamera->SetActive(true);
-	//²»ÏÔÊ¾µÚÒ»ÈË³ÆÄ£ĞÍ
+	//ä¸æ˜¾ç¤ºç¬¬ä¸€äººç§°æ¨¡å‹
 	GetMesh()->SetOwnerNoSee(false);
 	MeshFirst->SetOwnerNoSee(true);
 
-	//ÊµÀı»¯ÊÖÉÏÎïÆ·
+	//å®ä¾‹åŒ–æ‰‹ä¸Šç‰©å“
 	HandObject = CreateDefaultSubobject<UChildActorComponent>(TEXT("HandObject"));
 
 
-	//³õÊ¼»¯²ÎÊı
+	//åˆå§‹åŒ–å‚æ•°
 	BaseLookUpRate = 45.f;
 	BaseTurnRate = 45.f;
 
-	//ÉèÖÃ³õÊ¼ËÙ¶ÈÎª150.f
+	//è®¾ç½®åˆå§‹é€Ÿåº¦ä¸º150.f
 	GetCharacterMovement()->MaxWalkSpeed = 450.f;
-	//³õÊ¼»¯ÎªµÚÈıÈË³Æ
+	//åˆå§‹åŒ–ä¸ºç¬¬ä¸‰äººç§°
 	GameView = EGameViewMode::Third;
-	//ÉÏ°ëÉí¶¯×÷³õÊ¼»¯ÎªÎŞ¶¯×÷
+	//ä¸ŠåŠèº«åŠ¨ä½œåˆå§‹åŒ–ä¸ºæ— åŠ¨ä½œ
 	UpperType = EUpperBody::None;
-	//³õÊ¼»¯ÎªÔÊĞíÇĞ»»ÊÓ½Ç
+	//åˆå§‹åŒ–ä¸ºå…è®¸åˆ‡æ¢è§†è§’
 	IsAllowSwitch = true;
 }
 
@@ -109,8 +111,10 @@ ASlAiPlayerCharacter::ASlAiPlayerCharacter()
 void ASlAiPlayerCharacter::BeginPlay()
 {
 	Super::BeginPlay();
-	//°ÑÊÖ³ÖÎïÆ·×é¼ş°ó¶¨µ½µÚÈıÈË³ÆÄ£ĞÍÓÒÊÖ²å²ÛÉÏ
+	//æŠŠæ‰‹æŒç‰©å“ç»„ä»¶ç»‘å®šåˆ°ç¬¬ä¸‰äººç§°æ¨¡å‹å³æ‰‹æ’æ§½ä¸Š
 	HandObject->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetNotIncludingScale, FName("RHSocket"));
+	//æ·»åŠ Actoråˆ°HandObject
+	HandObject->SetChildActorClass(ASlAiHandObject::SpawnHandObject(0));
 }
 
 // Called every frame
@@ -149,18 +153,32 @@ void ASlAiPlayerCharacter::ChangeView(EGameViewMode::Type NewGameView)
 		ThirdCamera->SetActive(false);
 		MeshFirst->SetOwnerNoSee(false);
 		GetMesh()->SetOwnerNoSee(true);
-		//ĞŞ¸Ähandobject°ó¶¨µÄÎ»ÖÃ
-		//HandObject->AttachToComponent(MeshFirst, FAttachmentTransformRules::SnapToTargetNotIncludingScale, FName("RHSocket"));
+		//ä¿®æ”¹handobjectç»‘å®šçš„ä½ç½®
+		HandObject->AttachToComponent(MeshFirst, FAttachmentTransformRules::SnapToTargetNotIncludingScale, FName("RHSocket"));
 		break;
 	case EGameViewMode::Third:
 		FirstCamera->SetActive(false);
 		ThirdCamera->SetActive(true);
 		MeshFirst->SetOwnerNoSee(true);
 		GetMesh()->SetOwnerNoSee(false);
-		//ĞŞ¸Ähandobject°ó¶¨µÄÎ»ÖÃ
-		//HandObject->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetNotIncludingScale, FName("RHSocket"));
+		//ä¿®æ”¹handobjectç»‘å®šçš„ä½ç½®
+		HandObject->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetNotIncludingScale, FName("RHSocket"));
 		break;
 	}
+}
+
+void ASlAiPlayerCharacter::ChangeHandObject(TSubclassOf<AActor> HandObjectClass)
+{
+	//è®¾ç½®ç‰©å“åˆ°HandObject
+	HandObject->SetChildActorClass(HandObjectClass);
+
+}
+
+void ASlAiPlayerCharacter::ChangeHandObjectDetect(bool IsOpen)
+{
+	//è·å–æ‰‹ä¸Šç‰©å“
+	ASlAiHandObject* HandObjectClass = Cast<ASlAiHandObject>(HandObject->GetChildActor());
+	if (HandObjectClass) HandObjectClass->ChangeOverlayDetect(IsOpen);
 }
 
 void ASlAiPlayerCharacter::MoveForward(float Value)

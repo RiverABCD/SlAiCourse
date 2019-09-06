@@ -24,6 +24,9 @@ public:
 
 	virtual void NativeUpdateAnimation(float DeltaSeconds) override;
 
+	//开启和关闭手上物品的交互检测
+	UFUNCTION(BlueprintCallable, Category = "SlAi")
+		void ChangeDetection(bool IsOpen);
 public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = PlayAnim)
 		float Speed;

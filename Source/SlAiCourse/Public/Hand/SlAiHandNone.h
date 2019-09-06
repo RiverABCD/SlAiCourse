@@ -14,7 +14,10 @@ class SLAICOURSE_API ASlAiHandNone : public ASlAiHandObject
 {
 	GENERATED_BODY()
 	
-	
+public:
+	ASlAiHandNone();
+protected:
+	virtual void BeginPlay() override;
 	
 	
 };

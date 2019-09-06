@@ -4,18 +4,18 @@
 
 #include "CoreMinimal.h"
 #include "Hand/SlAiHandObject.h"
-#include "SlAiHandMeat.generated.h"
+#include "SlAiHandSword.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class SLAICOURSE_API ASlAiHandMeat : public ASlAiHandObject
+class SLAICOURSE_API ASlAiHandSword : public ASlAiHandObject
 {
 	GENERATED_BODY()
 	
 public:
-	ASlAiHandMeat();
+	ASlAiHandSword();
 protected:
 	virtual void BeginPlay() override;
 	

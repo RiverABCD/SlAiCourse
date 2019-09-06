@@ -1,36 +1,40 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 #include "SlAiPlayerController.h"
-
-
+#include "SlAiHandObject.h"
+#include "SlAiPlayerState.h"
+#include "SlAiPlayerCharacter.h"
 
 
 ASlAiPlayerController::ASlAiPlayerController()
 {
-	//ÔÊĞíÃ¿Ö¡ÔËĞĞ
+	//å…è®¸æ¯å¸§è¿è¡Œ
 	PrimaryActorTick.bCanEverTick = true;
 }
 
 void ASlAiPlayerController::Tick(float DeltaSeconds)
 {
 	Super::Tick(DeltaSeconds);
+
+	//ä¸´æ—¶ä»£ç 
+	ChangePreUpperType(EUpperBody::None);
 }
 
 void ASlAiPlayerController::BeginPlay()
 {
 	Super::BeginPlay();
-	//»ñÈ¡½ÇÉ«Óë×´Ì¬
+	//è·å–è§’è‰²ä¸çŠ¶æ€
 	if (!SPCharacter) SPCharacter = Cast<ASlAiPlayerCharacter>(GetCharacter());
 	if (!SPState) SPState = Cast<ASlAiPlayerState>(PlayerState);
 	
-	//ÉèÖÃÊó±ê²»ÏÔÊ¾
+	//è®¾ç½®é¼ æ ‡ä¸æ˜¾ç¤º
 	bShowMouseCursor = false;
-	//ÉèÖÃÊäÈëÄ£Ê½
+	//è®¾ç½®è¾“å…¥æ¨¡å¼
 	FInputModeGameOnly InputMode;
 	InputMode.SetConsumeCaptureMouseDown(true);
 	SetInputMode(InputMode);
 
-	//ÉèÖÃÔ¤¶¯×÷
+	//è®¾ç½®é¢„åŠ¨ä½œ
 	LeftUpperType = EUpperBody::Punch;
 	RightUpperType = EUpperBody::PickUp;
 
@@ -41,21 +45,27 @@ void ASlAiPlayerController::BeginPlay()
 void ASlAiPlayerController::SetupInputComponent()
 {
 	Super::SetupInputComponent();
-	//°ó¶¨ÊÓ½ÇÇĞ»»
+	//ç»‘å®šè§†è§’åˆ‡æ¢
 	InputComponent->BindAction("ChangeView", IE_Pressed, this, &ASlAiPlayerController::ChangeView);
-	//°ó¶¨Êó±ê°´ÏÂÊÂ¼ş
+	//ç»‘å®šé¼ æ ‡æŒ‰ä¸‹äº‹ä»¶
 	InputComponent->BindAction("LeftEvent", IE_Pressed, this, &ASlAiPlayerController::LeftEventStart);
 	InputComponent->BindAction("LeftEvent", IE_Released, this, &ASlAiPlayerController::LeftEventStop);
 	InputComponent->BindAction("RightEvent", IE_Pressed, this, &ASlAiPlayerController::RightEventStart);
 	InputComponent->BindAction("RightEvent", IE_Released, this, &ASlAiPlayerController::RightEventStop);
-	//°ó¶¨Êó±ê¹öÂÖÊÂ¼ş
+	//ç»‘å®šé¼ æ ‡æ»šè½®äº‹ä»¶
 	InputComponent->BindAction("ScrollUp", IE_Pressed, this, &ASlAiPlayerController::ScrollUpEvent);
 	InputComponent->BindAction("ScrollDown", IE_Pressed, this, &ASlAiPlayerController::ScrollDownEvent);
 }
 
+void ASlAiPlayerController::ChangeHandObject()
+{
+	//ç”Ÿæˆæ‰‹æŒç‰©å“
+	SPCharacter->ChangeHandObject(ASlAiHandObject::SpawnHandObject(SPState->GetCurrentHandObjectIndex()));
+}
+
 void ASlAiPlayerController::ChangeView()
 {
-	//Èç¹û²»ÔÊĞíÇĞ»»ÊÓ½Ç£¬Ö±½Ó·µ»Ø
+	//å¦‚æœä¸å…è®¸åˆ‡æ¢è§†è§’ï¼Œç›´æ¥è¿”å›
 	if (!SPCharacter->IsAllowSwitch) return;
 
 	switch (SPCharacter->GameView)
@@ -95,23 +105,51 @@ void ASlAiPlayerController::RightEventStop()
 
 void ASlAiPlayerController::ScrollUpEvent()
 {
-	//Èç¹û²»ÔÊĞíÇĞ»»£¬Ö±½Ó·µ»Ø
+	//å¦‚æœä¸å…è®¸åˆ‡æ¢ï¼Œç›´æ¥è¿”å›
 	if (!SPCharacter->IsAllowSwitch) return;
 
-	//Èç¹ûÊó±êÓĞÔÚ°´¼ü£¬Ôò²»×¼Ìø×ª
+	//å¦‚æœé¼ æ ‡æœ‰åœ¨æŒ‰é”®ï¼Œåˆ™ä¸å‡†è·³è½¬
 	if (IsLeftButtonDown || IsRightButtonDown) return;
-	//¸æËß×´Ì¬ÀàÇĞ»»¿ì½İÀ¸ÈİÆ÷
+	//å‘Šè¯‰çŠ¶æ€ç±»åˆ‡æ¢å¿«æ·æ å®¹å™¨
 	SPState->ChooseShortcut(true);
+	//åˆ‡æ¢æ‰‹ä¸­æŒæœ‰ç‰©å“
+	ChangeHandObject();
 
 }
 
 void ASlAiPlayerController::ScrollDownEvent()
 {
-	//Èç¹û²»ÔÊĞíÇĞ»»£¬Ö±½Ó·µ»Ø
+	//å¦‚æœä¸å…è®¸åˆ‡æ¢ï¼Œç›´æ¥è¿”å›
 	if (!SPCharacter->IsAllowSwitch) return;
 
-	//Èç¹ûÊó±êÓĞÔÚ°´¼ü£¬Ôò²»×¼Ìø×ª
+	//å¦‚æœé¼ æ ‡æœ‰åœ¨æŒ‰é”®ï¼Œåˆ™ä¸å‡†è·³è½¬
 	if (IsLeftButtonDown || IsRightButtonDown) return;
-	//¸æËß×´Ì¬ÀàÇĞ»»¿ì½İÀ¸ÈİÆ÷
+	//å‘Šè¯‰çŠ¶æ€ç±»åˆ‡æ¢å¿«æ·æ å®¹å™¨
 	SPState->ChooseShortcut(false);
+	//åˆ‡æ¢æ‰‹ä¸­æŒæœ‰ç‰©å“
+	ChangeHandObject();
+}
+
+void ASlAiPlayerController::ChangePreUpperType(EUpperBody::Type RightType)
+{
+	//æ ¹æ®å½“å‰æ‰‹æŒç‰©å“çš„ç±»å‹æ¥ä¿®æ”¹é¢„åŠ¨ä½œ
+	switch (SPState->GetCurrentObjectType())
+	{
+	case EObjectType::Normal:
+		LeftUpperType = EUpperBody::Punch;
+		RightUpperType = RightType;
+		break;
+	case EObjectType::Food:
+		LeftUpperType = EUpperBody::Punch;
+		//å¦‚æœå³é”®çŠ¶æ€æ˜¯æ‹¾å–é‚£å°±ç»™æ‹¾å–ï¼Œæ‹¾å–ä¼˜å…ˆçº§é«˜
+		RightUpperType = RightType == EUpperBody::None ? EUpperBody::Eat : RightType;
+		break;
+	case EObjectType::Tool:
+		LeftUpperType = EUpperBody::Hit;
+		RightUpperType = RightType;
+	case EObjectType::Weapon:
+		LeftUpperType = EUpperBody::Fight;
+		RightUpperType = RightType;
+		break;
+	}
 }

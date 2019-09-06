@@ -36,6 +36,8 @@ public:
 	TMap<int, TSharedPtr<ObjectAttribute>> ObjectAttrMap;
 	//物品贴图资源数组
 	TArray<const FSlateBrush*> ObjectBrushList;
+	//资源属性图
+	TMap<int, TSharedPtr<ResourceAttribute>> ResourceAttrMap;
 private:
 	//创建单例
 	static TSharedRef<SlAiDataHandle> Create();
@@ -53,7 +55,7 @@ private:
 	//初始化物品属性图
 	void InitObjectAttr();
 	//初始化资源属性图
-	//void InitResourceAttrMap();
+	void InitResourceAttrMap();
 	//初始化合成表图
 	//void InitCompoundTableMap();
 	//初始化Game声音数据

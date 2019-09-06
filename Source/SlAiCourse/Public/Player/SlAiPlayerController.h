@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
 
@@ -24,8 +24,11 @@ public:
 
 	virtual void SetupInputComponent() override;
 
+	//å¯¹Characterçš„æ‰‹æŒç‰©å“è¿›è¡Œæ›´æ”¹,è¿™ä¸ªå‡½æ•°åœ¨playerstateå†…ä¼šè°ƒç”¨
+	void ChangeHandObject();
+
 public:
-	//»ñÈ¡Íæ¼Ò½ÇÉ«
+	//è·å–ç©å®¶è§’è‰²
 	class ASlAiPlayerCharacter* SPCharacter;
 	class ASlAiPlayerState* SPState;
 
@@ -33,27 +36,30 @@ protected:
 	virtual void BeginPlay() override;
 	
 private:
-	//ÇĞ»»ÊÓ½Ç
+	//åˆ‡æ¢è§†è§’
 	void ChangeView();
 
-	//Êó±ê°´¼üÊÂ¼ş
+	//é¼ æ ‡æŒ‰é”®äº‹ä»¶
 	void LeftEventStart();
 	void LeftEventStop();
 	void RightEventStart();
 	void RightEventStop();
 
-	//Êó±ê¹öÂÖÉÏÏÂ»¬¶¯ÊÂ¼ş
+	//é¼ æ ‡æ»šè½®ä¸Šä¸‹æ»‘åŠ¨äº‹ä»¶
 	void ScrollUpEvent();
 	void ScrollDownEvent();
+
+	//ä¿®æ”¹é¢„åŠ¨ä½œ
+	void ChangePreUpperType(EUpperBody::Type RightType);
 private:
 
-	//×ó¼üÔ¤¶¯×÷
+	//å·¦é”®é¢„åŠ¨ä½œ
 	EUpperBody::Type LeftUpperType;
 
-	//ÓÒ¼üÔ¤¶¯×÷
+	//å³é”®é¢„åŠ¨ä½œ
 	EUpperBody::Type RightUpperType;
 
-	//ÊÇ·ñ°´×¡×óÓÒÊó±ê¼ü
+	//æ˜¯å¦æŒ‰ä½å·¦å³é¼ æ ‡é”®
 	bool IsLeftButtonDown;
 	bool IsRightButtonDown;
 };

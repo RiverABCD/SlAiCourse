@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
 
@@ -22,8 +22,15 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
-	//ĞŞ¸ÄÊÓ½Ç
+	//ä¿®æ”¹è§†è§’
 	void ChangeView(EGameViewMode::Type NewGameView);
+
+	//ä¿®æ”¹å½“å‰çš„æ‰‹æŒç‰©å“
+	void ChangeHandObject(TSubclassOf<AActor> HandObjectClass);
+
+	//ä¿®æ”¹æ‰‹æŒç‰©å“çš„ç¢°æ’æ£€æµ‹æ˜¯å¦å¼€å¯
+	void ChangeHandObjectDetect(bool IsOpen);
+
 public:
 	UPROPERTY(VisibleDefaultsOnly, Category = "SlAi")
 		class USpringArmComponent* CameraBoom;
@@ -32,22 +39,22 @@ public:
 	UPROPERTY(VisibleDefaultsOnly, Category = "SlAi")
 		UCameraComponent* FirstCamera;
 
-	//Íæ¼Ò¿ØÖÆÆ÷Ö¸Õë
+	//ç©å®¶æ§åˆ¶å™¨æŒ‡é’ˆ
 	class ASlAiPlayerController* SPController;
 
-	//µ±Ç°µÄÊÓ½ÇÄ£ĞÍ
+	//å½“å‰çš„è§†è§’æ¨¡å‹
 	EGameViewMode::Type GameView;
 
-	//ÉÏ°ëÉí¶¯»­×´Ì¬
+	//ä¸ŠåŠèº«åŠ¨ç”»çŠ¶æ€
 	EUpperBody::Type UpperType;
 
-	//ÊÇ·ñÔÊĞíÇĞ»»ÊÓ½Ç
+	//æ˜¯å¦å…è®¸åˆ‡æ¢è§†è§’
 	bool IsAllowSwitch;
 
-	//ÊÇ·ñËø×¡ÊäÈë
+	//æ˜¯å¦é”ä½è¾“å…¥
 	bool IsInputLocked;
 
-	//ÊÇ·ñÔÚ¹¥»÷
+	//æ˜¯å¦åœ¨æ”»å‡»
 	bool IsAttack;
 
 protected:
@@ -67,15 +74,15 @@ private:
 	void OnStopRun();
 
 private:
-	//µÚÒ»ÈË³Æ¹Ç÷ÀÄ£ĞÍ
+	//ç¬¬ä¸€äººç§°éª¨éª¼æ¨¡å‹
 	UPROPERTY(VisibleDefaultsOnly, Category = "SlAi")
 		USkeletalMeshComponent* MeshFirst;
 
-	//ÊÖÉÏÎïÆ·
+	//æ‰‹ä¸Šç‰©å“
 	UPROPERTY(VisibleDefaultsOnly, Category = "SlAi")
 		class UChildActorComponent* HandObject;
 
-	//Ğı×ª±ÈÀı
+	//æ—‹è½¬æ¯”ä¾‹
 	float BaseLookUpRate;
 	float BaseTurnRate;
 	

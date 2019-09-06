@@ -19,6 +19,12 @@ void USlAiPlayerAnim::NativeUpdateAnimation(float DeltaSeconds)
 	UpdateMontage();
 }
 
+void USlAiPlayerAnim::ChangeDetection(bool IsOpen)
+{
+	if (!SPCharacter) return;
+	SPCharacter->ChangeHandObjectDetect(IsOpen);
+}
+
 void USlAiPlayerAnim::InitSPCharacter()
 {
 	if (!SPCharacter) SPCharacter = Cast<ASlAiPlayerCharacter>(TryGetPawnOwner());

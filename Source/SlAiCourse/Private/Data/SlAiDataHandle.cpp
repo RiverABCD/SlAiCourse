@@ -155,7 +155,10 @@ void SlAiDataHandle::InitializedMenuAudio()
 
 void SlAiDataHandle::InitializeGameData()
 {
+	//初始化物品属性图
 	InitObjectAttr();
+	//初始化资源属性图
+	InitResourceAttrMap();
 }
 
 void SlAiDataHandle::InitObjectAttr()
@@ -184,4 +187,15 @@ void SlAiDataHandle::InitObjectAttr()
 	//	ObjectBrushList.Add(ObjectBrush);
 	//}
 
+}
+
+void SlAiDataHandle::InitResourceAttrMap()
+{
+	SlAiSingleton<SlAiJsonHandle>::Get()->ResourceAttrJsonRead(ResourceAttrMap);
+#if 0
+	for (TMap<int, TSharedPtr<ResourceAttribute>>::TIterator It(ResourceAttrMap); It; ++It)
+	{
+		SlAiHelper::Debug((It->Value)->ToString(), 120.f);
+	}
+#endif
 }
