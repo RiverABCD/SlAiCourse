@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+Ôªø// Fill out your copyright notice in the Description page of Project Settings.
 
 #include "SSlAiGameHUDWidget.h"
 #include "SlateOptMacros.h"
@@ -7,6 +7,8 @@
 #include "SOverlay.h"
 
 #include "SSlAiShortcutWidget.h"
+#include "Engine/GameViewportClient.h"
+//#include "SSlAiRayInfoWidget.h"
 
 BEGIN_SLATE_FUNCTION_BUILD_OPTIMIZATION
 void SSlAiGameHUDWidget::Construct(const FArguments& InArgs)
@@ -17,11 +19,18 @@ void SSlAiGameHUDWidget::Construct(const FArguments& InArgs)
 		SNew(SDPIScaler).DPIScale(UIScaler)
 		[
 			SNew(SOverlay)
-			//øÏΩ›¿∏
+			//Âø´Êç∑Ê†è
 			+ SOverlay::Slot().HAlign(HAlign_Center).VAlign(VAlign_Bottom)
 			[
 				SAssignNew(ShortcutWidget,SSlAiShortcutWidget)
 			]
+			//Â∞ÑÁ∫ø‰ø°ÊÅØ
+	/*
+			+ SOverlay::Slot().HAlign(HAlign_Center).VAlign(VAlign_Top)
+			[
+				SAssignNew(RayInfoWidget,SSlAiRayInfoWidget)
+			]
+			*/
 		]
 	];
 	

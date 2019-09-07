@@ -24,7 +24,7 @@ ASlAiResourceTree::ASlAiResourceTree()
 	//产生随机种子
 	Stream.GenerateNewSeed();
 	int RandIndex = Stream.RandRange(0, ResourcePath.Num() - 1);
-	//给模型组件添加上模型,这里不能用静态变量
+	//给模型组件添加上模型,这里不能用静态变量(加static之后物品不能随机生成）
 	ConstructorHelpers::FObjectFinder<UStaticMesh> StaticBaseMesh(*ResourcePath[RandIndex]);
 	//绑定模型到Mesh组件
 	BaseMesh->SetStaticMesh(StaticBaseMesh.Object);

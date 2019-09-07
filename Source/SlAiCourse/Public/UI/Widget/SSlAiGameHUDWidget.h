@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
 
@@ -19,19 +19,20 @@ public:
 	/** Constructs this widget with InArgs */
 	void Construct(const FArguments& InArgs);
 
-	//°ó¶¨µ½UIScalerµÄ·½·¨
+	//ç»‘å®šåˆ°UIScalerçš„æ–¹æ³•
 	float GetUIScaler() const;
 public:
-	//¿ì½İÀ¸Ö¸Õë
+	//å¿«æ·æ æŒ‡é’ˆ
 	TSharedPtr<class SSlAiShortcutWidget> ShortcutWidget;
-
+	//å°„çº¿ä¿¡æ¯æ¡†
+	//TSharedPtr<class SSlAiRayInfoWidget> RayInfoWidget;
 
 
 private:
-	//»ñÈ¡ÆÁÄ»Size
+	//è·å–å±å¹•Size
 	FVector2D GetViewportSize() const;
 
 private:
-	//DPIËõ·Å
+	//DPIç¼©æ”¾
 	TAttribute<float> UIScaler;
 };
