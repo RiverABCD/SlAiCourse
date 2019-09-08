@@ -19,8 +19,8 @@ ASlAiResourceObject::ASlAiResourceObject()
 	BaseMesh->SetCollisionProfileName(FName("ResourceProfile"));
 
 	//开启交互检测
-	BaseMesh->bGenerateOverlapEvents = true;
-
+	//BaseMesh->bGenerateOverlapEvents = true;
+	BaseMesh->SetGenerateOverlapEvents(true);
 	//设置在下一帧不销毁
 	
 }

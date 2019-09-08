@@ -4,7 +4,6 @@
 #include "Components/StaticMeshComponent.h"
 #include "Components/BoxComponent.h"
 #include "ConstructorHelpers.h"
-
 //手持物品类
 #include "SlAiHandNone.h"
 #include "SlAiHandWood.h"
@@ -16,6 +15,7 @@
 #include "SlAiHandSword.h"
 
 #include "SlAiHelper.h"
+
 
 // Sets default values
 ASlAiHandObject::ASlAiHandObject()
@@ -38,7 +38,8 @@ ASlAiHandObject::ASlAiHandObject()
 	AffectCollision->SetCollisionProfileName(TEXT("ToolProfile"));
 
 	//初始时关闭Overlay检测
-	AffectCollision->bGenerateOverlapEvents = false;
+	//AffectCollision->bGenerateOverlapEvents = false;
+	AffectCollision->SetGenerateOverlapEvents(false);
 
 	//绑定检测方法到碰撞体
 	FScriptDelegate OverlayBegin;
@@ -91,7 +92,8 @@ TSubclassOf<AActor> ASlAiHandObject::SpawnHandObject(int ObjectID)
 
 void ASlAiHandObject::ChangeOverlayDetect(bool IsOpen)
 {
-	AffectCollision->bGenerateOverlapEvents = IsOpen;
+	//AffectCollision->bGenerateOverlapEvents = IsOpen;
+	AffectCollision->SetGenerateOverlapEvents(IsOpen);
 }
 
 void ASlAiHandObject::OnOverlayBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult)
