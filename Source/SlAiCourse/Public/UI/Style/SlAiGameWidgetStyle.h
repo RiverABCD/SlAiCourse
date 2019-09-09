@@ -6,6 +6,7 @@
 #include "Styling/SlateWidgetStyle.h"
 #include "SlateWidgetStyleContainerBase.h"
 #include "SlateBrush.h"
+#include "SlateFontInfo.h"
 
 #include "SlAiGameWidgetStyle.generated.h"
 

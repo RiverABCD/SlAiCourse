@@ -25,7 +25,7 @@ public:
 	//快捷栏指针
 	TSharedPtr<class SSlAiShortcutWidget> ShortcutWidget;
 	//射线信息框
-	//TSharedPtr<class SSlAiRayInfoWidget> RayInfoWidget;
+	TSharedPtr<class SSlAiRayInfoWidget> RayInfoWidget;
 
 
 private:

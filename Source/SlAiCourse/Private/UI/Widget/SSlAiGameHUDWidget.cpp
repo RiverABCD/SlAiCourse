@@ -8,7 +8,10 @@
 
 #include "SSlAiShortcutWidget.h"
 #include "Engine/GameViewportClient.h"
-//#include "SSlAiRayInfoWidget.h"
+#include "SSlAiRayInfoWidget.h"
+
+
+//"D:/project/Unreal Projects/C++/SlAiCourse/Intermediate/ProjectFiles/SSlAiRayInfoWidget.h"
 
 BEGIN_SLATE_FUNCTION_BUILD_OPTIMIZATION
 void SSlAiGameHUDWidget::Construct(const FArguments& InArgs)
@@ -25,12 +28,12 @@ void SSlAiGameHUDWidget::Construct(const FArguments& InArgs)
 				SAssignNew(ShortcutWidget,SSlAiShortcutWidget)
 			]
 			//射线信息
-	/*
+	
 			+ SOverlay::Slot().HAlign(HAlign_Center).VAlign(VAlign_Top)
 			[
 				SAssignNew(RayInfoWidget,SSlAiRayInfoWidget)
 			]
-			*/
+			
 		]
 	];
 	

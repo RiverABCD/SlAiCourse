@@ -1,4 +1,4 @@
-ï»¿// Fill out your copyright notice in the Description page of Project Settings.
+// Fill out your copyright notice in the Description page of Project Settings.
 
 #include "SSlAiRayInfoWidget.h"
 #include "SlateOptMacros.h"
@@ -12,7 +12,7 @@
 BEGIN_SLATE_FUNCTION_BUILD_OPTIMIZATION
 void SSlAiRayInfoWidget::Construct(const FArguments& InArgs)
 {
-	//è·å–GameStyle
+	//»ñÈ¡GameStyle
 	GameStyle = &SlAiStyle::Get().GetWidgetStyle<FSlAiGameStyle>("BPSlAiGameStyle");
 
 	ChildSlot
@@ -32,7 +32,7 @@ END_SLATE_FUNCTION_BUILD_OPTIMIZATION
 
 void SSlAiRayInfoWidget::Tick(const FGeometry & AllottedGeometry, const double InCurrentTime, const float InDeltaTime)
 {
-	//ç¬¬ä¸€å¸§çš„æ—¶å€™è¿›è¡Œåˆå§‹åŒ–
+	//µÚÒ»Ö¡µÄÊ±ºò½øĞĞ³õÊ¼»¯
 	if (!IsInitRayInfoEvent)
 	{
 		RegisterRayInfoEvent.ExecuteIfBound(RayInfoTextBlock);

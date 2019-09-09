@@ -1,10 +1,10 @@
-ï»¿// Fill out your copyright notice in the Description page of Project Settings.
+// Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
 
 #include "CoreMinimal.h"
 #include "Widgets/SCompoundWidget.h"
-//#include "DeclarativeSyntaxSupport.h"
+#include "DeclarativeSyntaxSupport.h"
 
 
 class STextBlock;
@@ -28,10 +28,10 @@ public:
 	FRegisterRayInfoEvent RegisterRayInfoEvent;
 
 private:
-	//ä¿å­˜æ˜¾ç¤ºå°„çº¿ä¿¡æ¯çš„æ–‡æœ¬
+	//±£´æÏÔÊ¾ÉäÏßĞÅÏ¢µÄÎÄ±¾
 	TSharedPtr<STextBlock> RayInfoTextBlock;
-	//è·å–GameStyle
+	//»ñÈ¡GameStyle
 	const struct FSlAiGameStyle* GameStyle;
-	//æ˜¯å¦å·²ç»åˆå§‹åŒ–äº‹ä»¶
+	//ÊÇ·ñÒÑ¾­³õÊ¼»¯ÊÂ¼ş
 	bool IsInitRayInfoEvent;
 };
