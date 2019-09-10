@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+Ôªø// Fill out your copyright notice in the Description page of Project Settings.
 
 #include "SlAiPlayerState.h"
 #include "STextBlock.h"
@@ -7,7 +7,7 @@
 
 ASlAiPlayerState::ASlAiPlayerState()
 {
-	//µ±«∞—°÷–µƒøÏΩ›¿∏–Ú∫≈
+	//ÂΩìÂâçÈÄâ‰∏≠ÁöÑÂø´Êç∑Ê†èÂ∫èÂè∑
 	CurrentShortcutIndex = 0;
 }
 void ASlAiPlayerState::RegisterShortcutContainer(TArray<TSharedPtr<ShortcutContainer>>* ContainerList, TSharedPtr<STextBlock> ShortcutInfoTextBlock)
@@ -17,10 +17,10 @@ void ASlAiPlayerState::RegisterShortcutContainer(TArray<TSharedPtr<ShortcutConta
 		ShortcutContainerList.Add(*It);
 	}
 	ShortcutInfoTextAttr.BindUObject(this, &ASlAiPlayerState::GetShortcutInfoText);
-	//∞Û∂®øÏΩ›¿∏–≈œ¢TextBlock
+	//ÁªëÂÆöÂø´Êç∑Ê†è‰ø°ÊÅØTextBlock
 	ShortcutInfoTextBlock->SetText(ShortcutInfoTextAttr);
 
-	//¡Ÿ ±≤‚ ‘¥˙¬Î,…Ë÷√øÏΩ›¿∏µƒŒÔ∆∑
+	//‰∏¥Êó∂ÊµãËØï‰ª£Á†Å,ËÆæÁΩÆÂø´Êç∑Ê†èÁöÑÁâ©ÂìÅ
 	ShortcutContainerList[1]->SetObject(1)->SetObjectNum(5);
 	ShortcutContainerList[2]->SetObject(2)->SetObjectNum(15);
 	ShortcutContainerList[3]->SetObject(3)->SetObjectNum(1);
@@ -32,7 +32,7 @@ void ASlAiPlayerState::RegisterShortcutContainer(TArray<TSharedPtr<ShortcutConta
 
 void ASlAiPlayerState::ChooseShortcut(bool IsPre)
 {
-	//œ¬“ª∏ˆ±ª—°‘Òµƒ»›∆˜µƒœ¬±Í
+	//‰∏ã‰∏Ä‰∏™Ë¢´ÈÄâÊã©ÁöÑÂÆπÂô®ÁöÑ‰∏ãÊ†á
 	int NextIndex = 0;
 	if (IsPre)
 	{
@@ -44,7 +44,7 @@ void ASlAiPlayerState::ChooseShortcut(bool IsPre)
 	}
 	ShortcutContainerList[CurrentShortcutIndex]->SetChoosed(false);
 	ShortcutContainerList[NextIndex]->SetChoosed(true);
-	//∏¸–¬µ±«∞—°‘Òµƒ»›∆˜Index
+	//Êõ¥Êñ∞ÂΩìÂâçÈÄâÊã©ÁöÑÂÆπÂô®Index
 	CurrentShortcutIndex = NextIndex;
 }
 
@@ -61,6 +61,13 @@ EObjectType::Type ASlAiPlayerState::GetCurrentObjectType()
 	return ObjectAttr->ObjectType;
 }
 
+void ASlAiPlayerState::RegisterRayInfoEvent(TSharedPtr<STextBlock> RayInfoTextBlock)
+{
+	RayInfoTextAttr.BindUObject(this, &ASlAiPlayerState::GetRayInfoText);
+	//ÁªëÂÆöÂ∞ÑÁ∫øÊ£ÄÊµã‰ø°ÊÅØ
+	RayInfoTextBlock->SetText(RayInfoTextAttr);
+}
+
 FText ASlAiPlayerState::GetShortcutInfoText() const
 {
 	TSharedPtr<ObjectAttribute> ObjectAttr;
@@ -73,4 +80,9 @@ FText ASlAiPlayerState::GetShortcutInfoText() const
 		return ObjectAttr->ZH;
 	}
 	return ObjectAttr->ZH;
+}
+
+FText ASlAiPlayerState::GetRayInfoText() const
+{
+	return FText::FromString("hahahah");
 }

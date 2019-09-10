@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 #include "SlAiGameHUD.h"
 #include "Engine/Engine.h"
@@ -7,10 +7,13 @@
 
 #include "SSlAiGameHUDWidget.h"
 #include "SSlAiShortcutWidget.h"
+#include "SSlAiRayInfoWidget.h"
 
 #include "SlAiPlayerController.h"
 #include "SlAiPlayerState.h"
 #include "SlAiGameMode.h"
+#include "Engine/GameViewportClient.h"
+
 
 
 ASlAiGameHUD::ASlAiGameHUD()
@@ -25,10 +28,13 @@ ASlAiGameHUD::ASlAiGameHUD()
 void ASlAiGameHUD::BeginPlay()
 {
 	Super::BeginPlay();
-	//ÎªÊ²Ã´²»ÔÚ¹¹Ôìº¯ÊıÖĞ°ó¶¨Controller,Character£¬State£ºÒòÎªÖ´ĞĞµ½¹¹ÔìÊ±£¬ÊÀ½çÖĞ²¢Ã»ÓĞÊµÀı»¯ÕâĞ©Àà
+	//ä¸ºä»€ä¹ˆä¸åœ¨æ„é€ å‡½æ•°ä¸­ç»‘å®šController,Characterï¼ŒStateï¼šå› ä¸ºæ‰§è¡Œåˆ°æ„é€ æ—¶ï¼Œä¸–ç•Œä¸­å¹¶æ²¡æœ‰å®ä¾‹åŒ–è¿™äº›ç±»
 	GM = Cast<ASlAiGameMode>(UGameplayStatics::GetGameMode(GetWorld()));
 	if (!GM) return;
-	//ÏÈÈ·±£Òªµ÷ÓÃµÄ×é¼ş¶¼ÒÑ¾­ÊµÏÖ
+	//å…ˆç¡®ä¿è¦è°ƒç”¨çš„ç»„ä»¶éƒ½å·²ç»å®ç°
 	GM->InitGamePlayModule();
+	//ç»‘å®šæ³¨å†Œå¿«æ·æ å®¹å™¨
 	GameHUDWidget->ShortcutWidget->RegisterShortcutContainer.BindUObject(GM->SPState, &ASlAiPlayerState::RegisterShortcutContainer);
+	//ç»‘å®šå°„çº¿ä¿¡æ¯æ–‡æœ¬äº‹ä»¶
+	GameHUDWidget->RayInfoWidget->RegisterRayInfoEvent.BindUObject(GM->SPState, &ASlAiPlayerState::RegisterRayInfoEvent);
 }
