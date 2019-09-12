@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
 
@@ -17,7 +17,7 @@ class SLAICOURSE_API ASlAiGameHUD : public AHUD
 public:
 	ASlAiGameHUD();
 public:
-	//±£´æGameModeÖ¸Õë
+	//ä¿å­˜GameModeæŒ‡é’ˆ
 	class ASlAiGameMode* GM;
 protected:
 	virtual void BeginPlay() override;

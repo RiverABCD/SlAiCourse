@@ -8,6 +8,7 @@
 #include "SSlAiGameHUDWidget.h"
 #include "SSlAiShortcutWidget.h"
 #include "SSlAiRayInfoWidget.h"
+#include "SSlAiPointerWidget.h"
 
 #include "SlAiPlayerController.h"
 #include "SlAiPlayerState.h"
@@ -37,4 +38,6 @@ void ASlAiGameHUD::BeginPlay()
 	GameHUDWidget->ShortcutWidget->RegisterShortcutContainer.BindUObject(GM->SPState, &ASlAiPlayerState::RegisterShortcutContainer);
 	//绑定射线信息文本事件
 	GameHUDWidget->RayInfoWidget->RegisterRayInfoEvent.BindUObject(GM->SPState, &ASlAiPlayerState::RegisterRayInfoEvent);
+	//绑定修改准星委托(BindRaw绑定的继承纯C++类，而BindUObject则绑定的是继承 自UObject类)
+	GM->SPController->UpdatePointer.BindRaw(GameHUDWidget->PointerWidget.Get(), &SSlAiPointerWidget::UpdatePointer);
 }

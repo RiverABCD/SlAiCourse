@@ -18,6 +18,11 @@ void ASlAiPlayerController::Tick(float DeltaSeconds)
 
 	//临时代码
 	ChangePreUpperType(EUpperBody::None);
+
+	static float TestPointer = 1.f;
+	TestPointer = FMath::FInterpTo(TestPointer, 0, DeltaSeconds, 1.f);
+	UpdatePointer.ExecuteIfBound(true, FMath::Clamp(TestPointer, 0.f, 1.f));
+
 }
 
 void ASlAiPlayerController::BeginPlay()

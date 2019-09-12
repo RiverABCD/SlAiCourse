@@ -58,6 +58,9 @@ struct SLAICOURSE_API FSlAiGameStyle : public FSlateWidgetStyle
 	//射线检测信息面板背景
 	UPROPERTY(EditAnywhere, Category = Info)
 		FSlateBrush RayInfoBrush;
+	//准星Brush
+	UPROPERTY(EditAnywhere, Category = Info)
+		FSlateBrush PointerBrush;
 	/*
 	* 60号字体
 	*/

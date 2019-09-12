@@ -4,8 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Widgets/SCompoundWidget.h"
-#include "SSlAiShortcutWidget.h"
-
+#include "DeclarativeSyntaxSupport.h"
 /**
  * 
  */
@@ -26,6 +25,8 @@ public:
 	TSharedPtr<class SSlAiShortcutWidget> ShortcutWidget;
 	//射线信息框
 	TSharedPtr<class SSlAiRayInfoWidget> RayInfoWidget;
+	//准星
+	TSharedPtr<class SSlAiPointerWidget> PointerWidget;
 
 
 private:
