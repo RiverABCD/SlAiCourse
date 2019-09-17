@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+#include "SlAiTypes.h"
 #include "SlAiResourceObject.generated.h"
 
 UCLASS()
@@ -16,6 +17,16 @@ public:
 	ASlAiResourceObject();
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
+	//获取物品信息
+	FText GetInfoText() const;
+#if 1
+	//获取资源类型
+	EResourceType::Type GetResourceType();
+	//获取血量百分比
+	float GetHPRange();
+	//获取伤害
+	ASlAiResourceObject* TakeObjectDamage(int Damage);
+#endif
 public:
 	//资源ID
 	int ResourceIndex;
@@ -31,6 +42,9 @@ protected:
 	UStaticMeshComponent* BaseMesh;
 	//保存资源地址，用于随机刷资源
 	TArray<FString> ResourcePath;
-	
+	//血量
+	int HP;
+	//基础血量
+	int BaseHP;
 	
 };

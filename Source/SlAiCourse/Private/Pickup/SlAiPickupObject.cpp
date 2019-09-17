@@ -2,6 +2,9 @@
 
 #include "SlAiPickupObject.h"
 #include "Components/StaticMeshComponent.h"
+#include "SlAiTypes.h"
+#include "SlAiDataHandle.h"
+#include "Engine/GameEngine.h"
 
 // Sets default values
 ASlAiPickupObject::ASlAiPickupObject()
@@ -33,5 +36,25 @@ void ASlAiPickupObject::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+}
+
+FText ASlAiPickupObject::GetInfoText() const
+{
+	TSharedPtr<ObjectAttribute> ObjectAttr = *SlAiDataHandle::Get()->ObjectAttrMap.Find(ObjectIndex);
+	switch (SlAiDataHandle::Get()->CurrentCulture)
+	{
+	case ECultureTeam::EN:
+		return ObjectAttr->EN;
+	case ECultureTeam::ZH:
+		return ObjectAttr->ZH;
+	}
+	return ObjectAttr->ZH;
+}
+
+int ASlAiPickupObject::TakePickup()
+{
+	BaseMesh->SetCollisionResponseToAllChannels(ECR_Ignore);
+	if (GetWorld()) GetWorld()->DestroyActor(this);
+	return ObjectIndex;
 }
 

@@ -2,6 +2,8 @@
 
 #include "SlAiResourceObject.h"
 #include "Components/StaticMeshComponent.h"
+#include "Engine/GameEngine.h"
+#include "SlAiDataHandle.h"
 
 // Sets default values
 ASlAiResourceObject::ASlAiResourceObject()
@@ -22,6 +24,7 @@ ASlAiResourceObject::ASlAiResourceObject()
 	//BaseMesh->bGenerateOverlapEvents = true;
 	BaseMesh->SetGenerateOverlapEvents(true);
 	//设置在下一帧不销毁
+
 	
 }
 
@@ -29,7 +32,11 @@ ASlAiResourceObject::ASlAiResourceObject()
 void ASlAiResourceObject::BeginPlay()
 {
 	Super::BeginPlay();
-	
+	//这段有问题
+	/*
+	TSharedPtr<ResourceAttribute> ResourceAttr = *SlAiDataHandle::Get()->ResourceAttrMap.Find(ResourceIndex);
+	HP = BaseHP = ResourceAttr->HP;
+	*/
 }
 
 // Called every frame
@@ -37,5 +44,45 @@ void ASlAiResourceObject::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+}
+
+FText ASlAiResourceObject::GetInfoText() const
+{
+	TSharedPtr<ResourceAttribute> ResourceAttr = *SlAiDataHandle::Get()->ResourceAttrMap.Find(ResourceIndex);
+	switch (SlAiDataHandle::Get()->CurrentCulture)
+	{
+	case ECultureTeam::EN:
+		return ResourceAttr->EN;
+		break;
+	case ECultureTeam::ZH:
+		return ResourceAttr->ZH;
+		break;
+	}
+	return ResourceAttr->ZH;
+}
+
+
+EResourceType::Type ASlAiResourceObject::GetResourceType()
+{
+	TSharedPtr<ResourceAttribute> ResourceAttr = *SlAiDataHandle::Get()->ResourceAttrMap.Find(ResourceIndex);
+	HP = BaseHP = ResourceAttr->HP;
+	return ResourceAttr->ResourceType;
+}
+
+float ASlAiResourceObject::GetHPRange()
+{
+	return FMath::Clamp<float>((float)HP/(float)BaseHP,0.f,1.f);
+}
+
+ASlAiResourceObject * ASlAiResourceObject::TakeObjectDamage(int Damage)
+{
+	HP = FMath::Clamp<int>(HP - Damage, 0, BaseHP);
+	if (HP <= 0) {
+		//检测失败
+		BaseMesh->SetCollisionResponseToAllChannels(ECR_Ignore);
+		//销毁物体
+		GetWorld()->DestroyActor(this);
+	}
+	return this;
 }
 

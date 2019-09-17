@@ -57,6 +57,15 @@ private:
 
 	//修改预动作
 	void ChangePreUpperType(EUpperBody::Type RightType);
+
+	//射线检测结果
+	FHitResult RayGetHitResult(FVector TraceStart, FVector TraceEnd);
+	//射线绘制
+	void DrawRayLine(FVector StartPos, FVector EndPos, float Duration);
+	//进行射线检测
+	void RunRayCast();
+	//行为状态机
+	void StateMachine();
 private:
 
 	//左键预动作
@@ -68,4 +77,7 @@ private:
 	//是否按住左右鼠标键
 	bool IsLeftButtonDown;
 	bool IsRightButtonDown;
+
+	//检测到的资源
+	AActor* RayActor;
 };
