@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 #include "SlAiPlayerAnim.h"
 
@@ -11,11 +11,11 @@ USlAiPlayerAnim::USlAiPlayerAnim()
 
 void USlAiPlayerAnim::NativeUpdateAnimation(float DeltaSeconds)
 {
-	//³õÊ¼»¯½ÇÉ«Ö¸Õë
+	//åˆå§‹åŒ–è§’è‰²æŒ‡é’ˆ
 	InitSPCharacter();
-	//¸üĞÂÀ¶Í¼Êı¾İ
+	//æ›´æ–°è“å›¾æ•°æ®
 	UpdateParameter();
-	//¸üĞÂ¶¯×÷
+	//æ›´æ–°åŠ¨ä½œ
 	UpdateMontage();
 }
 
@@ -23,6 +23,12 @@ void USlAiPlayerAnim::ChangeDetection(bool IsOpen)
 {
 	if (!SPCharacter) return;
 	SPCharacter->ChangeHandObjectDetect(IsOpen);
+}
+
+void USlAiPlayerAnim::RenderHandObject(bool IsRender)
+{
+	if (!SPCharacter) return;
+	SPCharacter->RenderHandObject(IsRender);
 }
 
 void USlAiPlayerAnim::InitSPCharacter()
@@ -33,10 +39,10 @@ void USlAiPlayerAnim::InitSPCharacter()
 void USlAiPlayerAnim::UpdateParameter()
 {
 	if (!SPCharacter) return;
-	//ÉèÖÃËÙ¶È
+	//è®¾ç½®é€Ÿåº¦
 	Speed = SPCharacter->GetVelocity().Size();
 
-	//¶¨ÒåÉÏ°ëÉíµÄĞı×ª
+	//å®šä¹‰ä¸ŠåŠèº«çš„æ—‹è½¬
 	float SpineDir = SPCharacter->GetActorRotation().Yaw - 90.f;
 	if (SpineDir > 180.f) SpineDir -= 360.f;
 	if (SpineDir < -180.f) SpineDir += 360.f;
@@ -45,24 +51,24 @@ void USlAiPlayerAnim::UpdateParameter()
 
 void USlAiPlayerAnim::UpdateMontage()
 {
-	//Èç¹û²»´æÔÚÖ±½Ó·µ»Ø,±ÜÃâ¿ÕÖ¸Õë²úÉúÖĞ¶Ï
+	//å¦‚æœä¸å­˜åœ¨ç›´æ¥è¿”å›,é¿å…ç©ºæŒ‡é’ˆäº§ç”Ÿä¸­æ–­
 	if (!SPCharacter) return;
 
-	//Èç¹ûµ±Ç°µÄÈË³Æ×´Ì¬ºÍÕâ¸ö¶¯×÷µÄ²»Ò»ÖÂ,Ö±½Ó·µ»Ø
+	//å¦‚æœå½“å‰çš„äººç§°çŠ¶æ€å’Œè¿™ä¸ªåŠ¨ä½œçš„ä¸ä¸€è‡´,ç›´æ¥è¿”å›
 	if (SPCharacter->GameView != GameView) return;
 
-	//Èç¹ûµ±Ç°µÄ¶¯×÷Ã»ÓĞÍ£Ö¹,²»¸üĞÂ¶¯×÷
+	//å¦‚æœå½“å‰çš„åŠ¨ä½œæ²¡æœ‰åœæ­¢,ä¸æ›´æ–°åŠ¨ä½œ
 	if (!Montage_GetIsStopped(CurrentMontage)) return;
 
 	switch (SPCharacter->UpperType)
 	{
 	case EUpperBody::None:
-		//Èç¹ûÓĞÄÄ¸ö¶¯×÷ÔÚ²¥·Å
+		//å¦‚æœæœ‰å“ªä¸ªåŠ¨ä½œåœ¨æ’­æ”¾
 		if (CurrentMontage!=nullptr)
 		{
 			Montage_Stop(0);
 			CurrentMontage = nullptr;
-			//ÔÊĞíÇĞ»»ÊÓ½Ç
+			//å…è®¸åˆ‡æ¢è§†è§’
 			AllowViewChange(true);
 		}
 		break;
@@ -71,7 +77,7 @@ void USlAiPlayerAnim::UpdateMontage()
 		{
 			Montage_Play(PlayerPunchMontage);
 			CurrentMontage = PlayerPunchMontage;
-			//²»ÔÊĞíÇĞ»»ÊÓ½Ç
+			//ä¸å…è®¸åˆ‡æ¢è§†è§’
 			AllowViewChange(false);
 		}
 		break;

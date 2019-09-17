@@ -28,7 +28,6 @@ ASlAiPickupObject::ASlAiPickupObject()
 void ASlAiPickupObject::BeginPlay()
 {
 	Super::BeginPlay();
-	
 }
 
 // Called every frame

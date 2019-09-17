@@ -21,8 +21,8 @@ ASlAiResourceObject::ASlAiResourceObject()
 	BaseMesh->SetCollisionProfileName(FName("ResourceProfile"));
 
 	//开启交互检测
-	//BaseMesh->bGenerateOverlapEvents = true;
-	BaseMesh->SetGenerateOverlapEvents(true);
+	BaseMesh->bGenerateOverlapEvents = true;
+	//BaseMesh->SetGenerateOverlapEvents(true);
 	//设置在下一帧不销毁
 
 	
@@ -33,10 +33,10 @@ void ASlAiResourceObject::BeginPlay()
 {
 	Super::BeginPlay();
 	//这段有问题
-	/*
-	TSharedPtr<ResourceAttribute> ResourceAttr = *SlAiDataHandle::Get()->ResourceAttrMap.Find(ResourceIndex);
-	HP = BaseHP = ResourceAttr->HP;
-	*/
+	
+	//TSharedPtr<ResourceAttribute> ResourceAttr = *SlAiDataHandle::Get()->ResourceAttrMap.Find(ResourceIndex);
+	//HP = BaseHP = ResourceAttr->HP;
+	
 }
 
 // Called every frame
@@ -65,7 +65,6 @@ FText ASlAiResourceObject::GetInfoText() const
 EResourceType::Type ASlAiResourceObject::GetResourceType()
 {
 	TSharedPtr<ResourceAttribute> ResourceAttr = *SlAiDataHandle::Get()->ResourceAttrMap.Find(ResourceIndex);
-	HP = BaseHP = ResourceAttr->HP;
 	return ResourceAttr->ResourceType;
 }
 

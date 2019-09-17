@@ -11,6 +11,10 @@
 #include "Components/ChildActorComponent.h"
 
 #include "SlAiHandObject.h"
+
+#include "Kismet/GameplayStatics.h"
+#include "SlAiPlayerController.h"
+#include "SlAiPlayerState.h"
 #include "Animation/AnimInstance.h"
 
 // Sets default values
@@ -179,6 +183,14 @@ void ASlAiPlayerCharacter::ChangeHandObjectDetect(bool IsOpen)
 	//获取手上物品
 	ASlAiHandObject* HandObjectClass = Cast<ASlAiHandObject>(HandObject->GetChildActor());
 	if (HandObjectClass) HandObjectClass->ChangeOverlayDetect(IsOpen);
+}
+
+void ASlAiPlayerCharacter::RenderHandObject(bool IsRender)
+{
+	//如果手上物品没有
+	if (!HandObject->GetChildActor()) return;
+	//如果有
+	HandObject->GetChildActor()->SetActorHiddenInGame(!IsRender);
 }
 
 void ASlAiPlayerCharacter::MoveForward(float Value)

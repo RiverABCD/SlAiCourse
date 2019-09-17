@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
 
@@ -24,9 +24,13 @@ public:
 
 	virtual void NativeUpdateAnimation(float DeltaSeconds) override;
 
-	//¿ªÆôºÍ¹Ø±ÕÊÖÉÏÎïÆ·µÄ½»»¥¼ì²â
+	//å¼€å¯å’Œå…³é—­æ‰‹ä¸Šç‰©å“çš„äº¤äº’æ£€æµ‹
 	UFUNCTION(BlueprintCallable, Category = "SlAi")
 		void ChangeDetection(bool IsOpen);
+
+	//å¼€å¯å’Œå…³é—­æ‰‹ä¸Šç‰©å“çš„æ˜¾ç¤ºä¸å¦ï¼Œåœ¨æ¡ä¸œè¥¿æ—¶è°ƒç”¨
+	UFUNCTION(BlueprintCallable, Category = "SlAi")
+		void RenderHandObject(bool IsRender);
 public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = PlayAnim)
 		float Speed;
@@ -34,30 +38,30 @@ public:
 		FRotator SpineRotator;
 
 protected:
-	//»ñÈ¡½ÇÉ«Ö¸Õë
+	//è·å–è§’è‰²æŒ‡é’ˆ
 	void InitSPCharacter();
-	//¸üĞÂÊôĞÔ
+	//æ›´æ–°å±æ€§
 	virtual void UpdateParameter();
-	//¸üĞÂ¶¯×÷
+	//æ›´æ–°åŠ¨ä½œ
 	virtual void UpdateMontage();
-	//ĞŞ¸ÄÊÇ·ñÔÊĞíÇĞ»»ÊÓ½Ç
+	//ä¿®æ”¹æ˜¯å¦å…è®¸åˆ‡æ¢è§†è§’
 	void AllowViewChange(bool IsAllow);
 
 protected:
-	//½ÇÉ«Ö¸Õë
+	//è§’è‰²æŒ‡é’ˆ
 	class ASlAiPlayerCharacter* SPCharacter;
 
-	//ÉÏ°ëÉíµÄMontage
+	//ä¸ŠåŠèº«çš„Montage
 	UAnimMontage* PlayerHitMontage;
 	UAnimMontage* PlayerFightMontage;
 	UAnimMontage* PlayerPunchMontage;
 	UAnimMontage* PlayerEatMontage;
 	UAnimMontage* PlayerPickUpMontage;
 	
-	//±£´æµ±Ç°²¥·ÅµÄMontage
+	//ä¿å­˜å½“å‰æ’­æ”¾çš„Montage
 	UAnimMontage* CurrentMontage;
 	
-	//Ö¸¶¨×Ô¼ºµÄÔËĞĞÈË³Æ
+	//æŒ‡å®šè‡ªå·±çš„è¿è¡Œäººç§°
 	EGameViewMode::Type GameView;
 
 };
