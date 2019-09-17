@@ -34,7 +34,8 @@ public:
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
-
+	//生成凋落物
+	void CreateFlobObject();
 protected:
 	//根组件
 	USceneComponent* RootScene;

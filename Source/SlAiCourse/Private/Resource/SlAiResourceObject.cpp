@@ -4,6 +4,7 @@
 #include "Components/StaticMeshComponent.h"
 #include "Engine/GameEngine.h"
 #include "SlAiDataHandle.h"
+#include "SlAiFlobObject.h"
 
 // Sets default values
 ASlAiResourceObject::ASlAiResourceObject()
@@ -46,6 +47,27 @@ void ASlAiResourceObject::Tick(float DeltaTime)
 
 }
 
+void ASlAiResourceObject::CreateFlobObject()
+{
+	TSharedPtr<ResourceAttribute> ResourceAttr = *SlAiDataHandle::Get()->ResourceAttrMap.Find(ResourceIndex);
+	//遍历生成掉落物
+	for (TArray<TArray<int>>::TIterator It(ResourceAttr->FlobObjectInfo); It; ++It) {
+		//随机生成的数量
+		FRandomStream Stream;
+		Stream.GenerateNewSeed();
+		//生成数量 "FlobObjectInfo": [{"0":    "2_3,6"},],下面的(*It)[1], (*It)[2],(*It)[0], 对应的就是其中的"2_3,6"
+		int Num = Stream.RandRange((*It)[1], (*It)[2]);
+
+		if (GetWorld()) {
+			for (int i = 0; i < Num; ++i) {
+				//生成掉落物
+				ASlAiFlobObject* FlobObject = GetWorld()->SpawnActor<ASlAiFlobObject>(GetActorLocation() + FVector(0.f, 0.f, 20.f), FRotator::ZeroRotator);
+				FlobObject->CreateFlobObject((*It)[0]);
+			}
+		}
+	}
+}
+
 FText ASlAiResourceObject::GetInfoText() const
 {
 	TSharedPtr<ResourceAttribute> ResourceAttr = *SlAiDataHandle::Get()->ResourceAttrMap.Find(ResourceIndex);
@@ -79,6 +101,8 @@ ASlAiResourceObject * ASlAiResourceObject::TakeObjectDamage(int Damage)
 	if (HP <= 0) {
 		//检测失败
 		BaseMesh->SetCollisionResponseToAllChannels(ECR_Ignore);
+		//创建掉落物
+		CreateFlobObject();
 		//销毁物体
 		GetWorld()->DestroyActor(this);
 	}
