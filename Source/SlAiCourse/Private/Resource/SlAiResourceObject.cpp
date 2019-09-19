@@ -44,7 +44,7 @@ void ASlAiResourceObject::BeginPlay()
 void ASlAiResourceObject::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
+	
 }
 
 void ASlAiResourceObject::CreateFlobObject()
