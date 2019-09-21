@@ -10,6 +10,7 @@
 #include "Engine/GameViewportClient.h"
 #include "SSlAiRayInfoWidget.h"
 #include "SSlAiPointerWidget.h"
+#include "SSlAiPlayerStateWidget.h"
 
 BEGIN_SLATE_FUNCTION_BUILD_OPTIMIZATION
 void SSlAiGameHUDWidget::Construct(const FArguments& InArgs)
@@ -34,6 +35,11 @@ void SSlAiGameHUDWidget::Construct(const FArguments& InArgs)
 			+ SOverlay::Slot().HAlign(HAlign_Center).VAlign(VAlign_Center)
 			[
 				SAssignNew(PointerWidget,SSlAiPointerWidget)
+			]
+			//玩家状态
+			+ SOverlay::Slot().HAlign(HAlign_Left).VAlign(VAlign_Top)
+			[
+				SAssignNew(PlayerStateWidget,SSlAiPlayerStateWidget)
 			]
 		]
 	];

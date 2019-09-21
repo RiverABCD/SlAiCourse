@@ -175,7 +175,8 @@ FHitResult ASlAiPlayerController::RayGetHitResult(FVector TraceStart, FVector Tr
 	FHitResult Hit(ForceInit);
 	if (GetWorld()->LineTraceSingleByChannel(Hit,TraceStart,TraceEnd,ECollisionChannel::ECC_GameTraceChannel1,TraceParams))
 	{
-		DrawRayLine(TraceStart, TraceEnd, 5.f);
+		//画出射线
+		//DrawRayLine(TraceStart, TraceEnd, 5.f);
 	}
 	return Hit;
 }

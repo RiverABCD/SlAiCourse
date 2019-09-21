@@ -27,6 +27,8 @@ public:
 	TSharedPtr<class SSlAiRayInfoWidget> RayInfoWidget;
 	//准星
 	TSharedPtr<class SSlAiPointerWidget> PointerWidget;
+	//玩家状态指针
+	TSharedPtr<class SSlAiPlayerStateWidget> PlayerStateWidget;
 
 
 private:

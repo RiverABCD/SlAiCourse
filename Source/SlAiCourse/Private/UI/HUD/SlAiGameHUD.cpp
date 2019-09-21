@@ -14,6 +14,7 @@
 #include "SlAiPlayerState.h"
 #include "SlAiGameMode.h"
 #include "Engine/GameViewportClient.h"
+#include "SSlAiPlayerStateWidget.h"
 
 
 
@@ -40,4 +41,6 @@ void ASlAiGameHUD::BeginPlay()
 	GameHUDWidget->RayInfoWidget->RegisterRayInfoEvent.BindUObject(GM->SPState, &ASlAiPlayerState::RegisterRayInfoEvent);
 	//绑定修改准星委托(BindRaw绑定的继承纯C++类，而BindUObject则绑定的是继承 自UObject类)
 	GM->SPController->UpdatePointer.BindRaw(GameHUDWidget->PointerWidget.Get(), &SSlAiPointerWidget::UpdatePointer);
+	//绑定更新玩家状态的委托
+	GM->SPState->UpdateStateWidget.BindRaw(GameHUDWidget->PlayerStateWidget.Get(), &SSlAiPlayerStateWidget::UpdateStateWidget);
 }
