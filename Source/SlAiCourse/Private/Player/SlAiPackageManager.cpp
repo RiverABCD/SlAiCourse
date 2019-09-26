@@ -7,6 +7,9 @@ TSharedPtr<SlAiPackageManager> SlAiPackageManager::PackageInstance = NULL;
 
 SlAiPackageManager::SlAiPackageManager()
 {
+	//初始化物品和数量为0
+	ObjectIndex = 3;
+	ObjectNum = 35;
 }
 
 void SlAiPackageManager::Initialize()
