@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
 
@@ -6,6 +6,7 @@
 #include "GameFramework/GameModeBase.h"
 #include "SlAiGameMode.generated.h"
 
+DECLARE_DELEGATE(FInitPackageManager)
 /**
  * 
  */
@@ -16,10 +17,10 @@ class SLAICOURSE_API ASlAiGameMode : public AGameModeBase
 	
 public:
 	ASlAiGameMode();
-	//ÖØĞ´Ö¡º¯Êı
+	//é‡å†™å¸§å‡½æ•°
 	virtual void Tick(float DeltaSeconds) override;
 
-	//×é¼ş¸³Öµ,¸øGameHUDµ÷ÓÃ,±ÜÃâ¿ÕÒıÓÃÒıÆğ±ÀÀ£
+	//ç»„ä»¶èµ‹å€¼,ç»™GameHUDè°ƒç”¨,é¿å…ç©ºå¼•ç”¨å¼•èµ·å´©æºƒ
 	void InitGamePlayModule();
 public:
 	class ASlAiPlayerController* SPController;
@@ -27,9 +28,18 @@ public:
 	class ASlAiPlayerCharacter* SPCharacter;
 
 	class ASlAiPlayerState* SPState;
+	//åˆå§‹åŒ–èƒŒåŒ…ç®¡ç†å§”æ‰˜,ç»‘å®šçš„æ–¹æ³•æ˜¯PackageWidgetçš„InitPackageManageræ–¹æ³•
+	FInitPackageManager InitPackageManager;
 
 protected:
 	virtual void BeginPlay() override;
+
+	//åˆå§‹åŒ–èƒŒåŒ…ç®¡ç†ç±»
+	void InitializePackage();
 	
+private:
+
+	//çŸ³å¦å·²ç»åˆå§‹åŒ–èƒŒåŒ…
+	bool IsInitPackage;
 	
 };

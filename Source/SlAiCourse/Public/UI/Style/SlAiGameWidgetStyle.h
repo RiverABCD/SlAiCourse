@@ -39,6 +39,14 @@ struct SLAICOURSE_API FSlAiGameStyle : public FSlateWidgetStyle
 	UPROPERTY(EditAnywhere, Category = Package)
 		FSlateBrush EmptyBrush;
 
+	//背包的背景框
+	UPROPERTY(EditAnywhere, Category = Package)
+		FSlateBrush PackageBGBrush;
+
+	//合成表箭头
+	UPROPERTY(EditAnywhere, Category = Package)
+		FSlateBrush CompoundArrowBrush;
+
 	//物品的Brush
 	UPROPERTY(EditAnywhere, Category = Package)
 		FSlateBrush ObjectBrush_1;

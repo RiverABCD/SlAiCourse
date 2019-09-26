@@ -49,6 +49,8 @@ void ASlAiPlayerController::BeginPlay()
 
 	IsLeftButtonDown = false;
 	IsRightButtonDown = false;
+	//设置初始为Game状态
+	CurrentUIType = EGameUIType::Game;
 }
 
 void ASlAiPlayerController::SetupInputComponent()
@@ -64,6 +66,112 @@ void ASlAiPlayerController::SetupInputComponent()
 	//绑定鼠标滚轮事件
 	InputComponent->BindAction("ScrollUp", IE_Pressed, this, &ASlAiPlayerController::ScrollUpEvent);
 	InputComponent->BindAction("ScrollDown", IE_Pressed, this, &ASlAiPlayerController::ScrollDownEvent);
+
+	//绑定ESC键事件并且设置当暂停游戏的时候依然可以运行,bExecuteWhenPaused=true的意思就是你按ESC键游戏暂停了，再次按ESC回到游戏
+	InputComponent->BindAction("EscEvent", IE_Pressed, this, &ASlAiPlayerController::EscEvent).bExecuteWhenPaused = true;
+	//绑定背包
+	InputComponent->BindAction("PackageEvent", IE_Pressed, this, &ASlAiPlayerController::PackageEvent);
+	//聊天室
+	InputComponent->BindAction("ChatRoomEvent", IE_Pressed, this, &ASlAiPlayerController::ChatRoomEvent);
+}
+
+void ASlAiPlayerController::EscEvent()
+{
+	switch (CurrentUIType)
+	{
+	case EGameUIType::Game:
+		//设置游戏暂停
+		SetPause(true);
+		//设置输入模式为GameAndUI
+		SwitchInputMode(false);
+		//更新界面
+		ShowGameUI.ExecuteIfBound(CurrentUIType, EGameUIType::Pause);
+		//更新当前UI
+		CurrentUIType = EGameUIType::Pause;
+		//锁定输入
+		LockedInput(true);
+		break;
+	case EGameUIType::Pause:
+	case EGameUIType::Package:
+	case EGameUIType::ChatRoom:
+		//解除暂停
+		SetPause(false);
+		//设置游戏模式为游戏
+		SwitchInputMode(true);
+		//更新界面
+		ShowGameUI.ExecuteIfBound(CurrentUIType, EGameUIType::Game);
+		//更新当前UI
+		CurrentUIType = EGameUIType::Game;
+		//解开输入
+		LockedInput(false);
+		break;
+	}
+}
+
+void ASlAiPlayerController::PackageEvent()
+{
+	switch (CurrentUIType)
+	{
+	case EGameUIType::Game:
+		SwitchInputMode(false);
+		ShowGameUI.ExecuteIfBound(CurrentUIType, EGameUIType::Package);
+		CurrentUIType = EGameUIType::Package;
+		LockedInput(true);
+		break;
+	case EGameUIType::Package:
+		SwitchInputMode(true);
+		ShowGameUI.ExecuteIfBound(CurrentUIType, EGameUIType::Game);
+		CurrentUIType = EGameUIType::Game;
+		LockedInput(false);
+		break;
+	}
+}
+
+void ASlAiPlayerController::ChatRoomEvent()
+{
+	switch (CurrentUIType)
+	{
+	case EGameUIType::Game:
+		SwitchInputMode(false);
+		ShowGameUI.ExecuteIfBound(CurrentUIType, EGameUIType::ChatRoom);
+		CurrentUIType = EGameUIType::ChatRoom;
+		LockedInput(true);
+		break;
+	case EGameUIType::ChatRoom:
+		SwitchInputMode(true);
+		ShowGameUI.ExecuteIfBound(CurrentUIType, EGameUIType::Game);
+		CurrentUIType = EGameUIType::Game;
+		LockedInput(false);
+		break;
+	}
+}
+
+void ASlAiPlayerController::SwitchInputMode(bool IsGameOnly)
+{
+	//这里就是出不出现UI的鼠标跟其他输入模式，有UI则输入经过鼠标，无则直接传给玩家Player
+	if (IsGameOnly)
+	{
+		//隐藏鼠标
+		bShowMouseCursor = false;
+		//设置输入模式为OnlyGame
+		FInputModeGameOnly InputMode;
+		InputMode.SetConsumeCaptureMouseDown(true);
+		SetInputMode(InputMode);
+	}
+	else {
+		//显示鼠标
+		bShowMouseCursor = true;
+		//设置输入模式为GameAndUI
+		FInputModeGameAndUI InputMode;;
+		InputMode.SetLockMouseToViewportBehavior(EMouseLockMode::LockAlways);
+		InputMode.SetHideCursorDuringCapture(false);
+		SetInputMode(InputMode);
+	}
+}
+
+void ASlAiPlayerController::LockedInput(bool IsLocked)
+{
+	SPCharacter->IsInputLocked = IsLocked;
 }
 
 void ASlAiPlayerController::ChangeHandObject()
@@ -74,6 +182,9 @@ void ASlAiPlayerController::ChangeHandObject()
 
 void ASlAiPlayerController::ChangeView()
 {
+	//如果操作被锁住，直接返回
+	if (SPCharacter->IsInputLocked) return;
+
 	//如果不允许切换视角，直接返回
 	if (!SPCharacter->IsAllowSwitch) return;
 
@@ -90,30 +201,45 @@ void ASlAiPlayerController::ChangeView()
 
 void ASlAiPlayerController::LeftEventStart()
 {
+	//如果操作被锁住，直接返回
+	if (SPCharacter->IsInputLocked) return;
+
 	IsLeftButtonDown = true;
 	SPCharacter->UpperType = LeftUpperType;
 }
 
 void ASlAiPlayerController::LeftEventStop()
 {
+	//如果操作被锁住，直接返回
+	if (SPCharacter->IsInputLocked) return;
+
 	IsLeftButtonDown = false;
 	SPCharacter->UpperType = EUpperBody::None;
 }
 
 void ASlAiPlayerController::RightEventStart()
 {
+	//如果操作被锁住，直接返回
+	if (SPCharacter->IsInputLocked) return;
+
 	IsRightButtonDown = true;
 	SPCharacter->UpperType = RightUpperType;
 }
 
 void ASlAiPlayerController::RightEventStop()
 {
+	//如果操作被锁住，直接返回
+	if (SPCharacter->IsInputLocked) return;
+
 	IsRightButtonDown = false;
 	SPCharacter->UpperType = EUpperBody::None;
 }
 
 void ASlAiPlayerController::ScrollUpEvent()
 {
+	//如果操作被锁住，直接返回
+	if (SPCharacter->IsInputLocked) return;
+
 	//如果不允许切换，直接返回
 	if (!SPCharacter->IsAllowSwitch) return;
 
@@ -128,6 +254,9 @@ void ASlAiPlayerController::ScrollUpEvent()
 
 void ASlAiPlayerController::ScrollDownEvent()
 {
+	//如果操作被锁住，直接返回
+	if (SPCharacter->IsInputLocked) return;
+
 	//如果不允许切换，直接返回
 	if (!SPCharacter->IsAllowSwitch) return;
 
@@ -230,7 +359,7 @@ void ASlAiPlayerController::RunRayCast()
 		SPState->RayInfoText = FText();
 	}
 }
-#if 1
+
 void ASlAiPlayerController::StateMachine()
 {
 	//普通模式
@@ -276,4 +405,4 @@ void ASlAiPlayerController::StateMachine()
 		}
 	}
 }
-#endif
+

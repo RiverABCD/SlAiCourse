@@ -15,6 +15,7 @@
 #include "SlAiGameMode.h"
 #include "Engine/GameViewportClient.h"
 #include "SSlAiPlayerStateWidget.h"
+#include "SSlAiPackageWidget.h"
 
 
 
@@ -43,4 +44,8 @@ void ASlAiGameHUD::BeginPlay()
 	GM->SPController->UpdatePointer.BindRaw(GameHUDWidget->PointerWidget.Get(), &SSlAiPointerWidget::UpdatePointer);
 	//绑定更新玩家状态的委托
 	GM->SPState->UpdateStateWidget.BindRaw(GameHUDWidget->PlayerStateWidget.Get(), &SSlAiPlayerStateWidget::UpdateStateWidget);
+	//绑定显示UI委托
+	GM->SPController->ShowGameUI.BindRaw(GameHUDWidget.Get(), &SSlAiGameHUDWidget::ShowGameUI);
+	//初始化背包管理器到背包组件
+	GM->InitPackageManager.BindRaw(GameHUDWidget->PackageWidget.Get(), &SSlAiPackageWidget::InitPackageManager);
 }

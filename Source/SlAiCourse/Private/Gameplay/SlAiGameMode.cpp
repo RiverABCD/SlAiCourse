@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 #include "SlAiGameMode.h"
 #include "SlAiPlayerController.h"
@@ -14,23 +14,26 @@
 
 ASlAiGameMode::ASlAiGameMode()
 {
-	//ÔÊĞí¿ªÆôÖ¡º¯Êı
+	//å…è®¸å¼€å¯å¸§å‡½æ•°
 	PrimaryActorTick.bCanEverTick = true;
-	//Ìí¼Ó×é¼ş
+	//æ·»åŠ ç»„ä»¶
 	HUDClass = ASlAiGameHUD::StaticClass();
 	PlayerControllerClass = ASlAiPlayerController::StaticClass();
 	PlayerStateClass = ASlAiPlayerState::StaticClass();
 	DefaultPawnClass = ASlAiPlayerCharacter::StaticClass();
+
+	//å¼€å§‹æ²¡æœ‰åˆå§‹åŒ–
+	IsInitPackage = false;
 }
 
 void ASlAiGameMode::Tick(float DeltaSeconds)
 {
-
+	InitializePackage();
 }
 
 void ASlAiGameMode::InitGamePlayModule()
 {
-	//Ìí¼ÓÒıÓÃ
+	//æ·»åŠ å¼•ç”¨
 	SPController = Cast<ASlAiPlayerController>(UGameplayStatics::GetPlayerController(GetWorld(), 0));
 	SPCharacter = Cast<ASlAiPlayerCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
 	SPState = Cast<ASlAiPlayerState>(SPController->PlayerState);
@@ -38,8 +41,17 @@ void ASlAiGameMode::InitGamePlayModule()
 
 void ASlAiGameMode::BeginPlay()
 {
-	//³õÊ¼»¯ÓÎÏ·Êı¾İ
+	//åˆå§‹åŒ–æ¸¸æˆæ•°æ®
 	SlAiDataHandle::Get()->InitializeGameData();
 	
 	if(!SPController) InitGamePlayModule();
+}
+
+void ASlAiGameMode::InitializePackage()
+{
+	if (IsInitPackage) return;
+	//å«PackageWidgetåˆå§‹åŒ–èƒŒåŒ…ç®¡ç†å™¨
+	InitPackageManager.ExecuteIfBound();
+
+	IsInitPackage = true;
 }

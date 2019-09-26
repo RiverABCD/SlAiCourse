@@ -102,13 +102,15 @@ ASlAiPlayerCharacter::ASlAiPlayerCharacter()
 	BaseTurnRate = 45.f;
 
 	//设置初始速度为150.f
-	GetCharacterMovement()->MaxWalkSpeed = 450.f;
+	GetCharacterMovement()->MaxWalkSpeed = 350.f;
 	//初始化为第三人称
 	GameView = EGameViewMode::Third;
 	//上半身动作初始化为无动作
 	UpperType = EUpperBody::None;
 	//初始化为允许切换视角
 	IsAllowSwitch = true;
+	//初始输入不锁住
+	IsInputLocked = false;
 }
 
 // Called when the game starts or when spawned
@@ -195,6 +197,9 @@ void ASlAiPlayerCharacter::RenderHandObject(bool IsRender)
 
 void ASlAiPlayerCharacter::MoveForward(float Value)
 {
+	//如果操作被锁住，直接返回
+	if (IsInputLocked) return;
+
 	if (Value != 0.f&&Controller) {
 		const FRotator Rotation = Controller->GetControlRotation();
 		FVector Direction = FRotationMatrix(Rotation).GetScaledAxis(EAxis::X);
@@ -204,6 +209,9 @@ void ASlAiPlayerCharacter::MoveForward(float Value)
 
 void ASlAiPlayerCharacter::MoveRight(float Value)
 {
+	//如果操作被锁住，直接返回
+	if (IsInputLocked) return;
+
 	if (Value != 0) {
 		const FQuat Rotation = GetActorQuat();
 		FVector Direction = FQuatRotationMatrix(Rotation).GetScaledAxis(EAxis::Y);
@@ -213,33 +221,58 @@ void ASlAiPlayerCharacter::MoveRight(float Value)
 
 void ASlAiPlayerCharacter::LookUpAtRate(float Value)
 {
+	//如果操作被锁住，直接返回
+	if (IsInputLocked) return;
+
 	AddControllerPitchInput(Value*BaseLookUpRate*GetWorld()->GetDeltaSeconds());
 }
 
 void ASlAiPlayerCharacter::Turn(float Value)
 {
+	//如果操作被锁住，直接返回
+	if (IsInputLocked) return;
+
 	AddControllerYawInput(Value);
 }
 
 void ASlAiPlayerCharacter::TurnAtRate(float Value)
 {
+	//如果操作被锁住，直接返回
+	if (IsInputLocked) return;
+
 	AddControllerYawInput(Value*BaseTurnRate*GetWorld()->GetDeltaSeconds());
 }
 
 void ASlAiPlayerCharacter::OnStartJump()
 {
-	//bPressJump = true;
+	//如果操作被锁住，直接返回
+	if (IsInputLocked) return;
+
+	bPressedJump = true;
 }
 
 void ASlAiPlayerCharacter::OnStopJump()
 {
+	//如果操作被锁住,直接返回
+	if (IsInputLocked) return;
+
+	bPressedJump = false;
+	StopJumping();
 }
 
 void ASlAiPlayerCharacter::OnStartRun()
 {
+	//如果操作被锁住,直接返回
+	if (IsInputLocked) return;
+
+	GetCharacterMovement()->MaxWalkSpeed = 575.f;
 }
 
 void ASlAiPlayerCharacter::OnStopRun()
 {
+	//如果操作被锁住,直接返回
+	if (IsInputLocked) return;
+
+	GetCharacterMovement()->MaxWalkSpeed = 350.f;
 }
 
