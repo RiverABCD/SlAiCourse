@@ -30,6 +30,8 @@ public:
 	//重写绘制函数
 	virtual int32 OnPaint(const FPaintArgs& Args, const FGeometry& AllottedGeometry, const FSlateRect& MyCullingRect, FSlateWindowElementList& OutDrawElements, int32 LayerId, const FWidgetStyle& InWidgetStyle, bool bParentEnabled) const override;
 
+	//重写鼠标点击事件
+	virtual FReply OnMouseButtonDown(const FGeometry& MyGeometry, const FPointerEvent& MouseEvent) override;
 
 private:
 	//获取MenuStyle
@@ -56,4 +58,6 @@ private:
 
 	//是否已经初始化背包管理器
 	bool IsInitPackageMana;
+
+
 };

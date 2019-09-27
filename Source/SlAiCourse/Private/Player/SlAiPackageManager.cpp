@@ -135,3 +135,32 @@ TSharedPtr<SSlAiContainerBaseWidget> SlAiPackageManager::LocateContainer(FVector
 	//最后返回空
 	return nullptr;
 }
+
+void SlAiPackageManager::LeftOption(FVector2D MousePos, FGeometry PackGeo)
+{
+	//先获取点击的容器
+	TSharedPtr<SSlAiContainerBaseWidget> ClickedContainer = LocateContainer(MousePos, PackGeo);
+	//如果容器存在,执行容器事件
+	if (ClickedContainer.IsValid())
+	{
+		ClickedContainer->LeftOperate(ObjectIndex, ObjectNum, ObjectIndex, ObjectNum);
+	}
+	//如果容器不存在并且手上物品不为空
+	if (!ClickedContainer.IsValid() && ObjectIndex != 0)
+	{
+		//把物品丢弃,待填写
+		//ThrowObject(ObjectIndex, ObjectNum);
+		//重置物品
+		ObjectIndex = ObjectNum = 0;
+	}
+}
+
+void SlAiPackageManager::RightOption(FVector2D MousePos, FGeometry PackGeo)
+{
+	//先获取点击的容器
+	TSharedPtr<SSlAiContainerBaseWidget> ClickedContainer = LocateContainer(MousePos, PackGeo);
+	//如果容器存在,执行容器事件
+	if (ClickedContainer.IsValid()) {
+		ClickedContainer->RightOperate(ObjectIndex, ObjectNum, ObjectIndex, ObjectNum);
+	}
+}

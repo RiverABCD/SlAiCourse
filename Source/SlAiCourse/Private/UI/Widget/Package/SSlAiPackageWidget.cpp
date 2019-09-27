@@ -168,3 +168,22 @@ int32 SSlAiPackageWidget::OnPaint(const FPaintArgs & Args, const FGeometry & All
 	}
 	return LayerId;
 }
+
+FReply SSlAiPackageWidget::OnMouseButtonDown(const FGeometry& MyGeometry, const FPointerEvent& MouseEvent)
+{
+	//如果背包管理器还没有初始化
+	if (!IsInitPackageMana) return FReply::Handled();
+
+	//如果是左键点击
+	if (MouseEvent.IsMouseButtonDown(EKeys::LeftMouseButton)) {
+		SlAiPackageManager::Get()->LeftOption(MousePosition, MyGeometry);
+	}
+	//如果是右击
+	if (MouseEvent.IsMouseButtonDown(EKeys::RightMouseButton)) {
+		SlAiPackageManager::Get()->RightOption(MousePosition,MyGeometry);
+	}
+	FVector2D MouseAbsoLoc = MyGeometry.AbsoluteToLocal(MouseEvent.GetScreenSpacePosition());
+	SlAiHelper::Debug(FString("MouseAbsoLocX:") + FString::SanitizeFloat(MouseAbsoLoc.X)+FString("-")+ FString("MouseAbsoLocY:") + FString::SanitizeFloat(MouseAbsoLoc.Y), 3.f);
+
+	return FReply::Handled();
+}
