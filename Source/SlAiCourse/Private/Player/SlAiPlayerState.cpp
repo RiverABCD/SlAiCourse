@@ -3,7 +3,9 @@
 #include "SlAiPlayerState.h"
 #include "STextBlock.h"
 #include "SlAiDataHandle.h"
-
+#include "SlAiPlayerController.h"
+#include "Kismet/GameplayStatics.h"
+#include "Engine/Engine.h"
 
 ASlAiPlayerState::ASlAiPlayerState()
 {
@@ -45,6 +47,15 @@ void ASlAiPlayerState::Tick(float DeltaSeconds)
 		if()
 	}*/
 }
+
+
+void ASlAiPlayerState::BeginPlay()
+{
+	Super::BeginPlay();
+	//如果控制器指针为空，添加引用
+	SPController = Cast<ASlAiPlayerController>(UGameplayStatics::GetPlayerController(GetWorld(), 0));
+}
+
 void ASlAiPlayerState::RegisterShortcutContainer(TArray<TSharedPtr<ShortcutContainer>>* ContainerList, TSharedPtr<STextBlock> ShortcutInfoTextBlock)
 {
 	for (TArray<TSharedPtr<ShortcutContainer>>::TIterator It(*ContainerList); It; ++It)
@@ -56,13 +67,13 @@ void ASlAiPlayerState::RegisterShortcutContainer(TArray<TSharedPtr<ShortcutConta
 	ShortcutInfoTextBlock->SetText(ShortcutInfoTextAttr);
 
 	//临时测试代码,设置快捷栏的物品
-	ShortcutContainerList[1]->SetObject(1)->SetObjectNum(5);
+	/*ShortcutContainerList[1]->SetObject(1)->SetObjectNum(5);
 	ShortcutContainerList[2]->SetObject(2)->SetObjectNum(15);
 	ShortcutContainerList[3]->SetObject(3)->SetObjectNum(1);
 	ShortcutContainerList[4]->SetObject(4)->SetObjectNum(35);
 	ShortcutContainerList[5]->SetObject(5)->SetObjectNum(45);
 	ShortcutContainerList[6]->SetObject(6)->SetObjectNum(55);
-	ShortcutContainerList[7]->SetObject(7)->SetObjectNum(64);
+	ShortcutContainerList[7]->SetObject(7)->SetObjectNum(64);*/
 }
 
 void ASlAiPlayerState::ChooseShortcut(bool IsPre)
@@ -148,4 +159,24 @@ FText ASlAiPlayerState::GetShortcutInfoText() const
 FText ASlAiPlayerState::GetRayInfoText() const
 {
 	return RayInfoText;
+}
+
+
+void ASlAiPlayerState::ChangeHandObject(int ShortcutID, int ObjectID, int ObjectNum)
+{
+	//更改快捷栏信息
+	ShortcutContainerList[ShortcutID]->SetObject(ObjectID)->SetObjectNum(ObjectNum);
+	//告诉controller更新一次手持物品
+	SPController->ChangeHandObject();
+}
+
+void ASlAiPlayerState::PromoteHunger()
+{
+	//只要超过500,马上设为600
+	if (Hunger + 100 >= 500.f) {
+		Hunger = 600.f;
+		return;
+	}
+	//否则只加100
+	Hunger = FMath::Clamp<float>(Hunger + 100.f, 0, 600.f);
 }

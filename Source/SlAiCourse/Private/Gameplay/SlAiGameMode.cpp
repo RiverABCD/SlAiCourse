@@ -11,6 +11,7 @@
 
 #include "SlAiGameInstance.h"
 #include "Kismet/GameplayStatics.h"
+#include "SlAiPackageManager.h"
 
 ASlAiGameMode::ASlAiGameMode()
 {
@@ -52,6 +53,9 @@ void ASlAiGameMode::InitializePackage()
 	if (IsInitPackage) return;
 	//叫PackageWidget初始化背包管理器
 	InitPackageManager.ExecuteIfBound();
-
+	//绑定丢弃物品委托
+	SlAiPackageManager::Get()->PlayerThrowObject.BindUObject(SPCharacter,&ASlAiPlayerCharacter::PlayerThrowObject);
+	//绑定修改快捷栏委托
+	SlAiPackageManager::Get()->ChangeHandObject.BindUObject(SPState, &ASlAiPlayerState::ChangeHandObject);
 	IsInitPackage = true;
 }

@@ -2,7 +2,6 @@
 
 #include "SlAiPlayerAnim.h"
 
-
 USlAiPlayerAnim::USlAiPlayerAnim()
 {
 	Speed = 0.f;
@@ -29,6 +28,14 @@ void USlAiPlayerAnim::RenderHandObject(bool IsRender)
 {
 	if (!SPCharacter) return;
 	SPCharacter->RenderHandObject(IsRender);
+}
+
+void USlAiPlayerAnim::EatupEvent()
+{
+	
+	if (!SPCharacter) return;
+	//告诉角色我吃完东西了
+	SPCharacter->EatUpEvent();
 }
 
 void USlAiPlayerAnim::InitSPCharacter()

@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
 
@@ -15,61 +15,64 @@ public:
 	SlAiDataHandle();
 	static void Initialize();
 	static TSharedPtr<SlAiDataHandle> Get();
-	//ĞŞ¸ÄÖĞÓ¢ÎÄ
+	//ä¿®æ”¹ä¸­è‹±æ–‡
 	void ChangeLocalizationCulture(ECultureTeam Culture);
-	//ĞŞ¸Ä²Ëµ¥ÒôÁ¿
+	//ä¿®æ”¹èœå•éŸ³é‡
 	void ResetMenuVolume(float MusicVol, float SoundVol);
-	//ÓÎÏ·Êı¾İ³õÊ¼»¯
+	//æ¸¸æˆæ•°æ®åˆå§‹åŒ–
 	void InitializeGameData();
 
 public:
-	//ÓïÑÔ
+	//è¯­è¨€
 	ECultureTeam CurrentCulture;
-	//ÒôÁ¿
+	//éŸ³é‡
 	float MusicVolume;
 	float SoundVolume;
-	//´æµµÊı¾İ
+	//å­˜æ¡£æ•°æ®
 	TArray<FString> RecordDataList;
-	//´æµµÃû
+	//å­˜æ¡£å
 	FString RecordName;
-	//ÎïÆ·ÊôĞÔÍ¼
+	//ç‰©å“å±æ€§å›¾
 	TMap<int, TSharedPtr<ObjectAttribute>> ObjectAttrMap;
-	//ÎïÆ·ÌùÍ¼×ÊÔ´Êı×é
+	//ç‰©å“è´´å›¾èµ„æºæ•°ç»„
 	TArray<const FSlateBrush*> ObjectBrushList;
-	//×ÊÔ´ÊôĞÔÍ¼
+	//èµ„æºå±æ€§å›¾
 	TMap<int, TSharedPtr<ResourceAttribute>> ResourceAttrMap;
+	//åˆæˆè¡¨å›¾
+	TArray<TSharedPtr<CompoundTable>> CompoundTableMap;
+
 private:
-	//´´½¨µ¥Àı
+	//åˆ›å»ºå•ä¾‹
 	static TSharedRef<SlAiDataHandle> Create();
-	//¸ù¾İEnumÀàĞÍ»ñÈ¡×Ö·û´®
+	//æ ¹æ®Enumç±»å‹è·å–å­—ç¬¦ä¸²
 	template <typename TEnum>
 	FString GetEnumValueAsString(const FString& name,TEnum Value);
-	//¸ù¾İ×Ö·û´®»ñÈ¡EnumÖµ
+	//æ ¹æ®å­—ç¬¦ä¸²è·å–Enumå€¼
 	template <typename TEnum>
 	TEnum GetEnumValueFromString(const FString& name, FString Value);
 
-	//³õÊ¼»¯´æµµÊı¾İ
+	//åˆå§‹åŒ–å­˜æ¡£æ•°æ®
 	void InitRecordData();
-	//³õÊ¼»¯MenuÉùÒôÊı¾İ
+	//åˆå§‹åŒ–Menuå£°éŸ³æ•°æ®
 	void InitializedMenuAudio();
-	//³õÊ¼»¯ÎïÆ·ÊôĞÔÍ¼
+	//åˆå§‹åŒ–ç‰©å“å±æ€§å›¾
 	void InitObjectAttr();
-	//³õÊ¼»¯×ÊÔ´ÊôĞÔÍ¼
+	//åˆå§‹åŒ–èµ„æºå±æ€§å›¾
 	void InitResourceAttrMap();
-	//³õÊ¼»¯ºÏ³É±íÍ¼
-	//void InitCompoundTableMap();
-	//³õÊ¼»¯GameÉùÒôÊı¾İ
+	//åˆå§‹åŒ–åˆæˆè¡¨å›¾
+	void InitCompoundTableMap();
+	//åˆå§‹åŒ–Gameå£°éŸ³æ•°æ®
 	//void InitializeGameAudio();
 
 private:
 	static TSharedPtr<SlAiDataHandle> DataInstance;
-	//±£´æMenuµÄÉùÒô
+	//ä¿å­˜Menuçš„å£°éŸ³
 	TMap<FString, TArray<USoundCue*>> MenuAudioResource;
-	//»ñÈ¡MenuStyle,ÀïÃæ´æ·ÅÓĞÉùÒôÎÄ¼ş
+	//è·å–MenuStyle,é‡Œé¢å­˜æ”¾æœ‰å£°éŸ³æ–‡ä»¶
 	const struct FSlAiMenuStyle* MenuStyle;
-	//»ñÈ¡GameStyle
+	//è·å–GameStyle
 	const struct FSlAiGameStyle* GameStyle;
-	//ÒôÀÖ×é¼ş
+	//éŸ³ä¹ç»„ä»¶
 	class USoundMix* SlAiSoundMix;
 	class USoundClass* SlAiMusicClass;
 	USoundClass* SlAiSoundClass;

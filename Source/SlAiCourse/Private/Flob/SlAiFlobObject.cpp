@@ -84,10 +84,10 @@ void ASlAiFlobObject::Tick(float DeltaTime)
 		if (FVector::Distance(GetActorLocation(), SPCharacter->GetActorLocation() + FVector(0.f, 0.f, 40.f)) < 10.f)
 		{
 			//判断玩家背包是否有空间
-			if (true)
+			if (SPCharacter->IsPackageFree(ObjectIndex))
 			{
 				//添加对应的物品到背包
-
+				SPCharacter->AddPackageObject(ObjectIndex);
 				//销毁自己
 				DestroyEvent();
 			}
@@ -137,7 +137,7 @@ void ASlAiFlobObject::DetectPlayer()
 				//赋值
 				SPCharacter = Cast<ASlAiPlayerCharacter>(It->GetActor());
 				//如果背包有空间，后面再添加函数
-				if (true)
+				if (SPCharacter->IsPackageFree(ObjectIndex))
 				{
 					//停止检测
 					GetWorld()->GetTimerManager().PauseTimer(DetectTimer);
@@ -178,5 +178,28 @@ void ASlAiFlobObject::CreateFlobObject(int ObjectID)
 	FRotator ForceRot = FRotator(0.f, DirYaw, 0.f);
 	//添加力
 	BoxCollision->AddForce((FVector(0.f, 0.f, 4.f) + ForceRot.Vector())*100000.f);
+}
+
+void ASlAiFlobObject::ThrowFlobObject(int ObjectID, float DirYaw)
+{
+	//指定ID
+	ObjectIndex = ObjectID;
+
+	//渲染贴图
+	RenderTexture();
+
+	//随机方向添加力
+	FRandomStream Stream;
+
+	//产生新的随机种子
+	Stream.GenerateNewSeed();
+
+	//添加偏移方向
+	DirYaw += Stream.RandRange(-30, 30);
+
+	FRotator ForceRot = FRotator(0.f, DirYaw, 0.f);
+
+	//添加力
+	BoxCollision->AddForce((FVector(0.f, 0.f, 2.f) + ForceRot.Vector()) * 120000.f);
 }
 

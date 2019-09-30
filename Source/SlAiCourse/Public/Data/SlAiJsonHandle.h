@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
 
@@ -14,46 +14,49 @@ class SLAICOURSE_API SlAiJsonHandle
 public:
 	SlAiJsonHandle();
 
-	//½âÎö´æµµ·½·¨
+	//è§£æå­˜æ¡£æ–¹æ³•
 	void RecordDataJsonRead(FString& Culture, float& MusicVolume, float& SoundVolume, TArray<FString>& RecordDataList);
-	//ĞŞ¸Ä´æµµ
+	//ä¿®æ”¹å­˜æ¡£
 	void UpdateRecordData(FString Culture, float MusicVolume, float SoundVolume, TArray<FString>* RecordDataList);
 
-	//½âÎöÎïÆ·ÊôĞÔ
+	//è§£æç‰©å“å±æ€§
 	void ObjectAttrJsonRead(TMap<int, TSharedPtr<ObjectAttribute>>& ObjectAttrMap);
 
-	//½âÎö×ÊÔ´ÊôĞÔº¯Êı
+	//è§£æèµ„æºå±æ€§å‡½æ•°
 	void ResourceAttrJsonRead(TMap<int, TSharedPtr<ResourceAttribute>>& ResourceAttrMap);
 
+	//è§£æåˆæˆè¡¨
+	void CompoundTableJsonRead(TArray<TSharedPtr<CompoundTable>>& CompoundTableMap);
+
 private:
-	//¶ÁÈ¡JsonÎÄ¼şµ½×Ö·û´®
+	//è¯»å–Jsonæ–‡ä»¶åˆ°å­—ç¬¦ä¸²
 	bool LoadStringFromFile(const FString& FileName, const FString& RelaPath, FString& ResultString);
 
-	//FJsonObject×ª»»ÎªJson¸ñÊ½µÄ×Ö·û´®
+	//FJsonObjectè½¬æ¢ä¸ºJsonæ ¼å¼çš„å­—ç¬¦ä¸²
 	bool GetFStringInJsonData(const TSharedPtr<FJsonObject>& JsonObj, FString& JsonStr);
 
-	//±£´æ×Ö·û´®µ½ÎÄ¼ş
+	//ä¿å­˜å­—ç¬¦ä¸²åˆ°æ–‡ä»¶
 	bool WriteFileWithJsonData(const FString& JsonStr, const FString& RelaPath, const FString& FileName);
 
-	//¶¨ÒåÒ»¸ö´Óstring×ª»»µ½ObjectTypeµÄ·½·¨
+	//å®šä¹‰ä¸€ä¸ªä»stringè½¬æ¢åˆ°ObjectTypeçš„æ–¹æ³•
 	EObjectType::Type StringToObjectType(const FString ArgStr);
 
-	//¶¨ÒåÒ»¸ö´Óstring×ª»»µ½ResourceTypeµÄ·½·¨
+	//å®šä¹‰ä¸€ä¸ªä»stringè½¬æ¢åˆ°ResourceTypeçš„æ–¹æ³•
 	EResourceType::Type StringToResourceType(const FString ArgStr);
 private:
-	//´æµµÎÄ¼şÃû
+	//å­˜æ¡£æ–‡ä»¶å
 	FString RecordDataFileName;
 
-	//ÎïÆ·ÊôĞÔÎÄ¼şÃû
+	//ç‰©å“å±æ€§æ–‡ä»¶å
 	FString ObjectAttrFileName;
 
-	//×ÊÔ´ÊôĞÔÎÄ¼şÃû
+	//èµ„æºå±æ€§æ–‡ä»¶å
 	FString ResourceAttrFileName;
 
-	//ºÏ³É±íÎÄ¼şÃû
+	//åˆæˆè¡¨æ–‡ä»¶å
 	FString CompoundTableFileName;
 
-	//Ïà¶ÔÂ·¾¶
+	//ç›¸å¯¹è·¯å¾„
 	FString RelativePath;
 };
 

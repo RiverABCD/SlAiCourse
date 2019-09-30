@@ -183,6 +183,35 @@ void SlAiJsonHandle::ResourceAttrJsonRead(TMap<int, TSharedPtr<ResourceAttribute
 	}
 }
 
+void SlAiJsonHandle::CompoundTableJsonRead(TArray<TSharedPtr<CompoundTable>>& CompoundTableMap)
+{
+	FString JsonValue;
+	LoadStringFromFile(CompoundTableFileName, RelativePath, JsonValue);
+
+	TArray<TSharedPtr<FJsonValue>> JsonParsed;
+	TSharedRef<TJsonReader<TCHAR>> JsonReader = TJsonReaderFactory<TCHAR>::Create(JsonValue);
+
+	if (FJsonSerializer::Deserialize(JsonReader, JsonParsed))
+	{
+		for (int i = 0; i < JsonParsed.Num(); ++i)
+		{
+			TArray<TSharedPtr<FJsonValue>> ObjectArrt = JsonParsed[i]->AsObject()->GetArrayField(FString::FromInt(i));
+			TArray<int> CompoundTableArr;
+
+			for (int j = 0; j < 10; ++j)
+			{
+				CompoundTableArr.Add(ObjectArrt[j]->AsObject()->GetIntegerField(FString::FromInt(j)));
+			}
+
+			TSharedPtr<CompoundTable> NewTable = MakeShareable(new CompoundTable(&CompoundTableArr));
+			CompoundTableMap.Add(NewTable);
+		}
+	}
+	else {
+		SlAiHelper::Debug(FString("Deserialize Failed"));
+	}
+}
+
 bool SlAiJsonHandle::LoadStringFromFile(const FString & FileName, const FString & RelaPath, FString & ResultString)
 {
 	if (!FileName.IsEmpty()) {

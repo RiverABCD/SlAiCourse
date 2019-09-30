@@ -16,6 +16,8 @@
 #include "SlAiPlayerController.h"
 #include "SlAiPlayerState.h"
 #include "Animation/AnimInstance.h"
+#include "SlAiFlobObject.h"
+#include "SlAiPackageManager.h"
 
 // Sets default values
 ASlAiPlayerCharacter::ASlAiPlayerCharacter()
@@ -117,6 +119,9 @@ ASlAiPlayerCharacter::ASlAiPlayerCharacter()
 void ASlAiPlayerCharacter::BeginPlay()
 {
 	Super::BeginPlay();
+
+	//如果控制器指针为空,添加引用
+	SPController = Cast<ASlAiPlayerController>(UGameplayStatics::GetPlayerController(GetWorld(), 0));
 	//把手持物品组件绑定到第三人称模型右手插槽上
 	HandObject->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetNotIncludingScale, FName("RHSocket"));
 	//添加Actor到HandObject
@@ -193,6 +198,42 @@ void ASlAiPlayerCharacter::RenderHandObject(bool IsRender)
 	if (!HandObject->GetChildActor()) return;
 	//如果有
 	HandObject->GetChildActor()->SetActorHiddenInGame(!IsRender);
+}
+
+void ASlAiPlayerCharacter::PlayerThrowObject(int ObjectID, int Num)
+{
+	if (GetWorld()) {
+		for (int i = 0; i < Num; ++i) {
+			//生成掉落资源
+			ASlAiFlobObject* FlobObject = GetWorld()->SpawnActor<ASlAiFlobObject>(GetActorLocation() + FVector(0.f, 0.f, 50.f), FRotator::ZeroRotator);
+			//以丢弃方式生成掉落物
+			FlobObject->ThrowFlobObject(ObjectID, GetActorRotation().Yaw);
+		}
+
+	}
+}
+
+bool ASlAiPlayerCharacter::IsPackageFree(int ObjectID)
+{
+	return SlAiPackageManager::Get()->SearchFreeSpace(ObjectID);
+}
+
+void ASlAiPlayerCharacter::AddPackageObject(int ObjectID)
+{
+	SlAiPackageManager::Get()->AddObject(ObjectID);
+}
+
+void ASlAiPlayerCharacter::EatUpEvent()
+{
+	//如果玩家用户状态为空,直接返回
+	if (!SPController->SPState) return;
+	//告诉背包哪个快捷栏吃了东西，如果成功吃掉东西
+	if (SlAiPackageManager::Get()->EatUpEvent(SPController->SPState->CurrentShortcutIndex))
+	{
+		//告诉玩家状态类提升饥饿值
+		SPController->SPState->PromoteHunger();
+	}
+	
 }
 
 void ASlAiPlayerCharacter::MoveForward(float Value)

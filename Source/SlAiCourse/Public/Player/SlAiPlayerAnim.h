@@ -31,6 +31,10 @@ public:
 	//开启和关闭手上物品的显示与否，在捡东西时调用
 	UFUNCTION(BlueprintCallable, Category = "SlAi")
 		void RenderHandObject(bool IsRender);
+
+	//吃完东西时调用
+	UFUNCTION(BlueprintCallable, Category = PlayAnim)
+		void EatupEvent();
 public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = PlayAnim)
 		float Speed;

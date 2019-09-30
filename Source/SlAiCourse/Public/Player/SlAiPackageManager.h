@@ -30,11 +30,24 @@ public:
 	//右键事件,参数是鼠标位置和PackageWidget的Geometry
 	void RightOption(FVector2D MousePos, FGeometry PackGeo);
 
+	//是否有插入物品的空间,提供给外部访问
+	bool SearchFreeSpace(int ObjectID);
+
+	//添加物品到背包
+	void AddObject(int ObjectID);
+	//吃东西,传入快捷栏的ID,传回是否成功吃掉
+	bool EatUpEvent(int ShortcutID);
+
 public:
 	//鼠标物品ID
 	int ObjectIndex;
 	//鼠标物品数量
 	int ObjectNum;
+
+	//丢弃物品委托,绑定的方法是PlayerState的PlayerThrowObject
+	FThrowObject PlayerThrowObject;
+	//修改快捷栏信息委托
+	FPackShortChange ChangeHandObject;
 
 private:
 	//创建实例方法
@@ -42,6 +55,21 @@ private:
 
 	//获取鼠标指向的容器
 	TSharedPtr<SSlAiContainerBaseWidget> LocateContainer(FVector2D MousePos, FGeometry PackGeo);
+
+	//委托所绑定的函数
+	//丢弃物品事件
+	void ThrowObject(int ObjectID, int Num);
+	//合成提取事件
+	void CompoundOutput(int ObjectID, int Num);
+	//合成输入事件
+	void CompoundInput();
+	//快捷栏变换事件
+	void PackShortChange(int ShortcutID, int ObjectID, int ObjectNum);
+	//获取是否可以叠加
+	bool Multiplyable(int ObjectID);
+	//是否有插入物品的空间,每次只会插入一个,返回可以插入的那个容器
+	bool SearchFreeSpace(int ObjectID, TSharedPtr<SSlAiContainerBaseWidget>& FreeContainer);
+
 private:
 	//单例私有指针
 	static TSharedPtr<SlAiPackageManager> PackageInstance;

@@ -20,4 +20,10 @@ public:
 
 	/** Constructs this widget with InArgs */
 	void Construct(const FArguments& InArgs);
+
+	//左键点击操作
+	virtual void LeftOperate(int InputID, int InputNum, int& OutputID, int& OutputNum);
+
+	//右键点击操作
+	virtual void RightOperate(int InputID, int InputNum, int& OutputID, int& OutputNum);
 };

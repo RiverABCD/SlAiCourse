@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 #include "SlAiDataHandle.h"
 #include "Internationalization.h"
@@ -18,9 +18,9 @@ TSharedPtr<SlAiDataHandle> SlAiDataHandle::DataInstance = NULL;
 
 SlAiDataHandle::SlAiDataHandle()
 {
-	//³õÊ¼»¯´æµµ
+	//åˆå§‹åŒ–å­˜æ¡£
 	InitRecordData();
-	//³õÊ¼»¯ÒôÀÖÊı¾İ
+	//åˆå§‹åŒ–éŸ³ä¹æ•°æ®
 	InitializedMenuAudio();
 }
 
@@ -54,9 +54,9 @@ void SlAiDataHandle::ChangeLocalizationCulture(ECultureTeam Culture)
 		FInternationalization::Get().SetCurrentCulture(TEXT("zh"));
 		break;
 	}
-	//¸³Öµ
+	//èµ‹å€¼
 	CurrentCulture = Culture;
-	//¸üĞÂ´æµµÊı¾İ
+	//æ›´æ–°å­˜æ¡£æ•°æ®
 	SlAiSingleton<SlAiJsonHandle>::Get()->UpdateRecordData(GetEnumValueAsString<ECultureTeam>(FString("ECultureTeam"), CurrentCulture), MusicVolume, SoundVolume, &RecordDataList);
 }
 
@@ -65,33 +65,33 @@ void SlAiDataHandle::ResetMenuVolume(float MusicVol, float SoundVol)
 	if (MusicVol > 0)
 	{
 		MusicVolume = MusicVol;
-		//Ê¹ÓÃ»ìÒôÆ÷À´ÉèÖÃ
+		//ä½¿ç”¨æ··éŸ³å™¨æ¥è®¾ç½®
 		//AudioDevice->SetSoundMixClassOverride(SlAiSoundMix, SlAiMusicClass, MusicVolume, 1.f, 0.2f, false);
-		//Ñ­»·ÉèÖÃ±³¾°ÒôÁ¿
+		//å¾ªç¯è®¾ç½®èƒŒæ™¯éŸ³é‡
 		for (TArray<USoundCue*>::TIterator It(MenuAudioResource.Find(FString("Music"))->CreateIterator()); It; ++It)
 		{
-			//ÉèÖÃÒôÁ¿
+			//è®¾ç½®éŸ³é‡
 			(*It)->VolumeMultiplier = MusicVolume;
 		}
 	}
 	if (SoundVol > 0)
 	{
 		SoundVolume = SoundVol;
-		//Ê¹ÓÃ»ìÒôÆ÷À´ÉèÖÃ
+		//ä½¿ç”¨æ··éŸ³å™¨æ¥è®¾ç½®
 		//AudioDevice->SetSoundMixClassOverride(SlAiSoundMix, SlAiMusicClass, MusicVolume, 1.f, 0.2f, false);
 		for (TArray<USoundCue*>::TIterator It(MenuAudioResource.Find(FString("Sound"))->CreateIterator()); It; ++It)
 		{
-			//ÉèÖÃÒôÁ¿
+			//è®¾ç½®éŸ³é‡
 			(*It)->VolumeMultiplier = SoundVolume;
 		}
 	}
-	//¸üĞÂ´æµµÊı¾İ
+	//æ›´æ–°å­˜æ¡£æ•°æ®
 	SlAiSingleton<SlAiJsonHandle>::Get()->UpdateRecordData(GetEnumValueAsString<ECultureTeam>(FString("ECultureTeam"), CurrentCulture), MusicVolume, SoundVolume, &RecordDataList);
 
 }
 
 /*
-*  ANY_PACKAGE ´ÓÓÎÏ·°üÖĞÕÒµ½¶ÔÓ¦NameÏÂµÄEnum
+*  ANY_PACKAGE ä»æ¸¸æˆåŒ…ä¸­æ‰¾åˆ°å¯¹åº”Nameä¸‹çš„Enum
 */
 template<typename TEnum>
 FString SlAiDataHandle::GetEnumValueAsString(const FString& Name, TEnum Value)
@@ -116,16 +116,16 @@ TEnum SlAiDataHandle::GetEnumValueFromString(const FString& Name, FString Value)
 void SlAiDataHandle::InitRecordData()
 {
 	RecordName = FString("");
-	//»ñÈ¡ÓïÑÔ
+	//è·å–è¯­è¨€
 	FString Culture;
-	//¶ÁÈ¡´æµµÊı¾İ
+	//è¯»å–å­˜æ¡£æ•°æ®
 	SlAiSingleton<SlAiJsonHandle>::Get()->RecordDataJsonRead(Culture, MusicVolume, SoundVolume, RecordDataList);
-	//³õÊ¼»¯ÓïÑÔ
+	//åˆå§‹åŒ–è¯­è¨€
 	ChangeLocalizationCulture(GetEnumValueFromString<ECultureTeam>(FString("ECultureTeam"), Culture));
 
-	//Êä³öµ÷ÊÔ
+	//è¾“å‡ºè°ƒè¯•
 	SlAiHelper::Debug(Culture + FString("--") + FString::SanitizeFloat(MusicVolume) + FString("--") + FString::SanitizeFloat(SoundVolume), 20.f);
-	//Ñ­»·¶ÁÈ¡RecordDataList
+	//å¾ªç¯è¯»å–RecordDataList
 	for (TArray<FString>::TIterator It(RecordDataList); It; ++It) {
 		SlAiHelper::Debug(*It, 20.f);
 	}
@@ -133,10 +133,10 @@ void SlAiDataHandle::InitRecordData()
 
 void SlAiDataHandle::InitializedMenuAudio()
 {
-	//»ñÈ¡±à¼­Æ÷µÄMenuStyle
+	//è·å–ç¼–è¾‘å™¨çš„MenuStyle
 	MenuStyle = &SlAiStyle::Get().GetWidgetStyle < FSlAiMenuStyle >("BPSlAiMenuStyle");
 
-	//Ìí¼Ó×ÊÔ´ÎÄ¼şµ½×ÊÔ´ÁĞ±í
+	//æ·»åŠ èµ„æºæ–‡ä»¶åˆ°èµ„æºåˆ—è¡¨
 	TArray<USoundCue*> MusicList;
 	MusicList.Add(Cast<USoundCue>(MenuStyle->MenuBackgroundMusic.GetResourceObject()));
 
@@ -145,28 +145,30 @@ void SlAiDataHandle::InitializedMenuAudio()
 	SoundList.Add(Cast<USoundCue>(MenuStyle->ExitGameSound.GetResourceObject()));
 	SoundList.Add(Cast<USoundCue>(MenuStyle->MenuItemChangeSound.GetResourceObject()));
 
-	//Ìí¼Ó×ÊÔ´µ½Map
+	//æ·»åŠ èµ„æºåˆ°Map
 	MenuAudioResource.Add(FString("Music"), MusicList);
 	MenuAudioResource.Add(FString("Sound"), SoundList);
 
-	//ÖØÖÃÉùÒô
+	//é‡ç½®å£°éŸ³
 	ResetMenuVolume(MusicVolume, SoundVolume);
 }
 
 void SlAiDataHandle::InitializeGameData()
 {
-	//³õÊ¼»¯ÎïÆ·ÊôĞÔÍ¼
+	//åˆå§‹åŒ–ç‰©å“å±æ€§å›¾
 	InitObjectAttr();
-	//³õÊ¼»¯×ÊÔ´ÊôĞÔÍ¼
+	//åˆå§‹åŒ–èµ„æºå±æ€§å›¾
 	InitResourceAttrMap();
+	//åˆå§‹åŒ–åˆæˆè¡¨å›¾
+	InitCompoundTableMap();
 }
 
 void SlAiDataHandle::InitObjectAttr()
 {
 	SlAiSingleton<SlAiJsonHandle>::Get()->ObjectAttrJsonRead(ObjectAttrMap);
-	//»ñÈ¡GameStyle
+	//è·å–GameStyle
 	GameStyle = &SlAiStyle::Get().GetWidgetStyle<FSlAiGameStyle>("BPSlAiGameStyle");
-	//Ìî³ä±ÊË¢Êı×é
+	//å¡«å……ç¬”åˆ·æ•°ç»„
 	ObjectBrushList.Add(&GameStyle->EmptyBrush);
 	ObjectBrushList.Add(&GameStyle->ObjectBrush_1);
 	ObjectBrushList.Add(&GameStyle->ObjectBrush_2);
@@ -176,9 +178,9 @@ void SlAiDataHandle::InitObjectAttr()
 	ObjectBrushList.Add(&GameStyle->ObjectBrush_6);
 	ObjectBrushList.Add(&GameStyle->ObjectBrush_7);
 
-	////¶¯Ì¬Éú³ÉObjectµÄÍ¼Æ¬Brush,Õâ¶Î´úÂë»áÒıÆğ±¼À£
+	////åŠ¨æ€ç”ŸæˆObjectçš„å›¾ç‰‡Brush,è¿™æ®µä»£ç ä¼šå¼•èµ·å¥”æºƒ
 	//for (int i = 1; i < ObjectAttrMap.Num(); ++i) {
-	//	//²âÊÔº¯Êı,¶¯Ì¬´´½¨FSlateBrush,Ò»¶¨Òª´´½¨Ö¸Õë,·ñÔò»áÔÚº¯Êı½áÊøÊ±Ïú»Ù×ÊÔ´
+	//	//æµ‹è¯•å‡½æ•°,åŠ¨æ€åˆ›å»ºFSlateBrush,ä¸€å®šè¦åˆ›å»ºæŒ‡é’ˆ,å¦åˆ™ä¼šåœ¨å‡½æ•°ç»“æŸæ—¶é”€æ¯èµ„æº
 	//	FSlateBrush* ObjectBrush = new FSlateBrush();
 	//	ObjectBrush->ImageSize = FVector2D(80.f, 80.f);
 	//	ObjectBrush->DrawAs = ESlateBrushDrawType::Image;
@@ -198,4 +200,9 @@ void SlAiDataHandle::InitResourceAttrMap()
 		SlAiHelper::Debug((It->Value)->ToString(), 120.f);
 	}
 #endif
+}
+
+void SlAiDataHandle::InitCompoundTableMap()
+{
+	SlAiSingleton<SlAiJsonHandle>::Get()->CompoundTableJsonRead(CompoundTableMap);
 }
