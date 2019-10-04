@@ -7,9 +7,20 @@ public class SlAiCourse : ModuleRules
 	public SlAiCourse(ReadOnlyTargetRules Target) : base(Target)
 	{
 		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
-	
-		PublicDependencyModuleNames.AddRange(new string[] 
-        { "Core", "CoreUObject", "Engine", "InputCore" ,"Slate","SlateCore","Json","JsonUtilities"});
+
+        PublicDependencyModuleNames.AddRange(new string[] {
+            "Core",
+            "CoreUObject",
+            "Engine",
+            "InputCore" ,
+            "UMG",
+            "Slate",
+            "SlateCore",
+            "Json",
+            "JsonUtilities",
+            "AIModule",
+            "GameplayTasks"
+            });
 
 		PrivateDependencyModuleNames.AddRange(new string[] {  });
 

@@ -46,6 +46,9 @@ public:
 	//吃完东西调用的事件,由Anim进行调用
 	void EatUpEvent();
 
+	//获取摄像机位置
+	FVector GetCameraPos();
+
 public:
 	UPROPERTY(VisibleDefaultsOnly, Category = "SlAi")
 		class USpringArmComponent* CameraBoom;

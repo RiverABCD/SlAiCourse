@@ -15,6 +15,8 @@ class SLAICOURSE_API ASlAiEnemyShield : public ASlAiEnemyTool
 	GENERATED_BODY()
 	
 	
-	
+public:
+
+	ASlAiEnemyShield();
 	
 };
