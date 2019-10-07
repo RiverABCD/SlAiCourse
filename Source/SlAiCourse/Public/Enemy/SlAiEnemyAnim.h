@@ -8,6 +8,8 @@
 
 #include "SlAiEnemyAnim.generated.h"
 
+class UAnimSequence;
+class UAnimMontage;
 /**
  * 
  */
@@ -22,6 +24,9 @@ public:
 
 	virtual void NativeUpdateAnimation(float DeltaSeconds) override;
 
+	//设置Idle模式,返回动作时长
+	float SetIdelType(int NewType);
+
 public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = EnemyAnim)
@@ -34,4 +39,9 @@ protected:
 
 	//保存角色
 	class ASlAiEnemyCharacter* SECharacter;
+
+	//等待动作指针
+	UAnimSequence* AnimIdle_I;
+	UAnimSequence* AnimIdle_II;
+	UAnimSequence* AnimIdle_III;
 };

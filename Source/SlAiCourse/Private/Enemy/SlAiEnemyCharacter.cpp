@@ -65,6 +65,11 @@ void ASlAiEnemyCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 	
+	//获取动作引用
+	SEAnim = Cast<USlAiEnemyAnim>(GetMesh()->GetAnimInstance());
+	//控制器引用
+	SEController = Cast<ASlAiEnemyController>(GetController());
+
 	//绑定插槽
 	WeaponSocket->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetNotIncludingScale, FName("RHSocket"));
 	ShieldSocket->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetNotIncludingScale, FName("LHSocket"));
@@ -117,10 +122,34 @@ void ASlAiEnemyCharacter::UpdateHPBarRotation(FVector SPLoaction)
 	HPBar->SetWorldRotation(FRotationMatrix::MakeFromX(TargetPos - StartPos).Rotator());
 }
 
+void ASlAiEnemyCharacter::SetMaxSpeed(float Speed)
+{
+	//设置最大运动速度
+	GetCharacterMovement()->MaxWalkSpeed = Speed;
+}
+
+float ASlAiEnemyCharacter::GetIdleWaitTime()
+{
+	//如果动作引用不存在，直接返回3秒
+	if (!SEAnim) return 3.f;
+
+	//创建随机流
+	FRandomStream Stream;
+	Stream.GenerateNewSeed();
+	int IdleType = Stream.RandRange(0, 2);
+	float AnimLength = SEAnim->SetIdelType(IdleType);
+	//更新种子
+	Stream.GenerateNewSeed();
+	//产生动作次数
+	int AnimCount = Stream.RandRange(1, 4);
+	//返回全部时长
+	return AnimLength * AnimCount;
+}
+
 void ASlAiEnemyCharacter::OnSeePlayer(APawn * PlayerChar)
 {
 	if (Cast<ASlAiPlayerCharacter>(PlayerChar))
 	{
-		SlAiHelper::Debug(FString("I See Player!"));
+		//SlAiHelper::Debug(FString("I See Player!"));
 	}
 }

@@ -26,6 +26,13 @@ public:
 	//实时更新血条的朝向,由Controller调用,传入玩家位置
 	void UpdateHPBarRotation(FVector SPLoaction);
 
+	//修改移动速度
+	void SetMaxSpeed(float Speed);
+
+	//获取Idle等待时长
+	float GetIdleWaitTime();
+
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -58,5 +65,6 @@ private:
 	class ASlAiEnemyController* SEController;
 	//血量
 	float HP;
-
+	//获取动作引用
+	class USlAiEnemyAnim* SEAnim;
 };

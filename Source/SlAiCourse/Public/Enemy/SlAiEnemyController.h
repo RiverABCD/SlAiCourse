@@ -19,6 +19,10 @@ class SLAICOURSE_API ASlAiEnemyController : public AAIController
 public:
 	ASlAiEnemyController();
 
+	virtual void Possess(APawn* InPawn) override;
+
+	virtual void UnPossess() override;
+
 	virtual void Tick(float DeltaTime) override;
 
 	//获取玩家位置
@@ -33,4 +37,8 @@ private:
 	class ASlAiPlayerCharacter* SPCharacter;
 	//敌人角色指针
 	class ASlAiEnemyCharacter* SECharacter;
+	//黑板组件
+	class UBlackboardComponent* BlackboardComp;
+
+	class UBehaviorTreeComponent* BehaviorComp;
 };
