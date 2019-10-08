@@ -12,6 +12,7 @@
 #include "TimerManager.h"
 #include "SlAiTypes.h"
 #include "BehaviorTree/BehaviorTreeTypes.h"
+#include "SlAiHelper.h"
 
 
 ASlAiEnemyController::ASlAiEnemyController()
@@ -29,6 +30,9 @@ void ASlAiEnemyController::BeginPlay()
 	if (!SPCharacter) return;
 	//如果角色没有初始化
 	if (!SECharacter) SECharacter = Cast<ASlAiEnemyCharacter>(GetPawn());
+
+	//初始设定没有锁定玩家
+	IsLockPlayer = false;
 }
 
 void ASlAiEnemyController::Tick(float DeltaTime)
@@ -108,4 +112,29 @@ FVector ASlAiEnemyController::GetPlayerLocation() const
 {
 	if (SPCharacter) return SPCharacter->GetActorLocation();
 	return FVector::ZeroVector;
+}
+
+bool ASlAiEnemyController::IsPlayerDead()
+{
+	if (SPCharacter) return SPCharacter->IsPlayerDead();
+	return false;
+}
+
+void ASlAiEnemyController::OnSeePlayer()
+{
+
+	//如果已经锁定了玩家或者玩家死亡，不再执行下面行动
+	if (IsLockPlayer || IsPlayerDead()) return;
+	//设置锁定玩家
+	IsLockPlayer = true;
+	//修改预状态为追逐
+	BlackboardComp->SetValueAsEnum("EnemyState", (uint8)EEnemyAIState::ES_Chase);
+	//修改敌人速度
+	SECharacter->SetMaxSpeed(300.f);
+}
+
+void ASlAiEnemyController::LoosePlayer()
+{
+	//设置丢失玩家的锁定
+	IsLockPlayer = false;
 }

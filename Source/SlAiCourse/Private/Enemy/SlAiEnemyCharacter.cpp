@@ -141,15 +141,15 @@ float ASlAiEnemyCharacter::GetIdleWaitTime()
 	//更新种子
 	Stream.GenerateNewSeed();
 	//产生动作次数
-	int AnimCount = Stream.RandRange(1, 4);
+	int AnimCount = Stream.RandRange(1, 3);
 	//返回全部时长
 	return AnimLength * AnimCount;
 }
 
 void ASlAiEnemyCharacter::OnSeePlayer(APawn * PlayerChar)
 {
-	if (Cast<ASlAiPlayerCharacter>(PlayerChar))
-	{
+	if (Cast<ASlAiPlayerCharacter>(PlayerChar)){
 		//SlAiHelper::Debug(FString("I See Player!"));
 	}
+	if (SEController) SEController->OnSeePlayer();
 }

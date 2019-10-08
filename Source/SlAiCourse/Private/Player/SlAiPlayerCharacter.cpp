@@ -248,6 +248,12 @@ FVector ASlAiPlayerCharacter::GetCameraPos()
 	return FirstCamera->K2_GetComponentLocation();
 }
 
+bool ASlAiPlayerCharacter::IsPlayerDead()
+{
+	if (SPController->SPState) return SPController->SPState->IsPlayerDead();
+	return false;
+}
+
 void ASlAiPlayerCharacter::MoveForward(float Value)
 {
 	//如果操作被锁住，直接返回

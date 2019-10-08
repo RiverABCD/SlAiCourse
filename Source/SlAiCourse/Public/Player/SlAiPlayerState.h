@@ -49,6 +49,9 @@ public:
 	//提升饥饿值
 	void PromoteHunger();
 
+	//判断玩家死亡
+	bool IsPlayerDead();
+
 public:
 	//当前被选中的快捷栏序号
 	int CurrentShortcutIndex;

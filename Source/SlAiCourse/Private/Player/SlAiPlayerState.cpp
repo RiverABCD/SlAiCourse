@@ -180,3 +180,8 @@ void ASlAiPlayerState::PromoteHunger()
 	//否则只加100
 	Hunger = FMath::Clamp<float>(Hunger + 100.f, 0, 600.f);
 }
+
+bool ASlAiPlayerState::IsPlayerDead()
+{
+	return HP <= 0.f;
+}
