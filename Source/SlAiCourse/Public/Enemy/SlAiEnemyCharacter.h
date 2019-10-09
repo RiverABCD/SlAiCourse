@@ -32,6 +32,9 @@ public:
 	//获取Idle等待时长
 	float GetIdleWaitTime();
 
+	//播放攻击动画,返回攻击时长
+	float PlayAttackAction(EEnemyAttackType AttackType);
+
 
 protected:
 	// Called when the game starts or when spawned

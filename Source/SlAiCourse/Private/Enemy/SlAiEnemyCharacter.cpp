@@ -146,6 +146,14 @@ float ASlAiEnemyCharacter::GetIdleWaitTime()
 	return AnimLength * AnimCount;
 }
 
+float ASlAiEnemyCharacter::PlayAttackAction(EEnemyAttackType AttackType)
+{
+	//如果动作蓝图不存在，直接返回0s;
+	if (!SEAnim) return 0.f;
+	//返回攻击时长
+	return SEAnim->PlayAttackAction(AttackType);
+}
+
 void ASlAiEnemyCharacter::OnSeePlayer(APawn * PlayerChar)
 {
 	if (Cast<ASlAiPlayerCharacter>(PlayerChar)){
