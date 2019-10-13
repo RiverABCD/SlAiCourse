@@ -52,6 +52,12 @@ public:
 	//判断玩家死亡
 	bool IsPlayerDead();
 
+	//接受伤害
+	void AcceptDamage(int DamageVal);
+
+	//播放死亡动画,返回播放时长
+	float PlayDeadAnim();
+
 public:
 	UPROPERTY(VisibleDefaultsOnly, Category = "SlAi")
 		class USpringArmComponent* CameraBoom;
@@ -107,5 +113,6 @@ private:
 	float BaseLookUpRate;
 	float BaseTurnRate;
 	
-	
+	//死亡动画资源
+	class UAnimationAsset* AnimDead;
 };

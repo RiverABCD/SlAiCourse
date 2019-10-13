@@ -185,3 +185,16 @@ bool ASlAiPlayerState::IsPlayerDead()
 {
 	return HP <= 0.f;
 }
+
+void ASlAiPlayerState::AcceptDamage(int DamageVal)
+{
+	HP = FMath::Clamp<float>(HP - DamageVal, 0.f, 500.f);
+	UpdateStateWidget.ExecuteIfBound(HP / 500.f, Hunger / 500.f);
+	//如果血值等于0但是没有死
+	if (HP == 0 && !IsDead)
+	{
+		//告诉控制器自己死了
+		if (SPController) SPController->PlayerDead();
+		IsDead = true;
+	}
+}

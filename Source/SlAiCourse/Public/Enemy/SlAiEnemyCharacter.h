@@ -8,6 +8,9 @@
 
 #include "SlAiEnemyCharacter.generated.h"
 
+
+class UAnimationAsset;
+
 UCLASS()
 class SLAICOURSE_API ASlAiEnemyCharacter : public ACharacter
 {
@@ -35,10 +38,35 @@ public:
 	//播放攻击动画,返回攻击时长
 	float PlayAttackAction(EEnemyAttackType AttackType);
 
+	//接受攻击,也可以重写APawn的TakeDamage函数,不过我嫌麻烦
+	void AcceptDamage(int DamageVal);
 
+	//播放受伤动画
+	float PlayHurtAction();
+
+	//开启防御
+	void StartDefence();
+
+	//停止防御
+	void StopDefence();
+
+	//销毁函数
+	void DestroyEvent();
+
+	//获取物品信息
+	FText GetInfoText() const;
+
+	//修改手持物品的碰撞检测是否开启
+	void ChangeWeaponDetect(bool IsOpen);
+public:
+	//资源ID
+	int ResourceIndex;
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
+
+	//生成资源掉落函数
+	void CreateFlobObject();
 
 protected:
 
@@ -70,4 +98,12 @@ private:
 	float HP;
 	//获取动作引用
 	class USlAiEnemyAnim* SEAnim;
+
+	//死亡动画资源
+	UAnimationAsset* AnimDead_I;
+	UAnimationAsset* AnimDead_II;
+
+	//死亡时间委托
+	FTimerHandle DeadHandle;
+
 };

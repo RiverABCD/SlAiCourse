@@ -30,6 +30,16 @@ public:
 	//播放攻击动画,返回动画时长
 	float PlayAttackAction(EEnemyAttackType AttackType);
 
+	//播放受伤动画返回动画时长
+	float PlayHurtAction();
+
+	//停止所有动画
+	void StopAllAction();
+
+	//开启和关闭交互动作时的碰撞检测
+	UFUNCTION(BlueprintCallable, Category = EnemyAnim)
+		void ChangeDetection(bool IsOpen);
+
 public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = EnemyAnim)
@@ -43,7 +53,10 @@ public:
 	//根骨骼权重
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = EnemyAnim)
 		float RootBoneAlpha;
-	
+	//是否在防御
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = EnemyAnim)
+		bool IsDefence;
+
 protected:
 
 	//保存角色
@@ -62,6 +75,9 @@ protected:
 
 	UAnimSequence* AnimAttackSeq_III;
 	UAnimSequence* AnimAttackSeq_IV;
+
+	//受伤动画指针
+	UAnimMontage* AnimHurt;
 
 	//动作计时器
 	float CurrentPlayTime;

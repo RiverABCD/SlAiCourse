@@ -14,7 +14,10 @@
 #include "SlAiHandHammer.h"
 #include "SlAiHandSword.h"
 
+#include "SlAiEnemyCharacter.h"
+
 #include "SlAiHelper.h"
+#include "SlAiDataHandle.h"
 
 
 // Sets default values
@@ -98,12 +101,19 @@ void ASlAiHandObject::ChangeOverlayDetect(bool IsOpen)
 
 void ASlAiHandObject::OnOverlayBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult)
 {
-	SlAiHelper::Debug(FString("OnOverlayBegin"), 3.f);
+	//SlAiHelper::Debug(FString("OnOverlayBegin"), 3.f);
+	if (Cast<ASlAiEnemyCharacter>(OtherActor))
+	{
+		//获取物品属性
+		TSharedPtr<ObjectAttribute> ObjectAttr = *SlAiDataHandle::Get()->ObjectAttrMap.Find(ObjectIndex);
+		//获取对动物的伤害值
+		Cast<ASlAiEnemyCharacter>(OtherActor)->AcceptDamage(ObjectAttr->AnimalAttack);
+	}
 }
 
 void ASlAiHandObject::OnOverlayEnd(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
 {
-	SlAiHelper::Debug(FString("OnOverlayEnd"), 3.f);
+	//SlAiHelper::Debug(FString("OnOverlayEnd"), 3.f);
 }
 
 

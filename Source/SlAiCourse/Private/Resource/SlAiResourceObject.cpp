@@ -55,7 +55,7 @@ void ASlAiResourceObject::CreateFlobObject()
 		//随机生成的数量
 		FRandomStream Stream;
 		Stream.GenerateNewSeed();
-		//生成数量 "FlobObjectInfo": [{"0":    "2_3,6"},],下面的(*It)[1], (*It)[2],(*It)[0], 对应的就是其中的"2_3,6"
+		//生成数量 "FlobObjectInfo": [{"0":    "1_3,6"},],下面的(*It)[1], (*It)[2],(*It)[0], 对应的就是其中的"1_3,6"
 		int Num = Stream.RandRange((*It)[1], (*It)[2]);
 
 		if (GetWorld()) {

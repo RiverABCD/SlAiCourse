@@ -52,6 +52,10 @@ public:
 	//判断玩家死亡
 	bool IsPlayerDead();
 
+	//接受伤害
+	void AcceptDamage(int DamageVal);
+
+
 public:
 	//当前被选中的快捷栏序号
 	int CurrentShortcutIndex;

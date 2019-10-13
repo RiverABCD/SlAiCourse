@@ -98,6 +98,9 @@ ASlAiPlayerCharacter::ASlAiPlayerCharacter()
 	//实例化手上物品
 	HandObject = CreateDefaultSubobject<UChildActorComponent>(TEXT("HandObject"));
 
+	//加载死亡动画资源
+	AnimDead = Cast<UAnimationAsset>(StaticLoadObject(UAnimationAsset::StaticClass(), NULL, *FString("AnimSequence'/Game/Res/PolygonAdventure/Mannequin/Player/Animation/Player_Death.Player_Death'")));
+
 
 	//初始化参数
 	BaseLookUpRate = 45.f;
@@ -113,6 +116,8 @@ ASlAiPlayerCharacter::ASlAiPlayerCharacter()
 	IsAllowSwitch = true;
 	//初始输入不锁住
 	IsInputLocked = false;
+	//初始化没有攻击
+	IsAttack = false;
 }
 
 // Called when the game starts or when spawned
@@ -190,6 +195,8 @@ void ASlAiPlayerCharacter::ChangeHandObjectDetect(bool IsOpen)
 	//获取手上物品
 	ASlAiHandObject* HandObjectClass = Cast<ASlAiHandObject>(HandObject->GetChildActor());
 	if (HandObjectClass) HandObjectClass->ChangeOverlayDetect(IsOpen);
+	//修改攻击状态
+	IsAttack = IsOpen;
 }
 
 void ASlAiPlayerCharacter::RenderHandObject(bool IsRender)
@@ -252,6 +259,17 @@ bool ASlAiPlayerCharacter::IsPlayerDead()
 {
 	if (SPController->SPState) return SPController->SPState->IsPlayerDead();
 	return false;
+}
+
+void ASlAiPlayerCharacter::AcceptDamage(int DamageVal)
+{
+	if (SPController->SPState) SPController->SPState->AcceptDamage(DamageVal);
+}
+
+float ASlAiPlayerCharacter::PlayDeadAnim()
+{
+	GetMesh()->PlayAnimation(AnimDead, false);
+	return AnimDead->GetMaxCurrentTime();
 }
 
 void ASlAiPlayerCharacter::MoveForward(float Value)

@@ -30,7 +30,8 @@ USlAiEnemyAnim::USlAiEnemyAnim()
 	static ConstructorHelpers::FObjectFinder<UAnimSequence> StaticAnimAttackSeq_IV(TEXT("AnimSequence'/Game/Res/PolygonAdventure/Mannequin/Enemy/Animation/FightGroup/Enemy_Attack_IV.Enemy_Attack_IV'"));
 	AnimAttackSeq_IV = StaticAnimAttackSeq_IV.Object;
 
-
+	static ConstructorHelpers::FObjectFinder<UAnimMontage> StaticAnimHurt(TEXT("AnimMontage'/Game/Res/PolygonAdventure/Mannequin/Enemy/Animation/FightGroup/MonEnemy_Hurt.MonEnemy_Hurt'"));
+	AnimHurt = StaticAnimHurt.Object;
 	//初始化参数
 	Speed = 0.f;
 	IdleType = 0.f;
@@ -38,6 +39,7 @@ USlAiEnemyAnim::USlAiEnemyAnim()
 	RootBoneAlpha = 0.f;
 	CurrentPlayTime = 0.f;
 	StartYPos = 0.f;
+	IsDefence = false;
 }
 
 void USlAiEnemyAnim::NativeUpdateAnimation(float DeltaSeconds)
@@ -148,4 +150,21 @@ float USlAiEnemyAnim::PlayAttackAction(EEnemyAttackType AttackType)
 		break;
 	}
 	return 0.f;
+}
+
+float USlAiEnemyAnim::PlayHurtAction()
+{
+	if (!Montage_IsPlaying(AnimHurt)) Montage_Play(AnimHurt);
+	return AnimHurt->GetPlayLength();
+}
+
+void USlAiEnemyAnim::StopAllAction()
+{
+	//停止所有动画
+	Montage_Stop(0);
+}
+
+void USlAiEnemyAnim::ChangeDetection(bool IsOpen)
+{
+	if (SECharacter) SECharacter->ChangeWeaponDetect(IsOpen);
 }

@@ -31,6 +31,9 @@ public:
 	//对Character的手持物品进行更改,这个函数在playerstate内会调用
 	void ChangeHandObject();
 
+	//死亡
+	void PlayerDead();
+
 public:
 	//获取玩家角色
 	class ASlAiPlayerCharacter* SPCharacter;
@@ -81,6 +84,10 @@ private:
 
 	//设置锁住输入
 	void LockedInput(bool IsLocked);
+
+	//死亡时间函数
+	void DeadTimeOut();
+
 private:
 
 	//左键预动作
@@ -98,4 +105,7 @@ private:
 
 	//保存当前UI状态
 	EGameUIType::Type CurrentUIType;
+
+	//死亡时间委托
+	FTimerHandle DeadHandle;
 };

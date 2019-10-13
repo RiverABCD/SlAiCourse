@@ -4,27 +4,34 @@
 
 #include "CoreMinimal.h"
 #include "AI/SlAiEnemyTaskBase.h"
-#include "TimerManager.h"
-#include "SlAiEnemyTaskAttackPursuit.generated.h"
+#include "SlAiEnemyTaskDefence.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class SLAICOURSE_API USlAiEnemyTaskAttackPursuit : public USlAiEnemyTaskBase
+class SLAICOURSE_API USlAiEnemyTaskDefence : public USlAiEnemyTaskBase
 {
 	GENERATED_BODY()
-
-	//重写执行函数
+	
+	// 重写执行函数
 	virtual EBTNodeResult::Type ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory) override;
 	//重写任务终止函数
 	virtual EBTNodeResult::Type AbortTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory) override;
-	
+
 protected:
+
+	//动作结束后事件
 	void OnAnimationTimerDone();
+
 protected:
+
 	UPROPERTY(EditAnywhere, Category = "Blackboard")
-		struct FBlackboardKeySelector IsActionFinish;
+		struct FBlackboardKeySelector IsDefenceFinish;
+
+	UPROPERTY(EditAnywhere, Category = "Blackboard")
+		struct FBlackboardKeySelector PlayerPawn;
+
 	//攻击动作结束后的委托
 	FTimerHandle TimerHandle;
 	

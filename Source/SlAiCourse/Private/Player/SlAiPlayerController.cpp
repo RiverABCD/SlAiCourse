@@ -11,6 +11,9 @@
 #include "SlAiPickupObject.h"
 
 #include "Engine/Engine.h"
+#include "SlAiEnemyCharacter.h"
+#include "TimerManager.h"
+#include "SlAiTypes.h"
 
 
 ASlAiPlayerController::ASlAiPlayerController()
@@ -174,10 +177,38 @@ void ASlAiPlayerController::LockedInput(bool IsLocked)
 	SPCharacter->IsInputLocked = IsLocked;
 }
 
+void ASlAiPlayerController::DeadTimeOut()
+{
+	//设置游戏暂停
+	SetPause(true);
+	//设置游戏模式为混合
+	SwitchInputMode(false);
+	//更新界面
+	ShowGameUI.ExecuteIfBound(CurrentUIType, EGameUIType::Lose);
+	//更新当前UI
+	CurrentUIType = EGameUIType::Lose;
+	//锁住输入
+	LockedInput(true);
+}
+
 void ASlAiPlayerController::ChangeHandObject()
 {
 	//生成手持物品
 	SPCharacter->ChangeHandObject(ASlAiHandObject::SpawnHandObject(SPState->GetCurrentHandObjectIndex()));
+}
+
+void ASlAiPlayerController::PlayerDead()
+{
+	//转换到第三视角
+	SPCharacter->ChangeView(EGameViewMode::Third);
+	//告诉角色播放死亡动画,获得死亡时间
+	float DeadDuration = SPCharacter->PlayDeadAnim();
+	//锁住输入
+	LockedInput(true);
+	//添加事件委托
+	FTimerDelegate TimerDelegate = FTimerDelegate::CreateUObject(this, &ASlAiPlayerController::DeadTimeOut);
+	//延时跳转UI
+	GetWorld()->GetTimerManager().SetTimer(DeadHandle, TimerDelegate, DeadDuration, false);
 }
 
 void ASlAiPlayerController::ChangeView()
@@ -353,6 +384,11 @@ void ASlAiPlayerController::RunRayCast()
 		IsDetected = true;
 		SPState->RayInfoText = Cast<ASlAiResourceObject>(RayActor)->GetInfoText();
 	}
+	if (Cast<ASlAiEnemyCharacter>(RayActor))
+	{
+		IsDetected = true;
+		SPState->RayInfoText = Cast<ASlAiEnemyCharacter>(RayActor)->GetInfoText();
+	}
 	//如果什么都没有检测到就设置信息为无
 	if (!IsDetected)
 	{
@@ -364,10 +400,16 @@ void ASlAiPlayerController::StateMachine()
 {
 	//普通模式
 	ChangePreUpperType(EUpperBody::None);
-	if (!Cast<ASlAiResourceObject>(RayActor) && !Cast<ASlAiPickupObject>(RayActor))
+	if (!Cast<ASlAiResourceObject>(RayActor) && !Cast<ASlAiPickupObject>(RayActor) && !Cast<ASlAiEnemyCharacter>(RayActor))
 	{
 		//准星显示未锁定
 		UpdatePointer.ExecuteIfBound(false, 1.f);
+	}
+	//如果检测到敌人
+	if (Cast<ASlAiEnemyCharacter>(RayActor))
+	{
+		//准星锁定模式
+		UpdatePointer.ExecuteIfBound(false, 0.f);
 	}
 	//如果检测到资源
 	if (Cast<ASlAiResourceObject>(RayActor))

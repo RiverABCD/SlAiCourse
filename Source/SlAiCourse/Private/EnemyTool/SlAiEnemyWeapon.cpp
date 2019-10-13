@@ -20,3 +20,11 @@ ASlAiEnemyWeapon::ASlAiEnemyWeapon()
 	AffectCollision->SetRelativeLocation(FVector(0.f, 0.f, 158.f));
 	AffectCollision->SetRelativeScale3D(FVector(1.125f, 0.22f, 1.f));
 }
+
+void ASlAiEnemyWeapon::OnOverlayBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult)
+{
+	if (Cast<ASlAiPlayerCharacter>(OtherActor))
+	{
+		Cast<ASlAiPlayerCharacter>(OtherActor)->AcceptDamage(20);
+	}
+}
