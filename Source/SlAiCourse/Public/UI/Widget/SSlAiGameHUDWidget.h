@@ -39,7 +39,8 @@ public:
 	TSharedPtr<class SSlAiChatRoomWidget> ChatRoomWidget;
 	//背包
 	TSharedPtr<class SSlAiPackageWidget> PackageWidget;
-
+	//小地图
+	TSharedPtr<class SSlAiMiniMapWidget> MiniMapWidget;
 
 private:
 	//获取屏幕Size

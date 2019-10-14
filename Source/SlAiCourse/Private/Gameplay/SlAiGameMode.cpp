@@ -12,6 +12,7 @@
 #include "SlAiGameInstance.h"
 #include "Kismet/GameplayStatics.h"
 #include "SlAiPackageManager.h"
+#include "SlAiSceneCapture2D.h"
 
 ASlAiGameMode::ASlAiGameMode()
 {
@@ -25,11 +26,15 @@ ASlAiGameMode::ASlAiGameMode()
 
 	//开始没有初始化
 	IsInitPackage = false;
+	//小地图还没生成
+	IsCreateMiniMap = false;
 }
 
 void ASlAiGameMode::Tick(float DeltaSeconds)
-{
+{	//初始化背包
 	InitializePackage();
+	//实时更新小地图
+	InitializeMiniMapCamera();
 }
 
 void ASlAiGameMode::InitGamePlayModule()
@@ -58,4 +63,24 @@ void ASlAiGameMode::InitializePackage()
 	//绑定修改快捷栏委托
 	SlAiPackageManager::Get()->ChangeHandObject.BindUObject(SPState, &ASlAiPlayerState::ChangeHandObject);
 	IsInitPackage = true;
+}
+
+void ASlAiGameMode::InitializeMiniMapCamera()
+{
+	//如果摄像机还不存在并且世界已经存在
+	if (!IsCreateMiniMap && GetWorld())
+	{
+		//生成小地图摄像机
+		MiniMapCamera = GetWorld()->SpawnActor<ASlAiSceneCapture2D>(ASlAiSceneCapture2D::StaticClass());
+		//运行委托给MiniMapWidget传递渲染的MiniMapTex
+		RegisterMiniMap.ExecuteIfBound(MiniMapCamera->GetMiniMapTex());
+		//设置已经生成小地图
+		IsCreateMiniMap = true;
+	}
+	//如果小地图已经创建
+	if (IsCreateMiniMap)
+	{
+		//每帧更新小地图摄像机的位置和旋转
+		MiniMapCamera->UpdateTransform(SPCharacter->GetActorLocation(), SPCharacter->GetActorRotation());
+	}
 }

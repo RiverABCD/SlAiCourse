@@ -70,6 +70,9 @@ struct SLAICOURSE_API FSlAiGameStyle : public FSlateWidgetStyle
 	UPROPERTY(EditAnywhere, Category = Info)
 		FSlateBrush PointerBrush;
 
+	//–°µÿÕº±≥æ∞Õº∆¨
+	UPROPERTY(EditAnywhere, Category = MiniMap) 
+		FSlateBrush MiniMapBGBrush;
 	//ÕÊº“ Ù–‘±≥æ∞Õº
 	UPROPERTY(EditAnywhere, Category = PlayerState)
 		FSlateBrush PlayerStateBGBrush;
