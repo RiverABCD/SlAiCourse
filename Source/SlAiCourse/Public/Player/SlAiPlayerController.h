@@ -13,6 +13,8 @@
 DECLARE_DELEGATE_TwoParams(FUpdatePointer, bool, float)
 //显示UI委托
 DECLARE_DELEGATE_TwoParams(FShowGameUI,EGameUIType::Type,EGameUIType::Type)
+//修改小地图视野范围委托
+DECLARE_DELEGATE_OneParam(FUpdateMiniMapWidth,int)
 /**
  * 
  */
@@ -43,7 +45,8 @@ public:
 	FUpdatePointer UpdatePointer;
 	//显示游戏UI界面委托,绑定的方法是GameHUDWidget的ShowGameUI
 	FShowGameUI ShowGameUI;
-
+	//修改小地图视野范围委托,注册函数是SlAiSceneCapture2D的UpdateMiniMapWidth 
+	FUpdateMiniMapWidth UpdateMiniMapWidth;
 protected:
 	virtual void BeginPlay() override;
 	
@@ -85,6 +88,15 @@ private:
 	//设置锁住输入
 	void LockedInput(bool IsLocked);
 
+	//小地图缩放事件
+	void AddMapSizeStart();
+	void AddMapSizeStop();
+	void ReduceMapSizeStart();
+	void ReduceMapSizeStop();
+
+	//在Tick函数处理小地图事件
+	void TickMiniMap();
+
 	//死亡时间函数
 	void DeadTimeOut();
 
@@ -105,6 +117,9 @@ private:
 
 	//保存当前UI状态
 	EGameUIType::Type CurrentUIType;
+
+	//小地图缩放状态
+	EMiniMapSizeMode::Type MiniMapSizeMode;
 
 	//死亡时间委托
 	FTimerHandle DeadHandle;

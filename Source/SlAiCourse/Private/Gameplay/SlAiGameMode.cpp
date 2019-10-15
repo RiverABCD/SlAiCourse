@@ -74,6 +74,8 @@ void ASlAiGameMode::InitializeMiniMapCamera()
 		MiniMapCamera = GetWorld()->SpawnActor<ASlAiSceneCapture2D>(ASlAiSceneCapture2D::StaticClass());
 		//运行委托给MiniMapWidget传递渲染的MiniMapTex
 		RegisterMiniMap.ExecuteIfBound(MiniMapCamera->GetMiniMapTex());
+		//绑定修改小地图视野的委托
+		SPController->UpdateMiniMapWidth.BindUObject(MiniMapCamera, &ASlAiSceneCapture2D::UpdateMiniMapWidth);
 		//设置已经生成小地图
 		IsCreateMiniMap = true;
 	}

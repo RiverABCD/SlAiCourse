@@ -40,10 +40,11 @@ void ASlAiSceneCapture2D::UpdateTransform(FVector NormLocation, FRotator NormRot
 
 void ASlAiSceneCapture2D::UpdateMiniMapWidth(int Delta)
 {
-
+	const float PreWidth = GetCaptureComponent2D()->OrthoWidth;
+	GetCaptureComponent2D()->OrthoWidth = FMath::Clamp<float>(PreWidth + Delta, 2000.f, 4000.f);
 }
 
 float ASlAiSceneCapture2D::GetMapSize()
 {
-	return 0.f;
+	return GetCaptureComponent2D()->OrthoWidth;
 }
