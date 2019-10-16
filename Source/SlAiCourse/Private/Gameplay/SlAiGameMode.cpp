@@ -13,6 +13,8 @@
 #include "Kismet/GameplayStatics.h"
 #include "SlAiPackageManager.h"
 #include "SlAiSceneCapture2D.h"
+#include "SlAiEnemyCharacter.h"
+#include "EngineUtils.h"
 
 ASlAiGameMode::ASlAiGameMode()
 {
@@ -84,5 +86,24 @@ void ASlAiGameMode::InitializeMiniMapCamera()
 	{
 		//每帧更新小地图摄像机的位置和旋转
 		MiniMapCamera->UpdateTransform(SPCharacter->GetActorLocation(), SPCharacter->GetActorRotation());
+
+		TArray<FVector2D> EnemyPosList;
+		TArray<bool> EnemyLockList;
+		TArray<float> EnemyRotateList;
+
+		//获取场景中的敌人
+		for (TActorIterator<ASlAiEnemyCharacter> EnemyIt(GetWorld()); EnemyIt; ++EnemyIt)
+		{
+			FVector EnemyPos = FVector((*EnemyIt)->GetActorLocation().X - SPCharacter->GetActorLocation().X, (*EnemyIt)->GetActorLocation().Y - SPCharacter->GetActorLocation().Y,0.f);
+			EnemyPos = FQuat(FVector::UpVector, FMath::DegreesToRadians(-SPCharacter->GetActorRotation().Yaw - 90.f))*EnemyPos;
+			EnemyPosList.Add(FVector2D(EnemyPos.X, EnemyPos.Y));
+
+			EnemyLockList.Add((*EnemyIt)->IsLockPlayer());
+			EnemyRotateList.Add((*EnemyIt)->GetActorRotation().Yaw - SPCharacter->GetActorRotation().Yaw);
+		}
+
+		//每帧更新小地图的方向文字位置
+		UpdateMapData.ExecuteIfBound(SPCharacter->GetActorRotation(), MiniMapCamera->GetMapSize(), &EnemyPosList, &EnemyLockList, &EnemyRotateList);
+
 	}
 }

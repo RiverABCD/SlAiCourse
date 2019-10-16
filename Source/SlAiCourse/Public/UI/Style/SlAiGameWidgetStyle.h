@@ -69,7 +69,9 @@ struct SLAICOURSE_API FSlAiGameStyle : public FSlateWidgetStyle
 	//准星Brush
 	UPROPERTY(EditAnywhere, Category = Info)
 		FSlateBrush PointerBrush;
-
+	//主角图标
+	UPROPERTY(EditAnywhere, Category = MiniMap)
+		FSlateBrush PawnPointBrush;
 	//小地图背景图片
 	UPROPERTY(EditAnywhere, Category = MiniMap) 
 		FSlateBrush MiniMapBGBrush;

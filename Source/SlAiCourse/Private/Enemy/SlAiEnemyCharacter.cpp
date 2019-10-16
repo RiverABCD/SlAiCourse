@@ -281,6 +281,12 @@ void ASlAiEnemyCharacter::ChangeWeaponDetect(bool IsOpen)
 	if (WeaponClass) WeaponClass->ChangeOverlayDetect(IsOpen);
 }
 
+bool ASlAiEnemyCharacter::IsLockPlayer()
+{
+	if (SEController) return SEController->IsLockPlayer;
+	return false;
+}
+
 void ASlAiEnemyCharacter::OnSeePlayer(APawn * PlayerChar)
 {
 	if (Cast<ASlAiPlayerCharacter>(PlayerChar)){

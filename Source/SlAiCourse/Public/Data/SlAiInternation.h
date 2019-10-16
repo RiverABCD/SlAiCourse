@@ -54,3 +54,26 @@ SlAiInternation::Register(LOCTEXT("GoBack", "GoBack"));//返回
 
 //在一个域名空间内的本地化，同上define
 //SlAiInternation::Register(NSLOCTEXT("SlAiMenu", "Menu", "Menu"));
+
+#define LOCTEXT_NAMESPACE "SlAiGame"
+
+
+SlAiInternation::Register(LOCTEXT("E", "E"));//东
+SlAiInternation::Register(LOCTEXT("S", "S"));//南
+SlAiInternation::Register(LOCTEXT("W", "W"));//西
+SlAiInternation::Register(LOCTEXT("N", "N"));//北
+
+SlAiInternation::Register(LOCTEXT("Player", "Player"));//玩家
+SlAiInternation::Register(LOCTEXT("Enemy", "Enemy"));//敌人
+
+SlAiInternation::Register(LOCTEXT("EnemyDialogue", ": Fight with me !"));//敌人的对话
+SlAiInternation::Register(LOCTEXT("Send", "Send"));//发送
+
+SlAiInternation::Register(LOCTEXT("GameOption", "GameOption"));//游戏设置
+SlAiInternation::Register(LOCTEXT("SaveGame", "SaveGame"));//保存游戏
+SlAiInternation::Register(LOCTEXT("SaveCompleted", "SaveCompleted"));//保存完毕
+SlAiInternation::Register(LOCTEXT("QuitGame", "QuitGame"));//退出游戏
+SlAiInternation::Register(LOCTEXT("GoBack", "GoBack"));//返回
+
+
+#undef LOCTEXT_NAMESPACE
