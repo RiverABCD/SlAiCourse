@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
 
@@ -27,27 +27,27 @@ struct SLAICOURSE_API FSlAiGameStyle : public FSlateWidgetStyle
 	virtual const FName GetTypeName() const override { return TypeName; };
 	static const FSlAiGameStyle& GetDefault();
 
-	//Ö¸¶¨¿ì½İÀ¸µÄÈİÆ÷Í¼±ê,°Ñ¿ì½İÀ¸µÄStyleÖ¸¶¨µ½Package
+	//æŒ‡å®šå¿«æ·æ çš„å®¹å™¨å›¾æ ‡,æŠŠå¿«æ·æ çš„StyleæŒ‡å®šåˆ°Package
 	UPROPERTY(EditAnywhere, Category = Package)
 		FSlateBrush NormalContainerBrush;
 
-	//Ö¸¶¨±»Ñ¡ÔñµÄÈİÆ÷µÄBrush
+	//æŒ‡å®šè¢«é€‰æ‹©çš„å®¹å™¨çš„Brush
 	UPROPERTY(EditAnywhere, Category = Package)
 		FSlateBrush ChoosedContainerBrush;
 
-	//Ö¸¶¨Ã»ÓĞÑÕÉ«µÄBrush
+	//æŒ‡å®šæ²¡æœ‰é¢œè‰²çš„Brush
 	UPROPERTY(EditAnywhere, Category = Package)
 		FSlateBrush EmptyBrush;
 
-	//±³°üµÄ±³¾°¿ò
+	//èƒŒåŒ…çš„èƒŒæ™¯æ¡†
 	UPROPERTY(EditAnywhere, Category = Package)
 		FSlateBrush PackageBGBrush;
 
-	//ºÏ³É±í¼ıÍ·
+	//åˆæˆè¡¨ç®­å¤´
 	UPROPERTY(EditAnywhere, Category = Package)
 		FSlateBrush CompoundArrowBrush;
 
-	//ÎïÆ·µÄBrush
+	//ç‰©å“çš„Brush
 	UPROPERTY(EditAnywhere, Category = Package)
 		FSlateBrush ObjectBrush_1;
 	UPROPERTY(EditAnywhere, Category = Package)
@@ -63,101 +63,105 @@ struct SLAICOURSE_API FSlAiGameStyle : public FSlateWidgetStyle
 	UPROPERTY(EditAnywhere, Category = Package)
 		FSlateBrush ObjectBrush_7;
 
-	//ÉäÏß¼ì²âĞÅÏ¢Ãæ°å±³¾°
+	//å°„çº¿æ£€æµ‹ä¿¡æ¯é¢æ¿èƒŒæ™¯
 	UPROPERTY(EditAnywhere, Category = Info)
 		FSlateBrush RayInfoBrush;
-	//×¼ĞÇBrush
+	//å‡†æ˜ŸBrush
 	UPROPERTY(EditAnywhere, Category = Info)
 		FSlateBrush PointerBrush;
-	//Ö÷½ÇÍ¼±ê
+	//ä¸»è§’å›¾æ ‡
 	UPROPERTY(EditAnywhere, Category = MiniMap)
 		FSlateBrush PawnPointBrush;
-	//Ğ¡µØÍ¼±³¾°Í¼Æ¬
+	//å°åœ°å›¾èƒŒæ™¯å›¾ç‰‡
 	UPROPERTY(EditAnywhere, Category = MiniMap) 
 		FSlateBrush MiniMapBGBrush;
-	//Íæ¼ÒÊôĞÔ±³¾°Í¼
+	//ç©å®¶å±æ€§èƒŒæ™¯å›¾
 	UPROPERTY(EditAnywhere, Category = PlayerState)
 		FSlateBrush PlayerStateBGBrush;
 
-	//Íæ¼ÒÍ·Ïñ±³¾°Í¼Æ¬
+	//ç©å®¶å¤´åƒèƒŒæ™¯å›¾ç‰‡
 	UPROPERTY(EditAnywhere, Category = PlayerState)
 		FSlateBrush PlayerHeadBGBrush;
 
-	//ÑªÌõBrush
+	//è¡€æ¡Brush
 	UPROPERTY(EditAnywhere, Category = PlayerState)
 		FSlateBrush HPBrush;
 
-	//¼¢¶öBrush
+	//é¥¥é¥¿Brush
 	UPROPERTY(EditAnywhere, Category = PlayerState)
 		FSlateBrush HungerBrush;
 
-	//Íæ¼ÒÍ·Ïñ
+	//ç©å®¶å¤´åƒ
 	UPROPERTY(EditAnywhere, Category = PlayerState)
 		FSlateBrush PlayerHeadBrush;
 
+	//èŠå¤©å®¤èƒŒæ™¯å›¾ç‰‡
+	UPROPERTY(EditAnywhere, Category = ChatRoom)
+		FSlateBrush ChatRoomBGBrush;
+
 	/*
-	* 60ºÅ×ÖÌå
+	* 60å·å­—ä½“
 	*/
 	UPROPERTY(EditAnywhere, Category = Common)
 		FSlateFontInfo Font_60;
 
 	/*
-	* 50ºÅ×ÖÌåÓĞÂÖÀª
+	* 50å·å­—ä½“æœ‰è½®å»“
 	*/
 	UPROPERTY(EditAnywhere, Category = Common)
 		FSlateFontInfo Font_Outline_50;
 
 	/*
-	* 40ºÅ×ÖÌå
+	* 40å·å­—ä½“
 	*/
 	UPROPERTY(EditAnywhere, Category = Common)
 		FSlateFontInfo Font_40;
 
 	/*
-	* 40ºÅ×ÖÌåÓĞÂÖÀª
+	* 40å·å­—ä½“æœ‰è½®å»“
 	*/
 	UPROPERTY(EditAnywhere, Category = Common)
 		FSlateFontInfo Font_Outline_40;
 
 	/*
-	* 30ºÅ×ÖÌå
+	* 30å·å­—ä½“
 	*/
 	UPROPERTY(EditAnywhere, Category = Common)
 		FSlateFontInfo Font_30;
 
 	/*
-	* 20ºÅ×ÖÌå
+	* 20å·å­—ä½“
 	*/
 	UPROPERTY(EditAnywhere, Category = Common)
 		FSlateFontInfo Font_20;
 
 	/*
-	* 20ºÅ×ÖÌåÓĞÂÖÀª
+	* 20å·å­—ä½“æœ‰è½®å»“
 	*/
 	UPROPERTY(EditAnywhere, Category = Common)
 		FSlateFontInfo Font_Outline_20;
 
 	/*
-	* 16ºÅ×ÖÌåÓĞÂÖÀª
+	* 16å·å­—ä½“æœ‰è½®å»“
 	*/
 	UPROPERTY(EditAnywhere, Category = Common)
 		FSlateFontInfo Font_Outline_16;
 
 	/*
-	* 16ºÅ×ÖÌå
+	* 16å·å­—ä½“
 	*/
 	UPROPERTY(EditAnywhere, Category = Common)
 		FSlateFontInfo Font_16;
 
 
 	/*
-	* ºÚÉ«ÑÕÉ«
+	* é»‘è‰²é¢œè‰²
 	*/
 	UPROPERTY(EditAnywhere, Category = Common)
 		FLinearColor FontColor_White;
 
 	/*
-	* °×É«ÑÕÉ«
+	* ç™½è‰²é¢œè‰²
 	*/
 	UPROPERTY(EditAnywhere, Category = Common)
 		FLinearColor FontColor_Black;

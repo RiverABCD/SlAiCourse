@@ -106,7 +106,7 @@ void SSlAiGameHUDWidget::Tick(const FGeometry& AllottedGeometry, const double In
 	else
 	{
 		ChatShowWidget->AddMessage(NSLOCTEXT("SlAiGame", "Enemy", "Enemy"), NSLOCTEXT("SlAiGame", "EnemyDialogue", ": Fight with me !"));
-		//ChatRoomWidget->AddMessage(NSLOCTEXT("SlAiGame", "Enemy", "Enemy"), NSLOCTEXT("SlAiGame", "EnemyDialogue", ": Fight with me !"));
+		ChatRoomWidget->AddMessage(NSLOCTEXT("SlAiGame", "Enemy", "Enemy"), NSLOCTEXT("SlAiGame", "EnemyDialogue", ": Fight with me !"));
 		MessageTimeCount = 0.f;
 	}
 }
@@ -135,6 +135,8 @@ void SSlAiGameHUDWidget::ShowGameUI(EGameUIType::Type PreUI, EGameUIType::Type N
 	else {
 		//显示现在状态对应的UI
 		UIMap.Find(NextUI)->Get()->SetVisibility(EVisibility::Visible);
+		//显示现在状态对应的UI(下一期用框架写UI)
+		if (NextUI == EGameUIType::ChatRoom) ChatRoomWidget->ScrollToEnd();
 	}
 }
 
@@ -156,7 +158,7 @@ void SSlAiGameHUDWidget::InitUIMap()
 	UIMap.Add(EGameUIType::Lose, GameMenuWidget);
 
 	//绑定委托
-
+	ChatRoomWidget->PushMessage.BindRaw(ChatShowWidget.Get(), &SSlAiChatShowWidget::AddMessage);
 	//消息计时器初始设置为0
 	MessageTimeCount = 0.f;
 }
