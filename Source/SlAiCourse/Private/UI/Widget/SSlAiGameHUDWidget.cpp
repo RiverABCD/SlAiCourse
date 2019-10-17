@@ -13,6 +13,7 @@
 #include "SSlAiPointerWidget.h"
 #include "SSlAiPlayerStateWidget.h"
 #include "SSlAiMiniMapWidget.h"
+#include "SSlAiChatShowWidget.h"
 
 #include "SSlAiGameMenuWidget.h"
 #include "SSlAiChatRoomWidget.h"
@@ -52,6 +53,11 @@ void SSlAiGameHUDWidget::Construct(const FArguments& InArgs)
 			[
 				SAssignNew(MiniMapWidget,SSlAiMiniMapWidget)
 			]
+			//聊天界面
+			+ SOverlay::Slot().HAlign(HAlign_Left).VAlign(VAlign_Bottom).Padding(FMargin(20.f,0.f,0.f,15.f))
+			[
+				SAssignNew(ChatShowWidget,SSlAiChatShowWidget)
+			]
 			//黑色遮罩，放在事件界面和游戏UI中间
 			+SOverlay::Slot().HAlign(HAlign_Fill).VAlign(VAlign_Fill)
 			[
@@ -90,6 +96,20 @@ void SSlAiGameHUDWidget::Construct(const FArguments& InArgs)
 }
 
 END_SLATE_FUNCTION_BUILD_OPTIMIZATION
+
+void SSlAiGameHUDWidget::Tick(const FGeometry& AllottedGeometry, const double InCurrentTime, const float InDeltaTime)
+{
+	//每五秒插入一条信息
+	if (MessageTimeCount < 5.f) {
+		MessageTimeCount += InDeltaTime;
+	}
+	else
+	{
+		ChatShowWidget->AddMessage(NSLOCTEXT("SlAiGame", "Enemy", "Enemy"), NSLOCTEXT("SlAiGame", "EnemyDialogue", ": Fight with me !"));
+		//ChatRoomWidget->AddMessage(NSLOCTEXT("SlAiGame", "Enemy", "Enemy"), NSLOCTEXT("SlAiGame", "EnemyDialogue", ": Fight with me !"));
+		MessageTimeCount = 0.f;
+	}
+}
 
 float SSlAiGameHUDWidget::GetUIScaler() const
 {
@@ -137,4 +157,6 @@ void SSlAiGameHUDWidget::InitUIMap()
 
 	//绑定委托
 
+	//消息计时器初始设置为0
+	MessageTimeCount = 0.f;
 }

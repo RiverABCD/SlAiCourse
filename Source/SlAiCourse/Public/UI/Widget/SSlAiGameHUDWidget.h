@@ -19,6 +19,7 @@ public:
 	/** Constructs this widget with InArgs */
 	void Construct(const FArguments& InArgs);
 
+	virtual void Tick(const FGeometry& AllottedGeometry, const double InCurrentTime, const float InDeltaTime) override;
 	//绑定到UIScaler的方法
 	float GetUIScaler() const;
 
@@ -35,6 +36,8 @@ public:
 	TSharedPtr<class SSlAiPlayerStateWidget> PlayerStateWidget;
 	//游戏菜单
 	TSharedPtr<class SSlAiGameMenuWidget> GameMenuWidget;
+	//聊天显示栏引用
+	TSharedPtr<class SSlAiChatShowWidget> ChatShowWidget;
 	//聊天室
 	TSharedPtr<class SSlAiChatRoomWidget> ChatRoomWidget;
 	//背包
@@ -58,4 +61,7 @@ private:
 
 	//UIMap
 	TMap<EGameUIType::Type, TSharedPtr<SCompoundWidget>> UIMap;
+
+	//消息计时器
+	float MessageTimeCount;
 };
