@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 #include "SSlAiMenuHUDWidget.h"
 #include "SlateOptMacros.h"
@@ -9,31 +9,31 @@
 #include "Engine/Engine.h"
 #include "SSlAiMenuWidget.h"
 #include "SDPIScaler.h"
+#include "Engine/GameViewportClient.h"
 
 
 BEGIN_SLATE_FUNCTION_BUILD_OPTIMIZATION
 void SSlAiMenuHUDWidget::Construct(const FArguments& InArgs)
 {
-	//»ñÈ¡±à¼­Æ÷µÄMenuStyle
+	//è·å–ç¼–è¾‘å™¨çš„MenuStyle
 	MenuStyle = &SlAiStyle::Get().GetWidgetStyle<FSlAiMenuStyle>("BPSlAiMenuStyle");
-	//°ó¶¨Ëõ·Å¹æÔò·½·¨
+	//ç»‘å®šç¼©æ”¾è§„åˆ™æ–¹æ³•
 	UIScaler.Bind(this, &SSlAiMenuHUDWidget::GetUIScaler);
-	// ²ã¼¶
+	// å±‚çº§
 	ChildSlot
 		[
 			SNew(SDPIScaler).DPIScale(UIScaler)
-		[
-			SNew(SOverlay)
-			+SOverlay::Slot().HAlign(HAlign_Fill).VAlign(VAlign_Fill)
-		[
-			SNew(SImage).Image(&MenuStyle->MenuHUDBackgroundBrush)
-		]
-			+ SOverlay::Slot().HAlign(HAlign_Center).VAlign(VAlign_Center)
-		[
-			SAssignNew(MenuWidget, SSlAiMenuWidget)
-		]
-
-		]
+			[
+				SNew(SOverlay)
+				+SOverlay::Slot().HAlign(HAlign_Fill).VAlign(VAlign_Fill)
+				[
+					SNew(SImage).Image(&MenuStyle->MenuHUDBackgroundBrush)
+				]
+				+ SOverlay::Slot().HAlign(HAlign_Center).VAlign(VAlign_Center)
+				[
+					SAssignNew(MenuWidget, SSlAiMenuWidget)
+				]
+			]
 		];
 	
 }

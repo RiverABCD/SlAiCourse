@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
 
@@ -20,18 +20,18 @@ public:
 	void Construct(const FArguments& InArgs);
 
 private:
-	//°ó¶¨UIScalerµÄº¯Êı
+	//ç»‘å®šUIScalerçš„å‡½æ•°
 	float GetUIScaler() const;
-	//»ñÈ¡ÆÁÄ»³ß´ç
+	//è·å–å±å¹•å°ºå¯¸
 	FVector2D GetViewportSize() const;
 
 
 private:
 
-	//»ñÈ¡MenuÑùÊ½
+	//è·å–Menuæ ·å¼
 	const struct FSlAiMenuStyle *MenuStyle;
-	//DPIËõ·ÅÏµÊı
+	//DPIç¼©æ”¾ç³»æ•°
 	TAttribute<float> UIScaler;
-	//²Ëµ¥Ö¸Õë
+	//èœå•æŒ‡é’ˆ
 	TSharedPtr<class SSlAiMenuWidget> MenuWidget;
 };

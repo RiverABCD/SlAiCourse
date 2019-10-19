@@ -137,6 +137,10 @@ void SSlAiGameHUDWidget::ShowGameUI(EGameUIType::Type PreUI, EGameUIType::Type N
 		UIMap.Find(NextUI)->Get()->SetVisibility(EVisibility::Visible);
 		//显示现在状态对应的UI(下一期用框架写UI)
 		if (NextUI == EGameUIType::ChatRoom) ChatRoomWidget->ScrollToEnd();
+		//如果是失败,只显示一个按钮
+		if (NextUI == EGameUIType::Lose) GameMenuWidget->GameLose();
+		//如果是菜单,设置菜单初始化
+		if (NextUI == EGameUIType::Pause) GameMenuWidget->ResetMenu();
 	}
 }
 
