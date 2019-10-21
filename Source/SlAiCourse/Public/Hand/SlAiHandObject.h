@@ -45,4 +45,7 @@ protected:
 	//盒子碰撞体
 	UPROPERTY(EditAnywhere, Category = "SlAi")
 		class UBoxComponent* AffectCollision;
+
+	//打到物品时的音效
+	class USoundWave* OverlaySound;
 };

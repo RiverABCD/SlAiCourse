@@ -40,12 +40,13 @@ void ASlAiPlayerState::Tick(float DeltaSeconds)
 	Hunger = FMath::Clamp<float>(Hunger, 0.f, 600.f);
 	//执行修改玩家状态UI的委托
 	UpdateStateWidget.ExecuteIfBound(HP / 500.f, Hunger / 500.f);
-	/*
+	
 	//如果血值等于0但是没死
 	if (HP == 0 && !IsDead) {
 		//告诉控制器自己死了
-		if()
-	}*/
+		if (SPController) SPController->PlayerDead();
+		IsDead = true;
+	}
 }
 
 
@@ -197,4 +198,18 @@ void ASlAiPlayerState::AcceptDamage(int DamageVal)
 		if (SPController) SPController->PlayerDead();
 		IsDead = true;
 	}
+}
+
+void ASlAiPlayerState::LoadState(float HPVal, float HungerVal)
+{
+	HP = HPVal;
+	Hunger = HungerVal;
+	//执行修改玩家状态UI的委托
+	UpdateStateWidget.ExecuteIfBound(HP / 500.f, Hunger / 500.f);
+}
+
+void ASlAiPlayerState::SaveState(float& HPVal, float& HungerVal)
+{
+	HPVal = HP;
+	HungerVal = Hunger;
 }

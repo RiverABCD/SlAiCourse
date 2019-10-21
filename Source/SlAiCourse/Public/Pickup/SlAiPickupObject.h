@@ -25,6 +25,9 @@ public:
 	int TakePickup();
 public:
 	int ObjectIndex;
+
+	//是否下一帧销毁自己,由GameMode加载游戏存档时进行设置
+	bool IsDestroyNextTick;
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;

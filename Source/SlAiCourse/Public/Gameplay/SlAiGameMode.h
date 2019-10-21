@@ -27,6 +27,9 @@ public:
 
 	//组件赋值,给GameHUD调用,避免空引用引起崩溃
 	void InitGamePlayModule();
+
+	//保存游戏
+	void SaveGame();
 public:
 	class ASlAiPlayerController* SPController;
 
@@ -49,6 +52,12 @@ protected:
 	//初始化与更新小地图摄像机
 	void InitializeMiniMapCamera();
 
+	//存档加载
+	void LoadRecord();
+
+	//给背包进行加载存档,这个函数一定要在第二帧再执行,否则快捷栏没初始化完成会崩溃
+	void LoadRecordPackage();
+
 private:
 
 	//石否已经初始化背包
@@ -59,4 +68,10 @@ private:
 
 	//小地图相机指针
 	class ASlAiSceneCapture2D* MiniMapCamera;
+
+	//是否需要加载存档
+	bool IsNeedLoadRecord;
+
+	//游戏存档指针
+	class USlAiSaveGame* GameRecord;
 };

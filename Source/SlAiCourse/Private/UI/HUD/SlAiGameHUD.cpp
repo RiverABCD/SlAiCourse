@@ -10,6 +10,7 @@
 #include "SSlAiRayInfoWidget.h"
 #include "SSlAiPointerWidget.h"
 #include "SSlAiMiniMapWidget.h"
+#include "SSlAiGameMenuWidget.h"
 
 #include "SlAiPlayerController.h"
 #include "SlAiPlayerState.h"
@@ -53,4 +54,6 @@ void ASlAiGameHUD::BeginPlay()
 	GM->RegisterMiniMap.BindRaw(GameHUDWidget->MiniMapWidget.Get(), &SSlAiMiniMapWidget::RegisterMiniMap);
 	//绑定更新小地图数据委托
 	GM->UpdateMapData.BindRaw(GameHUDWidget->MiniMapWidget.Get(), &SSlAiMiniMapWidget::UpdateMapData);
+	//保存游戏事件绑定
+	GameHUDWidget->GameMenuWidget->SaveGameDele.BindUObject(GM, &ASlAiGameMode::SaveGame);
 }

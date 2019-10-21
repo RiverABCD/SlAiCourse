@@ -5,6 +5,7 @@
 #include "ConstructorHelpers.h"
 #include "Components/BoxComponent.h"
 #include "Engine/StaticMesh.h"
+#include "Sound/SoundWave.h"
 
 ASlAiHandAxe::ASlAiHandAxe()
 {
@@ -27,4 +28,7 @@ void ASlAiHandAxe::BeginPlay()
 	Super::BeginPlay();
 	//定义物品序号
 	ObjectIndex = 5;
+
+	//从新加载砍树的音效
+	OverlaySound = LoadObject<USoundWave>(NULL, TEXT("SoundWave'/Game/Res/Sound/GameSound/Axe.Axe'"));
 }

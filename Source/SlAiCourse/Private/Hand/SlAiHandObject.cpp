@@ -4,6 +4,7 @@
 #include "Components/StaticMeshComponent.h"
 #include "Components/BoxComponent.h"
 #include "ConstructorHelpers.h"
+
 //手持物品类
 #include "SlAiHandNone.h"
 #include "SlAiHandWood.h"
@@ -18,7 +19,8 @@
 
 #include "SlAiHelper.h"
 #include "SlAiDataHandle.h"
-
+#include "Kismet/GameplayStatics.h"
+#include "Sound/SoundWave.h"
 
 // Sets default values
 ASlAiHandObject::ASlAiHandObject()
@@ -52,6 +54,10 @@ ASlAiHandObject::ASlAiHandObject()
 	FScriptDelegate OverlayEnd;
 	OverlayEnd.BindUFunction(this, "OnOverlayEnd");
 	AffectCollision->OnComponentEndOverlap.Add(OverlayEnd);
+
+	//默认拳头音效
+	static ConstructorHelpers::FObjectFinder<USoundWave> StaticSound(TEXT("SoundWave'/Game/Res/Sound/GameSound/Punch.Punch'"));
+	OverlaySound = StaticSound.Object;
 }
 
 // Called when the game starts or when spawned
@@ -109,6 +115,8 @@ void ASlAiHandObject::OnOverlayBegin(UPrimitiveComponent* OverlappedComponent, A
 		//获取对动物的伤害值
 		Cast<ASlAiEnemyCharacter>(OtherActor)->AcceptDamage(ObjectAttr->AnimalAttack);
 	}
+	//如果音效存在,播放音效,默认音效为拳打
+	if (OverlaySound) UGameplayStatics::PlaySoundAtLocation(GetWorld(), (USoundBase *)OverlaySound, OtherActor->GetActorLocation());
 }
 
 void ASlAiHandObject::OnOverlayEnd(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)

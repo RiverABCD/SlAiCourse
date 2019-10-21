@@ -19,8 +19,12 @@ public:
 	void ChangeLocalizationCulture(ECultureTeam Culture);
 	//修改菜单音量
 	void ResetMenuVolume(float MusicVol, float SoundVol);
+	//修改游戏音量
+	void ResetGameVolume(float MusicVol, float SoundVol);
 	//游戏数据初始化
 	void InitializeGameData();
+	//添加新存档名
+	void AddNewRecord();
 
 public:
 	//语言
@@ -62,7 +66,7 @@ private:
 	//初始化合成表图
 	void InitCompoundTableMap();
 	//初始化Game声音数据
-	//void InitializeGameAudio();
+	void InitializeGameAudio();
 
 private:
 	static TSharedPtr<SlAiDataHandle> DataInstance;

@@ -152,7 +152,7 @@ void SSlAiGameMenuWidget::ChangeCulture(ECultureTeam Cultrue)
 
 void SSlAiGameMenuWidget::ChangeVolume(const float MusicVolume, const float SoundVolume)
 {
-	//SlAiDataHandle::Get()->ResetGameVolume(MusicVolume, SoundVolume);
+	SlAiDataHandle::Get()->ResetGameVolume(MusicVolume, SoundVolume);
 }
 
 void SSlAiGameMenuWidget::GameLose()

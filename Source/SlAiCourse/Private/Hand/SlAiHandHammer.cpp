@@ -5,6 +5,7 @@
 #include "ConstructorHelpers.h"
 #include "Components/BoxComponent.h"
 #include "Engine/StaticMesh.h"
+#include "Sound/SoundWave.h"
 
 ASlAiHandHammer::ASlAiHandHammer()
 {
@@ -44,5 +45,6 @@ void ASlAiHandHammer::BeginPlay()
 	//定义物品序号
 	ObjectIndex = 6;
 
-
+	//从新加载锤子的音效
+	OverlaySound = LoadObject<USoundWave>(NULL, TEXT("SoundWave'/Game/Res/Sound/GameSound/Hammer.Hammer'"));
 }

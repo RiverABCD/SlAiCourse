@@ -19,7 +19,7 @@ END_SLATE_FUNCTION_BUILD_OPTIMIZATION
 
 void SSlAiEnemyHPWidget::ChangeHP(float HP)
 {
-	HP = FMath::Clamp(HP, 0.f, 1.f);
+	HP = FMath::Clamp<float>(HP, 0.f, 1.f);
 	HPBar->SetPercent(HP);
 	ResultColor = FLinearColor(1.f - HP, HP, 0.f, 1.f);
 	HPBar->SetFillColorAndOpacity(FSlateColor(ResultColor));

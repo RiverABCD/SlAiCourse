@@ -90,6 +90,24 @@ void SlAiDataHandle::ResetMenuVolume(float MusicVol, float SoundVol)
 
 }
 
+void SlAiDataHandle::ResetGameVolume(float MusicVol, float SoundVol)
+{
+	if (MusicVol > 0)
+	{
+		MusicVolume = MusicVol;
+		//使用混音器来设置
+		AudioDevice->SetSoundMixClassOverride(SlAiSoundMix, SlAiMusicClass, MusicVolume, 1.f, 0.2f, false);
+	}
+	if (SoundVol > 0)
+	{
+		SoundVolume = SoundVol;
+		//使用混音器来设置
+		AudioDevice->SetSoundMixClassOverride(SlAiSoundMix, SlAiSoundClass, SoundVolume, 1.f, 0.2f, false);
+	}
+	//更新存档数据
+	SlAiSingleton<SlAiJsonHandle>::Get()->UpdateRecordData(GetEnumValueAsString<ECultureTeam>(FString("ECultureTeam"), CurrentCulture), MusicVolume, SoundVolume, &RecordDataList);
+}
+
 /*
 *  ANY_PACKAGE 从游戏包中找到对应Name下的Enum
 */
@@ -161,6 +179,16 @@ void SlAiDataHandle::InitializeGameData()
 	InitResourceAttrMap();
 	//初始化合成表图
 	InitCompoundTableMap();
+	//初始化声音设置
+	InitializeGameAudio();
+}
+
+void SlAiDataHandle::AddNewRecord()
+{
+	//将现在的存档名添加到数组
+	RecordDataList.Add(RecordName);
+	//更新json数据
+	SlAiSingleton<SlAiJsonHandle>::Get()->UpdateRecordData(GetEnumValueAsString<ECultureTeam>(FString("ECultureTeam"), CurrentCulture), MusicVolume, SoundVolume, &RecordDataList);
 }
 
 void SlAiDataHandle::InitObjectAttr()
@@ -205,4 +233,19 @@ void SlAiDataHandle::InitResourceAttrMap()
 void SlAiDataHandle::InitCompoundTableMap()
 {
 	SlAiSingleton<SlAiJsonHandle>::Get()->CompoundTableJsonRead(CompoundTableMap);
+}
+
+void SlAiDataHandle::InitializeGameAudio()
+{
+	//获取混音器和音类
+	SlAiSoundMix = LoadObject<USoundMix>(NULL, TEXT("SoundMix'/Game/Blueprint/Sound/SlAiSoundMix.SlAiSoundMix'"));
+	SlAiMusicClass = LoadObject<USoundClass>(NULL, TEXT("SoundClass'/Game/Blueprint/Sound/SlAiMusicClass.SlAiMusicClass'"));
+	SlAiSoundClass = LoadObject<USoundClass>(NULL, TEXT("SoundClass'/Game/Blueprint/Sound/SlAiSoundClass.SlAiSoundClass'"));
+
+	//获取声音设备
+	AudioDevice = GEngine->GetMainAudioDevice();
+	//推送混音器到设备
+	AudioDevice->PushSoundMixModifier(SlAiSoundMix);
+	//根据音量设置一次声音
+
 }

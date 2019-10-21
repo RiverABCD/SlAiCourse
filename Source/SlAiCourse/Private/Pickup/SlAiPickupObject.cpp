@@ -22,6 +22,8 @@ ASlAiPickupObject::ASlAiPickupObject()
 	////设置模型碰撞为PickupProfile
 	BaseMesh->SetCollisionProfileName(FName("PickupProfile"));
 
+	//设置下一帧不销毁自己
+	IsDestroyNextTick = false;
 }
 
 // Called when the game starts or when spawned
@@ -34,7 +36,8 @@ void ASlAiPickupObject::BeginPlay()
 void ASlAiPickupObject::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
+	//如果下一帧要销毁，执行销毁
+	if (IsDestroyNextTick) GetWorld()->DestroyActor(this);
 }
 
 FText ASlAiPickupObject::GetInfoText() const

@@ -25,7 +25,7 @@ ASlAiResourceObject::ASlAiResourceObject()
 	BaseMesh->bGenerateOverlapEvents = true;
 	//BaseMesh->SetGenerateOverlapEvents(true);
 	//设置在下一帧不销毁
-
+	IsDestroyNextTick = false;
 	
 }
 
@@ -44,7 +44,8 @@ void ASlAiResourceObject::BeginPlay()
 void ASlAiResourceObject::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-	
+	//如果检测到下一帧要销毁
+	if (IsDestroyNextTick) GetWorld()->DestroyActor(this);
 }
 
 void ASlAiResourceObject::CreateFlobObject()

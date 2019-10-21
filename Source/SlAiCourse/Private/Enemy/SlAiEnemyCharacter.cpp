@@ -67,6 +67,9 @@ ASlAiEnemyCharacter::ASlAiEnemyCharacter()
 
 	//设置资源ID是3
 	ResourceIndex = 3;
+	//设置下一帧不销毁自己,得放在构造函数进行初始化,避免与GameMode的加载函数冲突
+	IsDestroyNextTick = false;
+
 }
 
 
@@ -107,6 +110,9 @@ void ASlAiEnemyCharacter::BeginPlay()
 	FScriptDelegate OnSeePlayerDele;
 	OnSeePlayerDele.BindUFunction(this, "OnSeePlayer");
 	EnemySense->OnSeePawn.Add(OnSeePlayerDele);
+
+	//设置资源ID是3
+	ResourceIndex = 3;
 }
 
 
@@ -139,6 +145,9 @@ void ASlAiEnemyCharacter::CreateFlobObject()
 void ASlAiEnemyCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+
+	//如果准备销毁为true,进行销毁
+	if (IsDestroyNextTick) DestroyEvent();
 }
 
 // Called to bind functionality to input
@@ -285,6 +294,18 @@ bool ASlAiEnemyCharacter::IsLockPlayer()
 {
 	if (SEController) return SEController->IsLockPlayer;
 	return false;
+}
+
+void ASlAiEnemyCharacter::LoadHP(float HPVal)
+{
+	HP = HPVal;
+	//修改血量显示
+	HPBarWidget->ChangeHP(HP / 200.f);
+}
+
+float ASlAiEnemyCharacter::GetHP()
+{
+	return HP;
 }
 
 void ASlAiEnemyCharacter::OnSeePlayer(APawn * PlayerChar)

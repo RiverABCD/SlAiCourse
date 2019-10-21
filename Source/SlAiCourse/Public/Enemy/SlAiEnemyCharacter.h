@@ -61,9 +61,19 @@ public:
 
 	//获取是否已经锁定了玩家
 	bool IsLockPlayer();
+
+	//加载血量
+	void LoadHP(float HPVal);
+
+	//获取血量,保存游戏时调用
+	float GetHP();
+
 public:
 	//资源ID
 	int ResourceIndex;
+	//是否下一帧销毁自己,由GameMode加载游戏存档时进行设置
+	bool IsDestroyNextTick;
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
